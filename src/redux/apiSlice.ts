@@ -1,5 +1,5 @@
+import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit"; 
 import axios from "axios";
 
 // State type definition
@@ -31,12 +31,13 @@ const apiSlice = createSlice({
       state.error = action.payload;
     },
     postSuccess: (state, action: PayloadAction<any>) => {
-      state.data.push(action.payload); 
+      state.data.push(action.payload);
     },
   },
 });
 
-export const { fetchStart, fetchSuccess, fetchError, postSuccess } = apiSlice.actions;
+export const { fetchStart, fetchSuccess, fetchError, postSuccess } =
+  apiSlice.actions;
 
 // GET request for fetching data
 export const fetchData = () => async (dispatch: any) => {

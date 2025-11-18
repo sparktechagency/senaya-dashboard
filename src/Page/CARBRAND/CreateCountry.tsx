@@ -1,10 +1,10 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import {
   useAllCountryQuery,
   useCreateCountryMutation,
   useDeleteCountryMutation,
 } from "../../redux/feature/adminApi";
-import { toast } from "react-toastify";
 
 export const CreateCountry = () => {
   const [countryName, setCountryName] = useState("");
@@ -36,7 +36,8 @@ export const CreateCountry = () => {
   };
 
   const handleDelete = async (id: string) => {
-    if (!window.confirm("Are you sure you want to delete this country?")) return;
+    if (!window.confirm("Are you sure you want to delete this country?"))
+      return;
     try {
       await deleteCountry(id).unwrap();
       toast.success("Country deleted successfully");

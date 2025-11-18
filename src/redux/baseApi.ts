@@ -1,6 +1,4 @@
-
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
 
 const baseQuery = fetchBaseQuery({
   baseUrl: 'https://api.senaeya.net/api/v1', 
@@ -33,6 +31,3 @@ export const baseApi = createApi({
 });
 
 export default baseApi;
-
-
- 
