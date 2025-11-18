@@ -1,11 +1,14 @@
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetSingleImageQuery, useUpdateImageMutation } from "../../redux/feature/adminApi";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {
+  useGetSingleImageQuery,
+  useUpdateImageMutation,
+} from "../../redux/feature/adminApi";
 
 interface FormData {
   title: string;
@@ -18,12 +21,10 @@ const UpdateImage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  // ✅ Skip query if id is undefined
-  const { data, isLoading: isFetching } = useGetSingleImageQuery(id!, {
-    skip: !id,
-  });
+  const { data, isLoading: isFetching } = useGetSingleImageQuery(id);
 
-  const [updateImage, { isLoading, isSuccess, isError }] = useUpdateImageMutation();
+  const [updateImage, { isLoading, isSuccess, isError }] =
+    useUpdateImageMutation();
 
   const {
     register,
@@ -62,7 +63,10 @@ const UpdateImage: React.FC = () => {
         updatedData.append("image", formData.image[0]);
       }
 
-      await updateImage({ id, payload: updatedData }).unwrap();
+  
+   await updateImage({ id: id as string, payload: updatedData }).unwrap();
+
+
 
       toast.success("Image updated successfully!");
       navigate("/admin/carmodel");
@@ -142,11 +146,15 @@ const UpdateImage: React.FC = () => {
             </label>
             <textarea
               placeholder="Enter description"
-              {...register("description", { required: "Description is required" })}
+              {...register("description", {
+                required: "Description is required",
+              })}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
             />
             {errors.description && (
-              <p className="text-red-500 text-xs">{errors.description.message}</p>
+              <p className="text-red-500 text-xs">
+                {errors.description.message}
+              </p>
             )}
           </div>
 
@@ -179,7 +187,9 @@ const UpdateImage: React.FC = () => {
             <p className="text-green-500 text-center mt-2">Image updated!</p>
           )}
           {isError && (
-            <p className="text-red-500 text-center mt-2">Failed to update image</p>
+            <p className="text-red-500 text-center mt-2">
+              Failed to update image
+            </p>
           )}
         </form>
       </motion.div>

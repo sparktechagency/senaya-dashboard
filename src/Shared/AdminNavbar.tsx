@@ -1,22 +1,23 @@
-import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import {
-  LayoutDashboard,
-  LogOut,
-  User,
-  Menu,
-  MessageCircle,
   Car,
-  Settings,
-  Sparkle,
   ChevronDown,
   ChevronUp,
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  MessageCircle,
   Package,
+  Settings,
+  Sparkle,
+  User,
 } from "lucide-react";
-import { motion } from "framer-motion";
-import { NavLink, Link, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { MdBrandingWatermark, MdWork, MdWorkHistory } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { toggleSidebar } from "../redux/sidebarSlice";
-import { MdBrandingWatermark, MdDiscount, MdWork, MdWorkHistory } from "react-icons/md";
+import { MdBrandingWatermark, MdWork, MdWorkHistory } from "react-icons/md";
 import type { RootState } from "../redux/store";
 
 interface MenuItem {
@@ -30,6 +31,7 @@ const AdminNavbar: React.FC = () => {
   const dispatch = useDispatch();
   const { isCollapsed } = useSelector((state: RootState) => state.sidebar);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  console.log("🚀 ~ AdminNavbar ~ isLoggedIn:", isLoggedIn);
 
   // ✅ Store open state per dropdown
   const [openDropdowns, setOpenDropdowns] = useState<{
@@ -223,26 +225,26 @@ console.log(isLoggedIn);
       {/* Footer */}
       <div className="p-4 border-t border-blue-400">
         <div className="flex items-center justify-between">
-            {!isCollapsed && (
-              <div className="flex items-center space-x-3">
-                <img
-                  src="https://i.pravatar.cc/40"
-                  alt="admin"
-                  className="h-8 w-8 rounded-full"
-                />
-                <div>
-                  <p className="text-sm font-semibold">Admin</p>
-                  <p className="text-xs text-gray-200">Super Admin</p>
-                </div>
+          {!isCollapsed && (
+            <div className="flex items-center space-x-3">
+              <img
+                src="https://i.pravatar.cc/40"
+                alt="admin"
+                className="h-8 w-8 rounded-full"
+              />
+              <div>
+                <p className="text-sm font-semibold">Admin</p>
+                <p className="text-xs text-gray-200">Super Admin</p>
               </div>
-            )}
-            <button
-              className="text-red-400 hover:text-red-500"
-              onClick={handleLogout}
-            >
-              <LogOut size={20} />
-            </button>
-          </div>
+            </div>
+          )}
+          <button
+            className="text-red-400 hover:text-red-500"
+            onClick={handleLogout}
+          >
+            <LogOut size={20} />
+          </button>
+        </div>
         {/* {isLoggedIn ? (
           
         ) : (

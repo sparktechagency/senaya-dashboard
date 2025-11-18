@@ -1,13 +1,13 @@
 import React from "react";
+import { MdDelete, MdEdit, MdOutlineCreateNewFolder } from "react-icons/md";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 import {
   useDeleteImageTypeMutation,
   useImageTypeQuery,
   useLogoTypeQuery,
 } from "../../redux/feature/adminApi";
-import { Link, useNavigate } from "react-router-dom";
-import { MdOutlineCreateNewFolder, MdDelete, MdEdit } from "react-icons/md";
-import { toast } from "react-toastify";
-import Swal from "sweetalert2";
 
 interface ImageItem {
   _id: string;
@@ -119,13 +119,15 @@ const ImageList: React.FC = () => {
                 {logos.slice(0, 4).map((l) => (
                   <img
                     key={l._id}
-                    src={`https://api.senaeya.net${l.image}`}
+                    src={`https://asif7001.binarybards.online${l.image}`}
                     alt={l.title}
                     className="w-10 h-10 rounded-full object-cover border border-white"
                   />
                 ))}
               </div>
-              <p className="text-4xl font-bold -mt-2">{typeCount.website_logo}</p>
+              <p className="text-4xl font-bold -mt-2">
+                {typeCount.website_logo}
+              </p>
             </div>
           </div>
         </div>
@@ -142,7 +144,7 @@ const ImageList: React.FC = () => {
                 className="bg-white shadow rounded-lg overflow-hidden border border-gray-200 hover:scale-105 transition-transform duration-200 relative cursor-pointer"
               >
                 <img
-                  src={`https://api.senaeya.net${img.image}`}
+                  src={`https://asif7001.binarybards.online${img.image}`}
                   alt={img.title}
                   className="w-full h-48 object-cover"
                 />

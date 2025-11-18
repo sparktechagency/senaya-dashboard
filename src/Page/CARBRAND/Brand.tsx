@@ -1,13 +1,13 @@
+import { motion } from "framer-motion";
 import { Delete, Loader2 } from "lucide-react"; // Loading spinner icon
+import { MdOutlineCreateNewFolder } from "react-icons/md";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 import {
   useAllBrandQuery,
   useDeleteBrandMutation,
 } from "../../redux/feature/adminApi";
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import { MdOutlineCreateNewFolder } from "react-icons/md";
-import Swal from "sweetalert2";
-import { toast } from "react-toastify";
 
 const CarBrandComponent: React.FC = () => {
   const { data, isLoading, isError } = useAllBrandQuery(undefined);
@@ -109,7 +109,7 @@ const CarBrandComponent: React.FC = () => {
             {/* Image */}
             <div className="w-full h-40 overflow-hidden rounded-xl mb-4">
               <img
-                src={`https://api.senaeya.net${brand.image}`}
+                src={`https://asif7001.binarybards.online${brand.image}`}
                 alt={brand.title}
                 className="w-full h-full object-cover transform hover:scale-105 transition duration-300"
               />

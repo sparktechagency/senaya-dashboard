@@ -1,19 +1,17 @@
+import { Eye, Loader2, Trash2 } from "lucide-react";
 import React from "react";
-import { Loader2, Trash2, Eye } from "lucide-react";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 import {
   useAllCarQuery,
   useDeleteCarMutation,
 } from "../../redux/feature/adminApi";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import Swal from "sweetalert2";
 
 type MaybeObjWithTitle = { title?: string } | string | undefined | null;
 
-
 const toTitle = (v: MaybeObjWithTitle, fallback = "-") =>
   v && typeof v === "object" ? v.title || fallback : v || fallback;
-
 
 const Cars: React.FC = () => {
   const { data, isLoading, isError } = useAllCarQuery(undefined);
@@ -59,8 +57,7 @@ const Cars: React.FC = () => {
     );
   }
 
-  const cars = data?.data?.result || data?.result || [];  
-
+  const cars = data?.data?.result || data?.result || [];
 
   console.log("Hellow Car");
 
@@ -94,12 +91,11 @@ const Cars: React.FC = () => {
 
             {cars.map((car: any, index: number) => {
               const brandTitle = toTitle(car?.brand?.title);
-              const brandImage =`https://api.senaeya.net/${car.brand?.image}`
+              const brandImage =`https://asif7001.binarybards.online/${car.brand?.image}`
               const modelTitle = toTitle(car.model);
               const year = String(car.year || "-");
               const vin = car.vin || "-";
-              const clientName =
-                toTitle(car.client?.clientId?.name);
+              const clientName = toTitle(car.client?.clientId?.name);
               const carType = car.carType || "-";
 
               let plateNumber = "-";
