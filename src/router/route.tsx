@@ -30,9 +30,11 @@ import SpareFromOrFileUpload from "../Page/SPARE/SpareHome";
 import SparePartsList from "../Page/SPARE/SpareList";
 import { CreateCountry } from "../Page/CARBRAND/CreateCountry";
 import PackageTable from "../Page/PACKAGE/AllPackage";
-import CreatePackageForm from "../Page/PACKAGE/CreatePackage";
 import AllSubscription from "../Page/PACKAGE/AllSubscription";
 import UpdatePackageForm from "../Page/PACKAGE/UpdatePackage";
+import CreateDiscount from "../Page/DISCOUNT/CreateDiscount";
+import CouponCards from "../Page/DISCOUNT/GetDiscount";
+import UpdateDiscount from "../Page/DISCOUNT/UpdateDisCount";
 
 const Routes = createBrowserRouter([
   {
@@ -41,19 +43,19 @@ const Routes = createBrowserRouter([
   },
   {
     path: "/",
-    element: <ProtectedRoute />, 
+    element: <ProtectedRoute />,
     errorElement: <ErrorPage />,
     children: [
       {
         element: <AdminLayout />,
         children: [
-          { index: true, element: <Dashboard /> }, 
+          { index: true, element: <Dashboard /> },
           { path: "admin/dashboard", element: <Dashboard /> },
           { path: "admin/profile", element: <Profile /> },
           { path: "admin/createAdmin", element: <CreateAdmin /> },
           { path: "admin/message", element: <MessageList /> },
           { path: "admin/brand", element: <CarBrandComponent /> },
-          { path: "acountry", element: <CreateCountry /> },
+          { path: "country", element: <CreateCountry /> },
           { path: "admin/carmodel", element: <CarModelTable /> },
           { path: "admin/details/:id", element: <CarBrandDetail /> },
           { path: "admin/package", element: <PackageTable /> },
@@ -65,14 +67,18 @@ const Routes = createBrowserRouter([
           { path: "admin/Spare", element: <SparePartsList /> },
           { path: "admin/createSpare", element: <SpareFromOrFileUpload /> },
           { path: "admin/car", element: <Cars /> },
+          // DISCOUNT
+          { path: "admin/cupon", element: <CouponCards /> },
+          { path: "admin/createCupon", element: <CreateDiscount /> },
+          { path: "updateCoupon/:id", element: <UpdateDiscount /> },
           // Setting
           { path: "admin/privacy-policy", element: <PrivacyPolicy /> },
           { path: "admin/about-us", element: <AboutUs /> },
           { path: "admin/support", element: <Support /> },
           { path: "admin/service", element: <Service /> },
           { path: "admin/account-delete", element: <AccountDelete /> },
-          { path: "create", element: <CreateCarBrand /> },
-          { path: "package", element: <CreatePackageForm /> },
+          { path: "createCarBrand", element: <CreateCarBrand /> },
+          { path: "createCarmodel", element: <CreateCarModel /> },
           { path: "model", element: <CreateCarModel /> },
           { path: "imageType", element: <CreateCarImage /> },
           { path: "image/edit/:id", element: <UpdateImage /> },

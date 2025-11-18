@@ -32,6 +32,7 @@ const WorkShop = () => {
 
   const { result = [], meta = {} } = allData?.data || {};
 
+
   const isSearchActive = searchTerm.length > 0;
   const isNoResult = isSearchActive && result.length === 0;
 
@@ -161,6 +162,8 @@ const WorkShop = () => {
               <th className="px-4 py-3">Address</th>
               <th className="px-4 py-3">Subscription</th>
               <th className="px-4 py-3">Invoices</th>
+              <th className="px-4 py-3">Nationality</th>
+              <th className="px-4 py-3">Preferred Language</th>
               <th className="px-4 py-3">Created</th>
               <th className="px-4 py-3 text-center">Actions</th>
             </tr>
@@ -204,6 +207,12 @@ const WorkShop = () => {
                   </td>
                   <td className="px-4 py-3">
                     {workshop.generatedInvoiceCount || 0}
+                  </td>
+                  <td className="px-4 py-3">
+                    {workshop.nationality || "N/A"}
+                  </td>
+                  <td className="px-4 py-3">
+                    {workshop.preferredLanguage || "N/A"}
                   </td>
                   <td className="px-4 py-3">
                     {new Date(workshop.createdAt).toLocaleDateString()}

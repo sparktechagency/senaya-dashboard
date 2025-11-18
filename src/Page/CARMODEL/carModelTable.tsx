@@ -58,7 +58,7 @@ console.log("CARMODEL",data);
 
   if (error)
     return (
-      <div className="text-center text-red-500 font-medium mt-6">
+      <div className="text-center text-5xl text-red-500 font-medium mt-6">
         Failed to load car models. Please try again later.
       </div>
     );
@@ -74,7 +74,7 @@ console.log("CARMODEL",data);
               🚗 Car Models Management
             </h2>
 
-            <Link to="/createPackage">
+            <Link to="/createCarmodel">
               <button className="px-5 py-2 flex items-center gap-2  bg-white text-indigo-600 font-semibold rounded-md hover:bg-indigo-50 transition-all shadow-md hover:shadow-lg">
                 <MdOutlineCreateNewFolder className="text-lg" />
                 Create Model

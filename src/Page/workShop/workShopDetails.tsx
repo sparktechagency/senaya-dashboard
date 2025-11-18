@@ -10,7 +10,7 @@ const WorkShopDetails: React.FC = () => {
 
   if (!workShopId) {
     return (
-      <div className="flex justify-center items-center min-h-screen text-red-500 font-semibold">
+      <div className="flex justify-center  text-5xl items-center min-h-screen text-red-500 font-semibold">
         Invalid Workshop ID ❌
       </div>
     );

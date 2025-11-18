@@ -46,6 +46,7 @@ const AllSubscription = () => {
   const { data, isLoading, isError, refetch } = useGetAllSubscriptionQuery({
     search: searchTerm,
   });
+  console.log("Data", data);
 
   const subscriptions: Subscription[] = data?.data?.result || [];
   console.log(subscriptions);
@@ -111,10 +112,11 @@ const AllSubscription = () => {
     }
   };
 
-  return (
+  return ( 
     <div className="p-6">
       {/* Search */}
-      <div className="flex gap-4 items-center mb-4">
+      <div className="flex justify-between gap-4 items-center mb-4">
+        <h2 className="font-semibold text-3xl">All Subscription</h2>
         <input
           type="text"
           placeholder="Search by Contact..."
@@ -122,12 +124,6 @@ const AllSubscription = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="border p-2 rounded w-64"
         />
-        <button
-          onClick={() => refetch()}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-        >
-          Search
-        </button>
       </div>
 
       {/* Table */}

@@ -20,12 +20,10 @@ const Dashboard = () => {
     isError,
   } = useGetDashBoardQuery(undefined);
   const { data: PersonalData } = useGetAllAdminQuery(undefined);
-
   const [searchTerm] = useState("");
-
-  // ✅ Single API for all & search
   const { data: allData } = useAllWorkShopQuery({ search: searchTerm });
-  console.log(allData?.data?.meta?.total);
+
+  console.log(DashBoard);
 
   if (isLoading) {
     return (
@@ -38,7 +36,7 @@ const Dashboard = () => {
 
   if (isError || !DashBoard?.data) {
     return (
-      <div className="flex justify-center items-center min-h-screen text-red-500">
+      <div className="flex justify-center items-center min-h-screen text-5xl text-red-500">
         Failed to load dashboard data ❌
       </div>
     );

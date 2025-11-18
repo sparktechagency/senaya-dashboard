@@ -18,7 +18,7 @@ const WorkListTable: React.FC = () => {
     return <div className="text-center py-10 text-gray-600">Loading...</div>;
   if (isError)
     return (
-      <div className="text-center py-10 text-red-500">
+      <div className="text-center text-5xl py-10 text-red-500">
         Failed to load work list!
       </div>
     );
@@ -63,7 +63,7 @@ const WorkListTable: React.FC = () => {
         </h2>
 
         <Link to="/admin/addWork" className="mt-3 sm:mt-0">
-          <button className="flex items-center gap-2 px-5 py-2 rounded-lg text-white bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:opacity-90 transition-all shadow-md hover:scale-105">
+          <button className="flex items-center gap-2 px-5 py-2 rounded-lg text-white bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 hover:opacity-90 transition-all shadow-md hover:scale-105">
             <MdOutlineCreateNewFolder size={20} />
             Create Work
           </button>

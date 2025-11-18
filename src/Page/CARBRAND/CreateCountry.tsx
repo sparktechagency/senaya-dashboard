@@ -86,28 +86,26 @@ export const CreateCountry = () => {
             key={country._id}
             className="bg-white rounded-xl shadow-md overflow-hidden relative hover:shadow-xl transition"
           >
-            {/* Delete Button */}
-            <button
-              onClick={() => handleDelete(country._id)}
-              className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:bg-red-600 z-10"
-            >
-              Delete
-            </button>
 
             {/* Image */}
             {country.image && (
               <img
-                src={`http://158.252.87.86:7001${country.image}`}
+                src={`https://api.senaeya.net${country.image}`}
                 alt={country.title}
                 className="w-full h-48 object-cover"
               />
             )}
 
             {/* Title */}
-            <div className="p-4 text-center">
-              <h3 className="text-lg font-semibold text-gray-800">
-                {country.title}
-              </h3>
+            <div className="p-4 text-center flex justify-between">
+              <h3 className="text-lg font-semibold text-gray-800">{country.title}</h3>
+                  {/* Delete Button */}
+            <button
+              onClick={() => handleDelete(country._id)}
+              className=" top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:bg-red-600 z-10"
+            >
+              Delete
+            </button>
             </div>
           </div>
         ))}

@@ -10,13 +10,29 @@ export const settingApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["PACKAGE"],
     }),
-//---------------- get All Package--------------
+    // discount
+    createDiscount: builder.mutation({
+      query: (data) => ({
+        url: "/coupon",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["DISCOUNT"],
+    }),
+    //---------------- get All Package--------------
     getAllPackage: builder.query({
       query: () => ({
         url: "/packages",
         method: "GET",
       }),
       providesTags: ["PACKAGE"],
+    }),
+    getAllCupon: builder.query({
+      query: () => ({
+        url: "/coupon",
+        method: "GET",
+      }),
+      providesTags: ["DISCOUNT"],
     }),
     // subscription
     getAllSubscription: builder.query({
@@ -27,14 +43,20 @@ export const settingApi = baseApi.injectEndpoints({
       providesTags: ["SUBSCRIPTION"],
     }),
     // single------------------
-        getSinglePackage: builder.query({
+    getSinglePackage: builder.query({
       query: (carId: string) => ({
         url: `/packages/${carId}`,
         method: "GET",
       }),
       providesTags: ["PACKAGE"],
     }),
-
+    getSingleDiscount: builder.query({
+      query: (carId: string) => ({
+        url: `/coupon/${carId}`,
+        method: "GET",
+      }),
+      providesTags: ["DISCOUNT"],
+    }),
 
     // -=================UPDATE===================
     updateSubscription: builder.mutation({
@@ -45,15 +67,22 @@ export const settingApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["SUBSCRIPTION"],
     }),
+    updateDiscount: builder.mutation({
+      query: ({ code, data }) => ({
+        url: `coupon/update-coupon/${code}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["DISCOUNT"],
+    }),
     updatePackage: builder.mutation({
-      query: ({ id, data }) => ({ 
+      query: ({ id, data }) => ({
         url: `/packages/${id}`,
         method: "PATCH",
         body: data,
       }),
       invalidatesTags: ["PACKAGE"],
     }),
-
 
     //============================== Delete
     deletePackage: builder.mutation({
@@ -62,6 +91,13 @@ export const settingApi = baseApi.injectEndpoints({
         method: "DELETE",
       }),
       invalidatesTags: ["PACKAGE"],
+    }),
+    deleteCupon: builder.mutation({
+      query: (id: string) => ({
+        url: `/coupon/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["DISCOUNT"],
     }),
     // Delete
     deleteSubscription: builder.mutation({
@@ -76,11 +112,16 @@ export const settingApi = baseApi.injectEndpoints({
 });
 
 export const {
+  useCreateDiscountMutation,
   useCreatePackageMutation,
   useDeletePackageMutation,
   useGetAllSubscriptionQuery,
   useGetAllPackageQuery,
+  useDeleteCuponMutation,
+  useUpdateDiscountMutation,
+  useGetAllCuponQuery,
   useGetSinglePackageQuery,
+  useGetSingleDiscountQuery,
   useDeleteSubscriptionMutation,
   useUpdateSubscriptionMutation,
   useUpdatePackageMutation,

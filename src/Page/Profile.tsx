@@ -24,7 +24,7 @@ const Profile: React.FC = () => {
 
   if (isError || !data?.data) {
     return (
-      <div className="text-center text-red-500 font-semibold mt-10">
+      <div className="text-center text-5xl  text-red-500 font-semibold mt-10">
         Failed to load profile data.
       </div>
     );

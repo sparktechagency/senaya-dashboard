@@ -6,8 +6,9 @@ import { Loader2, CarFront, MapPin, User, CreditCard, CalendarDays, Wrench } fro
 const CarDetails: React.FC = () => {
   const { carId } = useParams<{ carId: string }>();
   const { data, isLoading, isError } = useGetSingleCarQuery(carId!, { skip: !carId });
-  const car = data?.data;
+  const car = data?.data; 
   console.log(car);
+
 
   if (isLoading) {
     return (
@@ -32,16 +33,17 @@ const CarDetails: React.FC = () => {
         {/* Header Section */}
         <div className="bg-linear-to-r from-indigo-600 to-blue-500 p-6 text-white flex items-center justify-between">
           <div>
-            <h2 className="text-3xl font-bold">{car.brand?.title} - {car.model}</h2>
+             <h2 className="text-3xl font-bold">{car.brand?.title} - {car.model?.title}</h2>
             <p className="text-sm opacity-80 mt-1">VIN: {car.vin || "Not Available"}</p>
           </div>
           <CarFront size={44} className="opacity-90" />
+          
         </div>
 
-        {/* Body Section */}
+
         <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-8 text-gray-800">
           <DetailCard title="Brand" value={car.brand?.title} icon={<CarFront className="text-indigo-500" />} />
-          <DetailCard title="Model" value={car.model} icon={<Wrench className="text-indigo-500" />} />
+          <DetailCard title="Model" value={car.model?.title} icon={<Wrench className="text-indigo-500" />} />
           <DetailCard title="Year" value={car.year} icon={<CalendarDays className="text-indigo-500" />} />
           <DetailCard title="VIN" value={car.vin} icon={<CreditCard className="text-indigo-500" />} />
           <DetailCard title="Client Name" value={car.client?.clientId?.name || car.client?.name} icon={<User className="text-indigo-500" />} />
@@ -59,12 +61,10 @@ const CarDetails: React.FC = () => {
             icon={<CreditCard className="text-indigo-500" />}
           />
 
-          <DetailCard title="Latitude" value={car.latitude} icon={<MapPin className="text-indigo-500" />} />
+          <DetailCard title="PlateNumber" value={car.slugForSaudiCarPlateNumber} icon={<MapPin className="text-indigo-500" />} />
           <DetailCard title="Longitude" value={car.longitude} icon={<MapPin className="text-indigo-500" />} />
           <DetailCard title="Address" value={car.address} icon={<MapPin className="text-indigo-500" />} />
-          <DetailCard title="Bank Account Number" value={car.bankAccountNumber} icon={<CreditCard className="text-indigo-500" />} />
-          <DetailCard title="VAT Number" value={car.taxVatNumber} icon={<CreditCard className="text-indigo-500" />} />
-          <DetailCard title="Mobile Workshop" value={car.isAvailableMobileWorkshop ? "✅ Yes" : "❌ No"} icon={<Wrench className="text-indigo-500" />} />
+          
         </div>
       </div>
     </div>
