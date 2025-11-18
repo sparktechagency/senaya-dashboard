@@ -44,6 +44,7 @@ console.log(isLoggedIn);
     { name: "Dashboard", icon: LayoutDashboard, path: "/admin/dashboard" },
     { name: "Profile", icon: User, path: "/admin/profile" },
     { name: "Car", icon: Car, path: "/admin/car" },
+    { name: "Country", icon: MdBrandingWatermark, path: "/admin/country" },
     { name: "Brand", icon: MdBrandingWatermark, path: "/admin/brand" },
     { name: "Car Model", icon: Car, path: "/admin/carmodel" },
     { name: "Workshop", icon: MdWorkHistory, path: "/admin/workShop" },

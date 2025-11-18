@@ -66,7 +66,7 @@ const CarBrandComponent: React.FC = () => {
         {/* Left side - Title and Description */}
         <div>
           <h1 className="text-3xl font-bold text-gray-800">
-            Car Brands & Countries
+            Car Brands 
           </h1>
           <p className="text-gray-500 text-sm mt-2">
             Discover different car brands from around the world
@@ -78,11 +78,6 @@ const CarBrandComponent: React.FC = () => {
           <Link to="/createCarBrand">
             <button className="px-6 flex justify-between text-white rounded-ml items-center rounded-md gap-2 py-2 bg-linear-to-tr from-blue-500 via-purple-600 to-pink-500 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300">
               Create Car Brand <MdOutlineCreateNewFolder />
-            </button>
-          </Link>
-          <Link to="/country">
-            <button className="px-6 flex justify-between text-white rounded-ml items-center rounded-md gap-2 py-2 bg-linear-to-tr from-blue-500 via-purple-600 to-pink-500 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300">
-              Create Country <MdOutlineCreateNewFolder />
             </button>
           </Link>
         </div>

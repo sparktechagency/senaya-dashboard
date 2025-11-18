@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import {
   useAllCountryQuery,
   useCreateCountryMutation,
+  useDeleteCountryMutation,
 } from "../../redux/feature/adminApi";
 
 export const CreateCountry = () => {
@@ -10,7 +11,9 @@ export const CreateCountry = () => {
   const [image, setImage] = useState<File | null>(null);
 
   const [createCountry, { isLoading: creating }] = useCreateCountryMutation();
-  // const [deleteCountry] = useDeleteCountryMutation();
+  const [deleteCountry] = useDeleteCountryMutation();
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+
   const { data: countries } = useAllCountryQuery(undefined);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -34,16 +37,20 @@ export const CreateCountry = () => {
     }
   };
 
-  // const handleDelete = async (id: string) => {
-  //   if (!window.confirm("Are you sure you want to delete this country?"))
-  //     return;
-  //   try {
-  //     await deleteCountry(id).unwrap();
-  //     toast.success("Country deleted successfully");
-  //   } catch (err: any) {
-  //     toast.error(err?.data?.message || "Failed to delete country");
-  //   }
-  // };
+  const handleDelete = async (id: string) => {
+    if (!window.confirm("Are you sure you want to delete this country?"))
+      return;
+
+    try {
+      setDeletingId(id);
+      await deleteCountry(id).unwrap();
+      toast.success("Country deleted successfully");
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to delete country");
+    } finally {
+      setDeletingId(null);
+    }
+  };
 
   return (
     <div className="max-w-5xl mx-auto mt-10 p-6">
@@ -62,12 +69,30 @@ export const CreateCountry = () => {
           className="p-3 border rounded-md w-full sm:w-64 focus:outline-blue-500"
         />
 
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setImage(e.target.files?.[0] || null)}
-          className="p-3 border rounded-md w-full sm:w-64"
-        />
+        {/* Image Uploader */}
+        <label className="w-full sm:w-64 cursor-pointer">
+          <div className="border-2 border-dashed border-gray-300 rounded-md px-4 py-2 flex flex-col items-center justify-center hover:border-blue-500 transition">
+            {image ? (
+              <img
+                src={URL.createObjectURL(image)}
+                alt="Preview"
+                className="w-full h-40 object-cover rounded-md"
+              />
+            ) : (
+              <div className="text-center">
+                <div className="text-gray-400 text-3xl mb-2">📁</div>
+                <p className="text-gray-500 text-sm">Click to upload image</p>
+              </div>
+            )}
+          </div>
+
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setImage(e.target.files?.[0] || null)}
+            className="hidden"
+          />
+        </label>
 
         <button
           type="submit"
@@ -83,7 +108,7 @@ export const CreateCountry = () => {
         {countries?.data?.map((country: any) => (
           <div
             key={country._id}
-            className="bg-white rounded-xl shadow-md overflow-hidden relative hover:shadow-xl transition"
+            className="bg-white rounded-xl shadow-md overflow-hidden relative hover:shadow-xl transition group"
           >
             {/* Image */}
             {country.image && (
@@ -95,10 +120,18 @@ export const CreateCountry = () => {
             )}
 
             {/* Title */}
-            <div className="p-4 text-center">
+            <div className="flex justify-between items-center px-4 pb-3">
               <h3 className="text-lg font-semibold text-gray-800">
                 {country.title}
               </h3>
+
+              <button
+                onClick={() => handleDelete(country._id)}
+                disabled={deletingId === country._id}
+                className="bg-red-500 text-white px-2 py-1 text-xs rounded hover:bg-red-600 transition"
+              >
+                {deletingId === country._id ? "..." : "Delete"}
+              </button>
             </div>
           </div>
         ))}

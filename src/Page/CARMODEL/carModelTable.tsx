@@ -65,6 +65,10 @@ console.log("CARMODEL",data);
 
   return (
     <div className="p-8 min-h-screen bg-linear-to-br from-slate-100 via-gray-100 to-slate-200">
+       {/* Image List Section */}
+        <div >
+          <ImageList />
+        </div>
       <div className="max-w-6xl mx-auto">
         {/* Card container */}
         <div className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl overflow-hidden transition-all hover:shadow-indigo-300/40 hover:scale-[1.01] duration-300">
@@ -148,11 +152,6 @@ console.log("CARMODEL",data);
               </div>
             )}
           </div>
-        </div>
-
-        {/* Image List Section */}
-        <div className="mt-10">
-          <ImageList />
         </div>
       </div>
     </div>
