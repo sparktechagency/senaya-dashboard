@@ -79,7 +79,7 @@ const ImageList: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen py-10 px-5">
+    <div className=" py-10 px-5">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 mb-5 rounded-t-3xl p-4 flex justify-between items-center">

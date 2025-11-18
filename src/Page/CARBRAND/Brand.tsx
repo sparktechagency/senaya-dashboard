@@ -66,7 +66,7 @@ const CarBrandComponent: React.FC = () => {
         {/* Left side - Title and Description */}
         <div>
           <h1 className="text-3xl font-bold text-gray-800">
-            Car Brands & Countries
+            Car Brands 
           </h1>
           <p className="text-gray-500 text-sm mt-2">
             Discover different car brands from around the world
