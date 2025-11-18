@@ -91,7 +91,7 @@ const Cars: React.FC = () => {
 
             {cars.map((car: any, index: number) => {
               const brandTitle = toTitle(car?.brand?.title);
-              const brandImage =`https://asif7001.binarybards.online/${car.brand?.image}`
+              const brandImage =`https://api.senaeya.net/${car.brand?.image}`
               const modelTitle = toTitle(car.model);
               const year = String(car.year || "-");
               const vin = car.vin || "-";

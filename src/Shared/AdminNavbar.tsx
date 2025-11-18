@@ -17,7 +17,7 @@ import { MdBrandingWatermark, MdWork, MdWorkHistory } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { toggleSidebar } from "../redux/sidebarSlice";
-import { MdBrandingWatermark, MdWork, MdWorkHistory } from "react-icons/md";
+import { MdDiscount  } from "react-icons/md";
 import type { RootState } from "../redux/store";
 
 interface MenuItem {

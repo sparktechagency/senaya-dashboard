@@ -90,7 +90,7 @@ export const CreateCountry = () => {
             {/* Image */}
             {country.image && (
               <img
-                src={`https://asif7001.binarybards.online${country.image}`}
+                src={`https://api.senaeya.net${country.image}`}
                 alt={country.title}
                 className="w-full h-48 object-cover"
               />

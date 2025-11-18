@@ -119,7 +119,7 @@ const ImageList: React.FC = () => {
                 {logos.slice(0, 4).map((l) => (
                   <img
                     key={l._id}
-                    src={`https://asif7001.binarybards.online${l.image}`}
+                    src={`https://api.senaeya.net${l.image}`}
                     alt={l.title}
                     className="w-10 h-10 rounded-full object-cover border border-white"
                   />
@@ -144,7 +144,7 @@ const ImageList: React.FC = () => {
                 className="bg-white shadow rounded-lg overflow-hidden border border-gray-200 hover:scale-105 transition-transform duration-200 relative cursor-pointer"
               >
                 <img
-                  src={`https://asif7001.binarybards.online${img.image}`}
+                  src={`https://api.senaeya.net${img.image}`}
                   alt={img.title}
                   className="w-full h-48 object-cover"
                 />
