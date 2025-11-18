@@ -21,7 +21,7 @@ const UpdateImage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  const { data, isLoading: isFetching } = useGetSingleImageQuery(id);
+  const { data, isLoading: isFetching } = useGetSingleImageQuery(id!);
 
   const [updateImage, { isLoading, isSuccess, isError }] =
     useUpdateImageMutation();
@@ -63,10 +63,7 @@ const UpdateImage: React.FC = () => {
         updatedData.append("image", formData.image[0]);
       }
 
-  
-   await updateImage({ id: id as string, payload: updatedData }).unwrap();
-
-
+      await updateImage({ id: id as string, payload: updatedData }).unwrap();
 
       toast.success("Image updated successfully!");
       navigate("/admin/carmodel");

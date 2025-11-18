@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://api.senaeya.net/api/v1', 
+  baseUrl: "https://api.senaeya.net/api/v1",
   prepareHeaders: (headers) => {
     // Set custom headers (e.g., ngrok-skip-browser-warning)
     headers.set("ngrok-skip-browser-warning", "true");
@@ -25,13 +25,22 @@ const baseQuery = fetchBaseQuery({
 export const baseApi = createApi({
   reducerPath: "baseApi", // The name of the reducer slice for this API
   baseQuery, // Use the baseQuery defined above
-<<<<<<< HEAD
-  tagTypes: [ "ADMIN","CAR","CARS","AUTH","WORKSHOP","COUNTRY","SETTING","IMAGE","SPARE","WORK","PACKAGE","SUBSCRIPTION"
-=======
-  tagTypes: [ "ADMIN","CAR","CARS","AUTH","WORKSHOP","COUNTRY","SETTING","IMAGE","SPARE","WORK","PACKAGE","SUBSCRIPTION","DISCOUNT"
->>>>>>> 9011982415deefa3d6a6ff189b2da5e4ed29f531
-  ], 
-  endpoints: () => ({}), 
+  tagTypes: [
+    "ADMIN",
+    "CAR",
+    "CARS",
+    "AUTH",
+    "WORKSHOP",
+    "COUNTRY",
+    "SETTING",
+    "IMAGE",
+    "SPARE",
+    "WORK",
+    "PACKAGE",
+    "SUBSCRIPTION",
+    "DISCOUNT",
+  ],
+  endpoints: () => ({}),
 });
 
 export default baseApi;

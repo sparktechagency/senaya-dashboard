@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 import {
   useAllCountryQuery,
   useCreateCountryMutation,
-  useDeleteCountryMutation,
 } from "../../redux/feature/adminApi";
 
 export const CreateCountry = () => {
@@ -11,7 +10,7 @@ export const CreateCountry = () => {
   const [image, setImage] = useState<File | null>(null);
 
   const [createCountry, { isLoading: creating }] = useCreateCountryMutation();
-  const [deleteCountry] = useDeleteCountryMutation();
+  // const [deleteCountry] = useDeleteCountryMutation();
   const { data: countries } = useAllCountryQuery(undefined);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -35,16 +34,16 @@ export const CreateCountry = () => {
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!window.confirm("Are you sure you want to delete this country?"))
-      return;
-    try {
-      await deleteCountry(id).unwrap();
-      toast.success("Country deleted successfully");
-    } catch (err: any) {
-      toast.error(err?.data?.message || "Failed to delete country");
-    }
-  };
+  // const handleDelete = async (id: string) => {
+  //   if (!window.confirm("Are you sure you want to delete this country?"))
+  //     return;
+  //   try {
+  //     await deleteCountry(id).unwrap();
+  //     toast.success("Country deleted successfully");
+  //   } catch (err: any) {
+  //     toast.error(err?.data?.message || "Failed to delete country");
+  //   }
+  // };
 
   return (
     <div className="max-w-5xl mx-auto mt-10 p-6">
@@ -86,7 +85,6 @@ export const CreateCountry = () => {
             key={country._id}
             className="bg-white rounded-xl shadow-md overflow-hidden relative hover:shadow-xl transition"
           >
-
             {/* Image */}
             {country.image && (
               <img
@@ -98,7 +96,9 @@ export const CreateCountry = () => {
 
             {/* Title */}
             <div className="p-4 text-center">
-              <h3 className="text-lg font-semibold text-gray-800">{country.title}</h3>
+              <h3 className="text-lg font-semibold text-gray-800">
+                {country.title}
+              </h3>
             </div>
           </div>
         ))}
