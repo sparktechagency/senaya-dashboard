@@ -81,7 +81,6 @@ const CreateWorkForm: React.FC = () => {
         )}
 
         {/* Work Category Name */}
-        {/* Work Category Name */}
         <div className="flex flex-col">
           <label className="mb-1 font-medium">Work Category Name</label>
 
