@@ -2,9 +2,11 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
-import { useCreateWorkMutation } from "../../redux/feature/work";
+import {
+  useCreateWorkMutation,
+  useWorkCategoryQuery,
+} from "../../redux/feature/work";
 import { useNavigate } from "react-router";
-
 
 interface ITitleObj {
   ar: string;
@@ -22,11 +24,20 @@ interface IFormInput {
 }
 
 const CreateWorkForm: React.FC = () => {
-  const [createSpare, { isLoading }] = useCreateWorkMutation(); 
-  const navigate = useNavigate()
+  const [createSpare] = useCreateWorkMutation();
+  const {
+    data: workCategory,
+    isLoading,
+    isError,
+    refetch,
+  } = useWorkCategoryQuery(undefined);
+
+  const workCATEGORY = workCategory?.data;
+
+  const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm<IFormInput>({
     defaultValues: {
-      titleObj: { ar: "", bn: "", ur: "", hi: "",ti: "",en: "" },
+      titleObj: { ar: "", bn: "", ur: "", hi: "", ti: "", en: "" },
       workCategoryName: "",
       code: "",
     },
@@ -36,7 +47,7 @@ const CreateWorkForm: React.FC = () => {
     try {
       await createSpare(data).unwrap();
       toast.success("Data submitted successfully!");
-      navigate("/admin/workList")
+      navigate("/admin/workList");
       reset();
     } catch (error: any) {
       toast.error("Failed to submit data.");
@@ -56,25 +67,45 @@ const CreateWorkForm: React.FC = () => {
       </h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 ">
         {/* Title fields */}
-        {(["ar", "bn", "ur", "hi","ti","en"] as (keyof ITitleObj)[]).map((lang) => (
-          <div key={lang} className="flex flex-col">
-            <label className="mb-1 font-medium">{`Title (${lang.toUpperCase()})`}</label>
-            <input
-              {...register(`titleObj.${lang}`)}
-              className="border bg-white/20 rounded-lg p-2 focus:outline-none focus:ring-2 "
-              placeholder={`Enter title in ${lang.toUpperCase()}`}
-            />
-          </div>
-        ))}
+        {(["ar", "bn", "ur", "hi", "ti", "en"] as (keyof ITitleObj)[]).map(
+          (lang) => (
+            <div key={lang} className="flex flex-col">
+              <label className="mb-1 font-medium">{`Title (${lang.toUpperCase()})`}</label>
+              <input
+                {...register(`titleObj.${lang}`)}
+                className="border bg-white/20 rounded-lg p-2 focus:outline-none focus:ring-2 "
+                placeholder={`Enter title in ${lang.toUpperCase()}`}
+              />
+            </div>
+          )
+        )}
 
+        {/* Work Category Name */}
         {/* Work Category Name */}
         <div className="flex flex-col">
           <label className="mb-1 font-medium">Work Category Name</label>
-          <input
+
+          <select
             {...register("workCategoryName")}
-            className="border rounded-lg p-2 focus:outline-none focus:ring-2 "
-            placeholder="Enter work category"
-          />
+            className="border rounded-lg p-2 focus:outline-none focus:ring-2"
+            disabled={isLoading}
+          >
+            <option value="">
+              {isLoading ? "Loading categories..." : "Select Work Category"}
+            </option>
+
+            {workCATEGORY?.map((item: any) => (
+              <option key={item._id} value={item._id}>
+                {item.workCategoryName}
+              </option>
+            ))}
+          </select>
+
+          {isError && (
+            <p className="text-red-500 text-sm mt-1">
+              Failed to load categories!
+            </p>
+          )}
         </div>
 
         {/* Code */}

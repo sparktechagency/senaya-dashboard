@@ -24,6 +24,7 @@ const WorkListTable: React.FC = () => {
     );
 
   const works = data?.data?.result || [];
+  console.log("works",works);
 
   const handleDelete = async (id: string) => {
     try {

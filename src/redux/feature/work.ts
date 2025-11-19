@@ -43,6 +43,14 @@ export const workApi = baseApi.injectEndpoints({
       }),
       providesTags: ["SPARE"],
     }),
+    // ✅ Work Category
+    workCategory: builder.query({
+      query: () => ({
+        url: "/works-categories/unpaginated",
+        method: "GET",
+      }),
+      providesTags: ["WORKCATEGORY"],
+    }),
     // DELETE WORKS
     deleteWork: builder.mutation({
       query: (workId) => ({
@@ -70,5 +78,6 @@ export const {
   useWorkListQuery,
   useSpareListQuery,
   useDeleteWorkMutation,
-  useDeleteSpareMutation
+  useDeleteSpareMutation,
+  useWorkCategoryQuery
 } = workApi;
