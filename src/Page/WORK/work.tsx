@@ -17,6 +17,7 @@ interface ITitleObj {
   en: string;
 }
 
+
 interface IFormInput {
   titleObj: ITitleObj;
   workCategoryName: string;
@@ -29,7 +30,6 @@ const CreateWorkForm: React.FC = () => {
     data: workCategory,
     isLoading,
     isError,
-    refetch,
   } = useWorkCategoryQuery(undefined);
 
   const workCATEGORY = workCategory?.data;

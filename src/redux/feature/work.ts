@@ -2,6 +2,15 @@ import { baseApi } from "../baseApi";
 
 export const workApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    createWorkCategory: builder.mutation({
+      query: (body) => ({
+        url: "/works-categories",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["WORKCATEGORY"],
+    }),
+
     createWork: builder.mutation({
       query: (body) => ({
         url: "/works",
@@ -27,6 +36,7 @@ export const workApi = baseApi.injectEndpoints({
       invalidatesTags: ["SPARE"],
     }),
 
+
     // ✅ All WorkList
     workList: builder.query({
       query: () => ({
@@ -35,6 +45,7 @@ export const workApi = baseApi.injectEndpoints({
       }),
       providesTags: ["WORK"],
     }),
+
     // ✅ All SpareQuery
     spareList: builder.query({
       query: () => ({
@@ -67,6 +78,23 @@ export const workApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["SPARE"],
     }),
+    // DELETE WORKSCATEGORY
+    deleteWorkCategory: builder.mutation({
+      query: (workId) => ({
+        url: `/works-categories/${workId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["WORKCATEGORY"],
+    }),
+    // UPDATE
+       updateWorkCategory: builder.mutation({
+      query: ({ id, payload }: { id: string; payload: any }) => ({
+        url: `/works-categories/${id}`,
+        method: "PATCH",
+        body: payload,
+      }),
+      invalidatesTags: ["WORKCATEGORY"],
+    }),
   }),
   overrideExisting: false,
 });
@@ -76,8 +104,11 @@ export const {
   useCreateWorkByFileMutation,
   useCreateSpareMutation,
   useWorkListQuery,
+  useCreateWorkCategoryMutation,
   useSpareListQuery,
   useDeleteWorkMutation,
   useDeleteSpareMutation,
-  useWorkCategoryQuery
+  useWorkCategoryQuery,
+  useDeleteWorkCategoryMutation,
+  useUpdateWorkCategoryMutation
 } = workApi;
