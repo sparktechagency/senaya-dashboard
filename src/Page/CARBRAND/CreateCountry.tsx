@@ -9,10 +9,11 @@ import {
 export const CreateCountry = () => {
   const [countryName, setCountryName] = useState("");
   const [image, setImage] = useState<File | null>(null);
+  const [fileInputKey, setFileInputKey] = useState(Date.now()); // for resetting file input
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const [createCountry, { isLoading: creating }] = useCreateCountryMutation();
   const [deleteCountry] = useDeleteCountryMutation();
-  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const { data: countries } = useAllCountryQuery(undefined);
 
@@ -30,16 +31,18 @@ export const CreateCountry = () => {
     try {
       await createCountry(formData).unwrap();
       toast.success("Country created successfully");
+
+      // Reset states
       setCountryName("");
       setImage(null);
+      setFileInputKey(Date.now()); // Reset file input
     } catch (err: any) {
       toast.error(err?.data?.message || "Failed to create country");
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!window.confirm("Are you sure you want to delete this country?"))
-      return;
+    if (!window.confirm("Are you sure you want to delete this country?")) return;
 
     try {
       setDeletingId(id);
@@ -87,6 +90,7 @@ export const CreateCountry = () => {
           </div>
 
           <input
+            key={fileInputKey} // important to reset input
             type="file"
             accept="image/*"
             onChange={(e) => setImage(e.target.files?.[0] || null)}
@@ -119,7 +123,7 @@ export const CreateCountry = () => {
               />
             )}
 
-            {/* Title */}
+            {/* Title and Delete */}
             <div className="flex justify-between items-center px-4 pb-3">
               <h3 className="text-lg font-semibold text-gray-800">
                 {country.title}
@@ -130,7 +134,7 @@ export const CreateCountry = () => {
                 disabled={deletingId === country._id}
                 className="bg-red-500 text-white px-2 py-1 text-xs rounded hover:bg-red-600 transition"
               >
-                {deletingId === country._id ? "..." : "Delete"}
+                {deletingId === country._id ? "Deleting..." : "Delete"}
               </button>
             </div>
           </div>

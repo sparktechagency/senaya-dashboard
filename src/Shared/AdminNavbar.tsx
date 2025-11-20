@@ -19,6 +19,8 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { toggleSidebar } from "../redux/sidebarSlice";
 import { MdDiscount  } from "react-icons/md";
 import type { RootState } from "../redux/store";
+import { SiOrganicmaps } from "react-icons/si";
+import { SiWorkplace } from "react-icons/si";
 
 interface MenuItem {
   name: string;
@@ -44,10 +46,11 @@ console.log(isLoggedIn);
     { name: "Dashboard", icon: LayoutDashboard, path: "/admin/dashboard" },
     { name: "Profile", icon: User, path: "/admin/profile" },
     { name: "Car", icon: Car, path: "/admin/car" },
-    { name: "Country", icon: MdBrandingWatermark, path: "/admin/country" },
+    { name: "Country", icon: SiOrganicmaps, path: "/admin/country" },
     { name: "Brand", icon: MdBrandingWatermark, path: "/admin/brand" },
     { name: "Car Model", icon: Car, path: "/admin/carmodel" },
     { name: "Workshop", icon: MdWorkHistory, path: "/admin/workShop" },
+    { name: "WorkCategory", icon: SiWorkplace, path: "/admin/workCategory" },
     { name: "Work", icon: MdWork, path: "/admin/workList" },
     { name: "Spare", icon: Sparkle, path: "/admin/Spare" },
     { name: "Cupon", icon: MdDiscount, path: "/admin/cupon" },

@@ -35,6 +35,7 @@ import UpdatePackageForm from "../Page/PACKAGE/UpdatePackage";
 import CreateDiscount from "../Page/DISCOUNT/CreateDiscount";
 import CouponCards from "../Page/DISCOUNT/GetDiscount";
 import UpdateDiscount from "../Page/DISCOUNT/UpdateDisCount";
+import { CreateWorkCategory } from "../Page/WORK/WorkCategory";
 
 const Routes = createBrowserRouter([
   {
@@ -64,6 +65,9 @@ const Routes = createBrowserRouter([
           { path: "admin/workShop", element: <WorkShop /> },
           { path: "admin/workList", element: <WorkList /> },
           { path: "admin/addWork", element: <WorkFromOrFileUpload /> },
+          { path: "admin/workCategory", element: <CreateWorkCategory /> },
+          { path: "updateWorkCategory/:id", element: <CreateWorkCategory /> },
+
           { path: "admin/Spare", element: <SparePartsList /> },
           { path: "admin/createSpare", element: <SpareFromOrFileUpload /> },
           { path: "admin/car", element: <Cars /> },
