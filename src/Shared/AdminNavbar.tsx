@@ -9,7 +9,6 @@ import {
   MessageCircle,
   Package,
   Settings,
-  Sparkle,
   User,
 } from "lucide-react";
 import React, { useEffect, useState } from "react";

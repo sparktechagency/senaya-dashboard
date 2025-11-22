@@ -26,7 +26,7 @@ import Support from "../Page/Setting/Support";
 import Service from "../Page/Setting/Service";
 import AccountDelete from "../Page/Setting/AccountDelete";
 import WorkFromOrFileUpload from "../Page/WORK/workHome";
-import SpareFromOrFileUpload from "../Page/SPARE/SpareHome";
+// import SpareFromOrFileUpload from "../Page/SPARE/SpareHome";
 import SparePartsList from "../Page/SPARE/SpareList";
 import { CreateCountry } from "../Page/CARBRAND/CreateCountry";
 import PackageTable from "../Page/PACKAGE/AllPackage";
@@ -69,7 +69,7 @@ const Routes = createBrowserRouter([
           { path: "updateWorkCategory/:id", element: <CreateWorkCategory /> },
 
           { path: "admin/Spare", element: <SparePartsList /> },
-          { path: "admin/createSpare", element: <SpareFromOrFileUpload /> },
+          // { path: "admin/createSpare", element: <SpareFromOrFileUpload /> },
           { path: "admin/car", element: <Cars /> },
           // DISCOUNT
           { path: "admin/cupon", element: <CouponCards /> },

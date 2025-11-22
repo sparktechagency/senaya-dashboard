@@ -89,12 +89,12 @@ export const CreateWorkCategory: React.FC = () => {
   };
 
   // Edit work
-  const handleEdit = (item: any) => {
-    setEditingId(item._id);
-    setTitleObj(item.titleObj || { ar:"", bn:"", ur:"", hi:"", tl:"", en:"" });
-    setDescriptionObj(item.descriptionObj || { ar:"", bn:"", ur:"", hi:"", tl:"", en:"" });
-    setImage(null);
-  };
+  // const handleEdit = (item: any) => {
+  //   setEditingId(item._id);
+  //   setTitleObj(item.titleObj || { ar:"", bn:"", ur:"", hi:"", tl:"", en:"" });
+  //   setDescriptionObj(item.descriptionObj || { ar:"", bn:"", ur:"", hi:"", tl:"", en:"" });
+  //   setImage(null);
+  // };
 
   return (
     <div className="max-w-7xl mx-auto mt-12 p-6">
