@@ -71,7 +71,7 @@ const Routes = createBrowserRouter([
           { path: "admin/Spare", element: <SparePartsList /> },
           // { path: "admin/createSpare", element: <SpareFromOrFileUpload /> },
           { path: "admin/car", element: <Cars /> },
-          // DISCOUNT
+          
           { path: "admin/cupon", element: <CouponCards /> },
           { path: "admin/createCupon", element: <CreateDiscount /> },
           { path: "updateCoupon/:id", element: <UpdateDiscount /> },
