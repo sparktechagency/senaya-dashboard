@@ -23,7 +23,7 @@ export const settingApi = baseApi.injectEndpoints({
       query: (data) => ({
         url: `/settings`,
         method: "PUT",
-        body: data, // Send data directly without wrapping in { id, data }
+        body: data, 
       }),
       invalidatesTags: ["SETTING"],
     }),
