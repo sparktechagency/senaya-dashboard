@@ -79,31 +79,50 @@ const PrivacyPolicy: React.FC = () => {
   );
 
   // ✅ Save handler
-  const handleSave = async () => {
-    if (!content.trim()) {
-      message.error("Privacy Policy content cannot be empty");
-      return;
-    }
+// In your PrivacyPolicy component
+const handleSave = async () => {
+  if (!content.trim()) {
+    message.error("Privacy Policy content cannot be empty");
+    return;
+  }
 
-    try {
-      setIsSaving(true);
-      const result = await updatePrivacy({
-        privacyPolicy: content, // ✅ Key name must match your backend field
-      }).unwrap();
-
-      if (result.success) {
-        message.success("Privacy Policy updated successfully");
-        refetch();
-      } else {
-        message.error("Failed to update Privacy Policy");
-      }
-    } catch (error) {
-      console.error("Update failed:", error);
-      message.error("Failed to update Privacy Policy. Please try again.");
-    } finally {
-      setIsSaving(false);
+  try {
+    setIsSaving(true);
+    
+    // Log what we're sending
+    const payload = { privacyPolicy: content };
+    console.log("📤 Sending payload:", payload);
+    console.log("📤 Payload keys:", Object.keys(payload));
+    console.log("📤 Content length:", content.length);
+    
+    const result = await updatePrivacy(payload).unwrap();
+    
+    console.log("✅ Success response:", result);
+    message.success("Privacy Policy updated successfully");
+    refetch();
+    
+  } catch (error: any) {
+    console.error("❌ Full error object:", error);
+    console.error("❌ Error status:", error?.status);
+    console.error("❌ Error data:", error?.data);
+    console.error("❌ Error message:", error?.data?.message);
+    
+    // Extract detailed error message
+    let errorMessage = "Failed to update Privacy Policy.";
+    
+    if (error?.data?.message) {
+      errorMessage = error.data.message;
+    } else if (error?.data?.error) {
+      errorMessage = error.data.error;
+    } else if (error?.message) {
+      errorMessage = error.message;
     }
-  };
+    
+    message.error(errorMessage);
+  } finally {
+    setIsSaving(false);
+  }
+};
 
   // ✅ Loading state
   if (isLoading) {
