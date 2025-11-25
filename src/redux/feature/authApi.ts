@@ -10,6 +10,7 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["ADMIN"],
     }),
+
     Login: builder.mutation({
       query: (authData) => ({
         url: "/auth/login",
@@ -18,6 +19,19 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["AUTH"],
     }),
+
+    changePassword: builder.mutation({
+      query: (authData) => ({
+        url: "/auth/change-password",
+        method: "POST",
+        body: authData,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }),
+      invalidatesTags: ["AUTH"],
+    }),
+
 
     // ✅ Personal admin data
     getAllAdmin: builder.query({
@@ -66,4 +80,5 @@ export const {
   useLoginMutation,
   useUpdateAdminMutation,
   useDeleteAdminMutation,
+  useChangePasswordMutation,
 } = authApi;

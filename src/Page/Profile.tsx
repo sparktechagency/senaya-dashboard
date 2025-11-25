@@ -3,6 +3,7 @@ import { Loader2, User, Mail, Phone, Shield, CheckCircle, Edit, Check, X } from 
 import { useGetProfileQuery } from "../redux/feature/authApi";
 import { useUpdateAdminMutation } from "../redux/feature/authApi";
 import { toast } from "react-toastify";
+import { Link } from "react-router";
 
 const languages = ["en", "bn", "ar", "ur", "hi", "tl"];
 
@@ -45,7 +46,7 @@ const Profile: React.FC = () => {
 
     const formData = new FormData();
     formData.append("image", file);
-    console.log("fileeeeeeeee",file);
+    console.log("fileeeeeeeee", file);
 
     try {
       await updateAdmin({
@@ -132,6 +133,14 @@ const Profile: React.FC = () => {
               <Edit size={16} /> Edit Profile
             </button>
           )}
+          <button
+
+            className="mt-3 flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg shadow"
+          >
+            <Link to="change-password" className="text-indigo-600 hover:underline font-medium">
+              Change Password
+            </Link>
+          </button>
         </div>
 
         <div className="mt-6 space-y-4 text-gray-700 dark:text-gray-300">

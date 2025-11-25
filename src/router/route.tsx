@@ -37,6 +37,7 @@ import UpdateDiscount from "../Page/DISCOUNT/UpdateDisCount";
 import { CreateWorkCategory } from "../Page/WORK/WorkCategory";
 import Support from "../Page/Setting/Support";
 import CreateSpare from "../Page/SPARE/SpareCreate";
+import ChangePassword from "../Page/ChangePassword";
 
 const Routes = createBrowserRouter([
   {
@@ -54,6 +55,7 @@ const Routes = createBrowserRouter([
           { index: true, element: <Dashboard /> },
           { path: "admin/dashboard", element: <Dashboard /> },
           { path: "admin/profile", element: <Profile /> },
+          { path: "admin/profile/change-password", element: <ChangePassword /> },
           { path: "admin/createAdmin", element: <CreateAdmin /> },
           { path: "admin/message", element: <MessageList /> },
           { path: "admin/brand", element: <CarBrandComponent /> },

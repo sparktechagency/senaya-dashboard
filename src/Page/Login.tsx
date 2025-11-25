@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm, type FieldValues } from "react-hook-form";
 import { motion } from "framer-motion";
 import { Eye, EyeOff, LogIn } from "lucide-react";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../redux/feature/authApi";
 import { toast } from "react-toastify";
 
@@ -21,9 +21,9 @@ const Login: React.FC = () => {
       if (res.success) {
         localStorage.setItem("accessToken", res.data.accessToken);
         localStorage.setItem("refreshToken", res.data.refreshToken);
-        
+
         window.dispatchEvent(new Event('authChange'));
-        
+
         toast.success("Logged in Successfully");
         navigate("/admin/profile");
       }
@@ -88,14 +88,17 @@ const Login: React.FC = () => {
           </div>
 
           {/* Submit Button */}
+
+
+          {/* Submit/Login Button */}
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.97 }}
             type="submit"
             disabled={isLoading}
-            className={`w-full flex items-center justify-center gap-2 py-2 ${
-              isLoading ? "bg-indigo-400 cursor-not-allowed" : "bg-indigo-600 hover:bg-indigo-700"
-            } text-white rounded-lg font-semibold shadow-md transition duration-300`}
+            className={`w-full sm:w-auto flex items-center justify-center gap-2 py-2 px-6 
+          rounded-lg font-semibold shadow-md text-white transition duration-300 
+          ${isLoading ? "bg-indigo-400 cursor-not-allowed" : "bg-indigo-600 hover:bg-indigo-700"}`}
           >
             {isLoading ? (
               <svg
@@ -104,15 +107,28 @@ const Login: React.FC = () => {
                 fill="none"
                 viewBox="0 0 24 24"
               >
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8H4z"
+                ></path>
               </svg>
             ) : (
               <>
                 <LogIn size={18} /> Login
               </>
             )}
-          </motion.button> 
+          </motion.button>
+
+
         </form>
       </motion.div>
     </div>
