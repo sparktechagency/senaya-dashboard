@@ -137,7 +137,7 @@ const Profile: React.FC = () => {
 
             className="mt-3 flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg shadow"
           >
-            <Link to="change-password" className="text-indigo-600 hover:underline font-medium">
+            <Link to="change-password" className="hover:underline font-medium text-white">
               Change Password
             </Link>
           </button>

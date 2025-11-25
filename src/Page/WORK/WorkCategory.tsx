@@ -5,7 +5,6 @@ import {
   useWorkCategoryQuery,
   useDeleteWorkCategoryMutation,
 } from "../../redux/feature/work";
-import { Link } from "react-router";
 
 interface ILocaleObject {
   ar: string;
@@ -30,7 +29,8 @@ export const CreateWorkCategory: React.FC = () => {
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const { data: workCategory } = useWorkCategoryQuery(undefined);
-  const workCATEGORY = workCategory?.data;
+  const workCATEGORY = workCategory?.data; 
+
 
   const [createWork, { isLoading: creating }] = useCreateWorkCategoryMutation();
   const [deleteWork] = useDeleteWorkCategoryMutation();
@@ -169,47 +169,53 @@ export const CreateWorkCategory: React.FC = () => {
 
       {/* Work Table */}
       <h3 className="text-2xl font-bold mb-6 text-gray-800">All Works</h3>
-      <div className="overflow-x-auto">
-        <table className="min-w-full border rounded-lg overflow-hidden">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="px-4 py-2 border">Image</th>
-              <th className="px-4 py-2 border">Title (EN)</th>
-              <th className="px-4 py-2 border">Description</th>
-              <th className="px-4 py-2 border">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {workCATEGORY?.map((item: any) => (
-              <tr key={item._id} className="hover:bg-gray-50">
-                <td className="px-4 py-2 border text-center">
-                  {item.image && (
-                    <img src={`https://api.senaeya.net${item.image}`} alt="Work" className="w-16 h-16 rounded-full object-cover mx-auto" />
-                  )}
-                </td>
-                <td className="px-4 py-2 border">{item?.title?.tl}</td>
-                <td className="px-4 py-2 border">{item?.description?.ar}</td>
-                <td className="px-4 py-2  text-center flex justify-center gap-2">
-                  <Link to={`updateWorkCategory/${item._id}`}>
-                  <button
-                    className="bg-green-500 text-white px-3 py-1 rounded text-sm"
-                  >
-                    Edit
-                  </button>
-                  </Link>
-                  <button
-                    onClick={() => handleDelete(item._id)}
-                    disabled={deletingId === item._id}
-                    className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition text-sm"
-                  >
-                    {deletingId === item._id ? "Deleting..." : "Delete"}
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+
+<div className="overflow-x-auto">
+  <table className="min-w-full border border-gray-300 rounded-lg">
+    <thead className="bg-gray-100 text-gray-700">
+      <tr>
+        <th className="px-4 py-3 border">Image</th>
+        <th className="px-4 py-3 border">Title (EN)</th>
+        <th className="px-4 py-3 border">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {workCATEGORY?.map((item: any) => (
+        <tr key={item._id} className="hover:bg-gray-50 transition">
+          
+          <td className="px-4 py-3 border text-center">
+            {item.image && (
+              <img
+                src={`https://api.senaeya.net${item.image}`}
+                alt="Work"
+                className="w-16 h-16 rounded-full object-cover mx-auto"
+              />
+            )}
+          </td>
+
+          <td className="px-4 py-3 border text-center">
+            {item?.title?.en}
+          </td>
+
+          <td className="px-4 py-3 border">
+            <div className="flex items-center justify-center gap-3">
+              <button
+                onClick={() => handleDelete(item._id)}
+                disabled={deletingId === item._id}
+                className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition text-sm"
+              >
+                {deletingId === item._id ? "Deleting..." : "Delete"}
+              </button>
+            </div>
+          </td>
+
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
     </div>
   );
 };

@@ -59,7 +59,7 @@ const PackageTable = () => {
             📦 All Packages
           </h2>
 
-          <Link to="/package">
+          <Link to="/admin/package/create">
             <button className="px-5 py-2 flex items-center gap-2  bg-white text-indigo-600 font-semibold rounded-md hover:bg-indigo-50 transition-all shadow-md hover:shadow-lg">
               <MdOutlineCreateNewFolder className="text-lg" />
               Create Package

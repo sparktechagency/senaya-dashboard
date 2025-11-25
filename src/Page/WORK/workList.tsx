@@ -24,7 +24,6 @@ const WorkListTable: React.FC = () => {
     );
 
   const works = data?.data?.result || [];
-  console.log("works",works);
 
   const handleDelete = async (id: string) => {
     try {
@@ -81,7 +80,7 @@ const WorkListTable: React.FC = () => {
                 English Title
               </th>
               <th className="py-3 px-4 text-left border min-w-[180px]">
-                Bengali Title
+                Arabic Title
               </th>
               <th className="py-3 px-4 text-left border w-[140px]">
                 Category
@@ -108,7 +107,7 @@ const WorkListTable: React.FC = () => {
                     {idx + 1}
                   </td>
                   <td className="py-3 px-4 border">{work.title?.en || "N/A"}</td>
-                  <td className="py-3 px-4 border">{work.title?.bn || "N/A"}</td>
+                  <td className="py-3 px-4 border">{work.title?.ar || "N/A"}</td>
                   <td className="py-3 px-4 border">
                     {work.workCategoryName || "N/A"}
                   </td>
