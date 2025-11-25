@@ -9,6 +9,7 @@ import {
   MessageCircle,
   Package,
   Settings,
+  Sparkle,
   User,
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
@@ -51,7 +52,7 @@ console.log(isLoggedIn);
     { name: "Workshop", icon: MdWorkHistory, path: "/admin/workShop" },
     { name: "WorkCategory", icon: SiWorkplace, path: "/admin/workCategory" },
     { name: "Work", icon: MdWork, path: "/admin/workList" },
-    // { name: "Spare", icon: Sparkle, path: "/admin/Spare" },
+    { name: "Spare", icon: Sparkle, path: "/admin/Spare" },
     { name: "Cupon", icon: MdDiscount, path: "/admin/cupon" },
     { name: "User Feedback", icon: MessageCircle, path: "/admin/message" },
     {
@@ -70,7 +71,7 @@ console.log(isLoggedIn);
         { name: "About Us", path: "/admin/about-us" },
         { name: "Support", path: "/admin/support" },
         { name: "Service", path: "/admin/service" },
-        { name: "Account Delete", path: "/admin/account-delete" },
+        // { name: "Account Delete", path: "/admin/account-delete" },
       ],
     },
   ];

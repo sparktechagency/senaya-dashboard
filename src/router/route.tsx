@@ -22,7 +22,6 @@ import ProtectedRoute from "../Page/ProtectedRoute";
 import ErrorPage from "../Page/ErrorPage";
 import PrivacyPolicy from "../Page/Setting/PrivacyPolicy";
 import AboutUs from "../Page/Setting/AboutUs";
-import Support from "../Page/Setting/Support";
 import Service from "../Page/Setting/Service";
 import AccountDelete from "../Page/Setting/AccountDelete";
 import WorkFromOrFileUpload from "../Page/WORK/workHome";
@@ -36,6 +35,8 @@ import CreateDiscount from "../Page/DISCOUNT/CreateDiscount";
 import CouponCards from "../Page/DISCOUNT/GetDiscount";
 import UpdateDiscount from "../Page/DISCOUNT/UpdateDisCount";
 import { CreateWorkCategory } from "../Page/WORK/WorkCategory";
+import Support from "../Page/Setting/Support";
+import CreateSpare from "../Page/SPARE/SpareCreate";
 
 const Routes = createBrowserRouter([
   {
@@ -69,16 +70,15 @@ const Routes = createBrowserRouter([
           { path: "updateWorkCategory/:id", element: <CreateWorkCategory /> },
 
           { path: "admin/Spare", element: <SparePartsList /> },
-          // { path: "admin/createSpare", element: <SpareFromOrFileUpload /> },
+          { path: "admin/createSpare", element: <CreateSpare /> },
           { path: "admin/car", element: <Cars /> },
-          
           { path: "admin/cupon", element: <CouponCards /> },
           { path: "admin/createCupon", element: <CreateDiscount /> },
           { path: "updateCoupon/:id", element: <UpdateDiscount /> },
           // Setting
           { path: "admin/privacy-policy", element: <PrivacyPolicy /> },
           { path: "admin/about-us", element: <AboutUs /> },
-          { path: "admin/support", element: <Support /> },
+          { path: "admin/support", element: <Support/> },
           { path: "admin/service", element: <Service /> },
           { path: "admin/account-delete", element: <AccountDelete /> },
           { path: "createCarBrand", element: <CreateCarBrand /> },

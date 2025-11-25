@@ -23,7 +23,7 @@ const Dashboard = () => {
   const [searchTerm] = useState("");
   const { data: allData } = useAllWorkShopQuery({ search: searchTerm });
 
-  console.log(DashBoard);
+
 
   if (isLoading) {
     return (

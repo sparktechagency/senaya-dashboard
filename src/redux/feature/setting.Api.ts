@@ -18,51 +18,103 @@ interface UpdateSettingPayload {
 
 export const settingApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    // FIXED: Remove the id parameter, just send the data directly
-    updateSetting: builder.mutation<ApiResponse, UpdateSettingPayload>({
+    // PRIVACY-POLICY
+    updatePrivacyPolicy: builder.mutation<ApiResponse, UpdateSettingPayload>({
       query: (data) => ({
-        url: `/settings`,
-        method: "PUT",
-        body: data, 
+        url: `/rule/privacy-policy`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["SETTING"],
+    }),
+    updateSupport: builder.mutation<ApiResponse, UpdateSettingPayload>({
+      query: (data) => ({
+        url: `/rule/support`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["SETTING"],
+    }),
+    updateAboutUs: builder.mutation<ApiResponse, UpdateSettingPayload>({
+      query: (data) => ({
+        url: `/rule/about`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["SETTING"],
+    }),
+    updateTeamOfService: builder.mutation<ApiResponse, UpdateSettingPayload>({
+      query: (data) => ({
+        url: `/rule/termsOfService`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["SETTING"],
+    }),
+    updateService: builder.mutation<ApiResponse, UpdateSettingPayload>({
+      query: (data) => ({
+        url: `/rule/terms-and-conditions`,
+        method: "POST",
+        body: data,
       }),
       invalidatesTags: ["SETTING"],
     }),
 
-    getPrivacyPolicy: builder.query<ApiResponse<string>, void>({
+
+// GETall data
+    getPrivacyPolicy: builder.query({
       query: () => ({
-        url: "/settings/privacy-policy",
+        url: "/rule/privacy-policy",
         method: "GET",
       }),
       providesTags: ["SETTING"],
     }),
-    // About us
-    getAboutUs: builder.query<ApiResponse<string>, void>({
-      query: () => ({
-        url: "/settings/aboutus",
-        method: "GET",
-      }),
-      providesTags: ["SETTING"],
-    }),
-    // Support
+        // Support
     getSupport: builder.query<ApiResponse<string>, void>({
       query: () => ({
-        url: "/settings/support",
+        url: "/rule/support",
         method: "GET",
       }),
       providesTags: ["SETTING"],
     }),
-    // Team of SERVICE
-      getTeamOfService: builder.query<ApiResponse<string>, void>({
+        // About us
+    getAboutUs: builder.query<ApiResponse<string>, void>({
       query: () => ({
-        url: "/settings/termsOfService",
+        url: "/rule/about",
         method: "GET",
       }),
       providesTags: ["SETTING"],
     }),
-    // Team of SERVICE
-      getAllSetting: builder.query({
+        // Team of SERVICE
+    getService: builder.query<ApiResponse<string>, void>({
       query: () => ({
-        url: "/settings",
+        url: "/rule/terms-and-conditions",
+        method: "GET",
+      }),
+      providesTags: ["SETTING"],
+    }),
+
+
+
+
+
+    // FIXED: Remove the id parameter, just send the data directly
+    updateSetting: builder.mutation<ApiResponse, UpdateSettingPayload>({
+      query: (data) => ({
+        url: `/rule/terms-and-conditions`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["SETTING"],
+    }),
+
+
+
+
+    // Team of SERVICE
+    getAllSetting: builder.query({
+      query: () => ({
+        url: "/rule",
         method: "GET",
       }),
       providesTags: ["SETTING"],
@@ -71,4 +123,4 @@ export const settingApi = baseApi.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { useGetPrivacyPolicyQuery,useGetAboutUsQuery,useGetSupportQuery,useGetTeamOfServiceQuery, useUpdateSettingMutation ,useGetAllSettingQuery} = settingApi;
+export const { useGetPrivacyPolicyQuery,useUpdateAboutUsMutation,useUpdateSupportMutation, useUpdatePrivacyPolicyMutation, useGetAboutUsQuery, useGetSupportQuery, useGetServiceQuery, useUpdateServiceMutation, useUpdateSettingMutation, useGetAllSettingQuery } = settingApi;

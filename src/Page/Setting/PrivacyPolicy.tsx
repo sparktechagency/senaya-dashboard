@@ -1,183 +1,140 @@
-import React, { useRef, useState, useMemo, useEffect } from "react";
+import React, { useRef, useState, useEffect, useMemo } from "react";
 import JoditEditor from "jodit-react";
+import { useGetPrivacyPolicyQuery, useUpdatePrivacyPolicyMutation } from "../../redux/feature/setting.Api";
 import { message } from "antd";
-import {
-  useGetPrivacyPolicyQuery,
-  useUpdateSettingMutation,
-} from "../../redux/feature/setting.Api";
 
 const PrivacyPolicy: React.FC = () => {
   const editor = useRef(null);
   const [content, setContent] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
-  // ✅ Fetch privacy policy from backend
-  const {
-    data: privacyData,
-    isLoading,
-    error,
-    refetch,
-  } = useGetPrivacyPolicyQuery(undefined);
+  // GET API
+  const { data, isLoading, error, refetch } = useGetPrivacyPolicyQuery(undefined);
 
-  // ✅ Update mutation
-  const [updatePrivacy, { isLoading: isUpdating, error: updateError }] =
-    useUpdateSettingMutation();
+  // POST + UPDATE API
+  const [updatePolicy, { isLoading: isUpdating }] = useUpdatePrivacyPolicyMutation();
 
-  // ✅ Set content when data is fetched
+  // Load content from API
   useEffect(() => {
-    if (privacyData?.data) {
-      setContent(privacyData.data); // The API returns HTML inside data
+    if (data?.data?.content) {
+      setContent(data.data.content);
     }
-  }, [privacyData]);
+  }, [data]);
 
-  // ✅ Jodit Editor config
+  // Jodit Editor config
   const config = useMemo(
-    () =>
-      ({
-        theme: "default",
-        showCharsCounter: false,
-        showWordsCounter: false,
-        toolbarAdaptive: true,
-        toolbarSticky: false,
-        enableDragAndDropFileToEditor: false,
-        allowResizeX: false,
-        allowResizeY: false,
-        statusbar: false,
-        buttons: [
-          "source",
-          "|",
-          "bold",
-          "italic",
-          "underline",
-          "|",
-          "ul",
-          "ol",
-          "|",
-          "font",
-          "fontsize",
-          "brush",
-          "paragraph",
-          "|",
-          "left",
-          "center",
-          "right",
-          "justify",
-          "|",
-          "undo",
-          "redo",
-          "|",
-          "hr",
-          "eraser",
-          "fullsize",
-        ],
-        readonly: false,
-        askBeforePasteHTML: false,
-        askBeforePasteFromWord: false,
-        toolbarButtonSize: "small" as const,
-      } as any),
+    () => ({
+      theme: "default",
+      showCharsCounter: false,
+      showWordsCounter: false,
+      toolbarAdaptive: true,
+      toolbarSticky: false,
+      enableDragAndDropFileToEditor: false,
+      allowResizeX: false,
+      allowResizeY: false,
+      statusbar: false,
+      buttons: [
+        "source",
+        "|",
+        "bold",
+        "italic",
+        "underline",
+        "|",
+        "ul",
+        "ol",
+        "|",
+        "font",
+        "fontsize",
+        "brush",
+        "paragraph",
+        "|",
+        "left",
+        "center",
+        "right",
+        "justify",
+        "|",
+        "undo",
+        "redo",
+        "|",
+        "hr",
+        "eraser",
+        "fullsize",
+      ],
+      readonly: false,
+      askBeforePasteHTML: false,
+      askBeforePasteFromWord: false,
+      toolbarButtonSize: "small" as const,
+    }),
     []
   );
 
-  // ✅ Save handler
-// In your PrivacyPolicy component
-const handleSave = async () => {
-  if (!content.trim()) {
-    message.error("Privacy Policy content cannot be empty");
-    return;
-  }
-
-  try {
-    setIsSaving(true);
-    
-    // Log what we're sending
-    const payload = { privacyPolicy: content };
-    console.log("📤 Sending payload:", payload);
-    console.log("📤 Payload keys:", Object.keys(payload));
-    console.log("📤 Content length:", content.length);
-    
-    const result = await updatePrivacy(payload).unwrap();
-    
-    console.log("✅ Success response:", result);
-    message.success("Privacy Policy updated successfully");
-    refetch();
-    
-  } catch (error: any) {
-    console.error("❌ Full error object:", error);
-    console.error("❌ Error status:", error?.status);
-    console.error("❌ Error data:", error?.data);
-    console.error("❌ Error message:", error?.data?.message);
-    
-    // Extract detailed error message
-    let errorMessage = "Failed to update Privacy Policy.";
-    
-    if (error?.data?.message) {
-      errorMessage = error.data.message;
-    } else if (error?.data?.error) {
-      errorMessage = error.data.error;
-    } else if (error?.message) {
-      errorMessage = error.message;
+  // Save Handler
+  const handleSave = async () => {
+    if (!content.trim()) {
+      message.error("Content cannot be empty");
+      return;
     }
-    
-    message.error(errorMessage);
-  } finally {
-    setIsSaving(false);
-  }
-};
 
-  // ✅ Loading state
+    setIsSaving(true);
+    try {
+      await updatePolicy({ content }).unwrap();
+      message.success("Privacy Policy saved successfully!");
+      refetch();
+    } catch (err: any) {
+      console.error(err);
+      message.error("Failed to save Privacy Policy");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  // Loading UI
   if (isLoading) {
     return (
-      <div className="w-full h-[400px] border rounded-lg bg-white px-4 py-5 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-2"></div>
-          <p>Loading Privacy Policy...</p>
-        </div>
+      <div className="w-full border rounded-lg bg-white p-6 text-center">
+        Loading Privacy Policy...
       </div>
     );
   }
 
-  // ✅ Error state
+  // Error UI
   if (error) {
     return (
-      <div className="w-full h-[400px] border rounded-lg bg-white px-4 py-5 flex items-center justify-center">
-        <div className="text-center text-red-600">
-          <p>Error loading Privacy Policy</p>
-          <button
-            onClick={() => refetch()}
-            className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md"
-          >
-            Retry
-          </button>
-        </div>
+      <div className="w-full border rounded-lg bg-white p-6 text-center text-red-500">
+        Failed to load Privacy Policy
       </div>
     );
   }
 
   return (
     <div className="w-full border rounded-lg bg-white px-4 py-5">
-      <h1 className="text-[20px] font-medium py-5 w-fit mx-auto">
-        Privacy Policy
-      </h1>
+      <h1 className="text-[20px] font-medium py-5 mx-auto w-fit">Privacy Policy</h1>
 
-      {/* ✅ Update error display */}
-      {updateError && (
-        <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-          Error updating Privacy Policy. Please try again.
+      {/* Jodit Editor */}
+      <div className="mb-4">
+        <JoditEditor
+          ref={editor}
+          value={content}
+          onChange={(newContent) => setContent(newContent)}
+          config={config}
+        />
+        <div className="text-gray-500 text-sm mt-2">
+          {content.replace(/<[^>]*>/g, "").length} characters
         </div>
-      )}
+      </div>
 
-      {/* ✅ Rich Text Editor */}
-      <JoditEditor
-        ref={editor}
-        value={content}
-        onChange={(newContent) => setContent(newContent)}
-        config={config}
-      />
-
-      {/* ✅ Save Button */}
-      <div className="flex items-center justify-end">
+      {/* Buttons */}
+      <div className="flex justify-end gap-3">
         <button
-          className={`text-[16px] text-white px-10 py-2.5 mt-5 rounded-md ${
+          className="px-6 py-2 border rounded-md"
+          onClick={() => setContent(data?.data?.content || "")}
+          disabled={isSaving || isUpdating}
+        >
+          Reset
+        </button>
+
+        <button
+          className={`px-6 py-2 text-white rounded-md ${
             isSaving || isUpdating
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-blue-600 hover:bg-blue-700"

@@ -1,163 +1,140 @@
-import React, { useRef, useState, useMemo, useEffect } from "react";
+import React, { useRef, useState, useEffect, useMemo } from "react";
 import JoditEditor from "jodit-react";
+import { useGetAboutUsQuery, useUpdateAboutUsMutation } from "../../redux/feature/setting.Api";
 import { message } from "antd";
-import {
-    useGetAboutUsQuery,
-  useUpdateSettingMutation,
-} from "../../redux/feature/setting.Api";
 
 const AboutUs: React.FC = () => {
   const editor = useRef(null);
   const [content, setContent] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
+  // GET API
+  const { data, isLoading, error, refetch } = useGetAboutUsQuery(undefined);
 
-  const {
-    data: aboutUs,
-    isLoading,
-    error,
-    refetch,
-  } = useGetAboutUsQuery(undefined);
+  // POST + UPDATE API
+  const [updatePolicy, { isLoading: isUpdating }] = useUpdateAboutUsMutation();
 
-  // ✅ Update mutation
-  const [updateAbout, { isLoading: isUpdating, error: updateError }] =useUpdateSettingMutation();
-
-
+  // Load content from API
   useEffect(() => {
-    if (aboutUs?.data) {
-      setContent(aboutUs.data);
+    if ((data as any)?.data?.content) {
+      setContent((data as any).data.content);
     }
-  }, [aboutUs]);
+  }, [data]);;
 
-  // ✅ Jodit Editor config
+  // Jodit Editor config
   const config = useMemo(
-    () =>
-      ({
-        theme: "default",
-        showCharsCounter: false,
-        showWordsCounter: false,
-        toolbarAdaptive: true,
-        toolbarSticky: false,
-        enableDragAndDropFileToEditor: false,
-        allowResizeX: false,
-        allowResizeY: false,
-        statusbar: false,
-        buttons: [
-          "source",
-          "|",
-          "bold",
-          "italic",
-          "underline",
-          "|",
-          "ul",
-          "ol",
-          "|",
-          "font",
-          "fontsize",
-          "brush",
-          "paragraph",
-          "|",
-          "left",
-          "center",
-          "right",
-          "justify",
-          "|",
-          "undo",
-          "redo",
-          "|",
-          "hr",
-          "eraser",
-          "fullsize",
-        ],
-        readonly: false,
-        askBeforePasteHTML: false,
-        askBeforePasteFromWord: false,
-        toolbarButtonSize: "small" as const,
-      } as any),
+    () => ({
+      theme: "default",
+      showCharsCounter: false,
+      showWordsCounter: false,
+      toolbarAdaptive: true,
+      toolbarSticky: false,
+      enableDragAndDropFileToEditor: false,
+      allowResizeX: false,
+      allowResizeY: false,
+      statusbar: false,
+      buttons: [
+        "source",
+        "|",
+        "bold",
+        "italic",
+        "underline",
+        "|",
+        "ul",
+        "ol",
+        "|",
+        "font",
+        "fontsize",
+        "brush",
+        "paragraph",
+        "|",
+        "left",
+        "center",
+        "right",
+        "justify",
+        "|",
+        "undo",
+        "redo",
+        "|",
+        "hr",
+        "eraser",
+        "fullsize",
+      ],
+      readonly: false,
+      askBeforePasteHTML: false,
+      askBeforePasteFromWord: false,
+      toolbarButtonSize: "small" as const,
+    }),
     []
   );
 
-  // ✅ Save handler
+  // Save Handler
   const handleSave = async () => {
     if (!content.trim()) {
-      message.error("About Us Policy content cannot be empty");
+      message.error("Content cannot be empty");
       return;
     }
 
+    setIsSaving(true);
     try {
-      setIsSaving(true);
-      const result = await updateAbout({
-       aboutUs: content,
-      }).unwrap();
-
-      if (result.success) {
-        message.success("About Us Policy updated successfully");
-        refetch();
-      } else {
-        message.error("Failed to update About Us Policy");
-      }
-    } catch (error) {
-      console.error("Update failed:", error);
-      message.error("Failed to update About Us Policy. Please try again.");
+      await updatePolicy({ content }).unwrap();
+      message.success("Privacy Policy saved successfully!");
+      refetch();
+    } catch (err: any) {
+      console.error(err);
+      message.error("Failed to saveAbout Us");
     } finally {
       setIsSaving(false);
     }
   };
 
-  // ✅ Loading state
+  // Loading UI
   if (isLoading) {
     return (
-      <div className="w-full h-[400px] border rounded-lg bg-white px-4 py-5 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-2"></div>
-          <p>Loading About Us Policy...</p>
-        </div>
+      <div className="w-full border rounded-lg bg-white p-6 text-center">
+        LoadingAbout Us...
       </div>
     );
   }
 
-  // ✅ Error state
+  // Error UI
   if (error) {
     return (
-      <div className="w-full h-[400px] border rounded-lg bg-white px-4 py-5 flex items-center justify-center">
-        <div className="text-center text-red-600">
-          <p>Error loading About Us Policy</p>
-          <button
-            onClick={() => refetch()}
-            className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md"
-          >
-            Retry
-          </button>
-        </div>
+      <div className="w-full border rounded-lg bg-white p-6 text-center text-red-500">
+        Failed to loadAbout Us
       </div>
     );
   }
 
   return (
     <div className="w-full border rounded-lg bg-white px-4 py-5">
-      <h1 className="text-[20px] font-medium py-5 w-fit mx-auto">
-        About Us Policy
-      </h1>
+      <h1 className="text-[20px] font-medium py-5 mx-auto w-fit">About Us</h1>
 
-      {/* ✅ Update error display */}
-      {updateError && (
-        <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-          Error updating About Us Policy. Please try again.
+      {/* Jodit Editor */}
+      <div className="mb-4">
+        <JoditEditor
+          ref={editor}
+          value={content}
+          onChange={(newContent) => setContent(newContent)}
+          config={config}
+        />
+        <div className="text-gray-500 text-sm mt-2">
+          {content.replace(/<[^>]*>/g, "").length} characters
         </div>
-      )}
+      </div>
 
-      {/* ✅ Rich Text Editor */}
-      <JoditEditor
-        ref={editor}
-        value={content}
-        onChange={(newContent) => setContent(newContent)}
-        config={config}
-      />
+      {/* Buttons */}
+      <div className="flex justify-end gap-3">
+         <button
+          className="px-6 py-2 border rounded-md"
+          onClick={() => setContent((data as any)?.data?.content || "")}
+          disabled={isSaving || isUpdating}
+        >
+          Reset
+        </button>
 
-      {/* ✅ Save Button */}
-      <div className="flex items-center justify-end">
         <button
-          className={`text-[16px] text-white px-10 py-2.5 mt-5 rounded-md ${
+          className={`px-6 py-2 text-white rounded-md ${
             isSaving || isUpdating
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-blue-600 hover:bg-blue-700"

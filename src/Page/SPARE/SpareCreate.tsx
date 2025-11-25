@@ -59,7 +59,7 @@ const CreateSpare: React.FC = () => {
                 defaultValue=""
               >
                 <option value="" disabled>
-                  Select provider
+                  Select WorkShopProvider
                 </option>
                 {providerList.length === 0 ? (
                   <option value="" disabled>
