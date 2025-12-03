@@ -66,7 +66,7 @@ const CarBrandComponent: React.FC = () => {
         {/* Left side - Title and Description */}
         <div>
           <h1 className="text-3xl font-bold text-gray-800">
-            Car Brands 
+            Car Brands
           </h1>
           <p className="text-gray-500 text-sm mt-2">
             Discover different car brands from around the world
@@ -104,7 +104,7 @@ const CarBrandComponent: React.FC = () => {
             {/* Image */}
             <div className="w-full h-40 overflow-hidden rounded-xl mb-4">
               <img
-                src={`https://api.senaeya.net${brand.image}`}
+                src={`http://158.252.71.185:5173${brand.image}`}
                 alt={brand.title}
                 className="w-full h-full object-cover transform hover:scale-105 transition duration-300"
               />

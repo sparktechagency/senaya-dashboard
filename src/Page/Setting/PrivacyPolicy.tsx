@@ -10,6 +10,8 @@ const PrivacyPolicy: React.FC = () => {
 
   // GET API
   const { data, isLoading, error, refetch } = useGetPrivacyPolicyQuery(undefined);
+  console.log("PRIVACY POLICY", data);
+  
 
   // POST + UPDATE API
   const [updatePolicy, { isLoading: isUpdating }] = useUpdatePrivacyPolicyMutation();
@@ -134,11 +136,10 @@ const PrivacyPolicy: React.FC = () => {
         </button>
 
         <button
-          className={`px-6 py-2 text-white rounded-md ${
-            isSaving || isUpdating
+          className={`px-6 py-2 text-white rounded-md ${isSaving || isUpdating
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-blue-600 hover:bg-blue-700"
-          }`}
+            }`}
           onClick={handleSave}
           disabled={isSaving || isUpdating}
         >

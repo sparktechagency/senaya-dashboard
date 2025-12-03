@@ -117,7 +117,7 @@ export const CreateCountry = () => {
             {/* Image */}
             {country.image && (
               <img
-                src={`https://api.senaeya.net${country.image}`}
+                src={`http://158.252.71.185:5173${country.image}`}
                 alt={country.title}
                 className="w-full h-48 object-cover"
               />

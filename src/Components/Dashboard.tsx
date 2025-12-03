@@ -20,6 +20,8 @@ const Dashboard = () => {
     isError,
   } = useGetDashBoardQuery(undefined);
   const { data: PersonalData } = useGetAllAdminQuery(undefined);
+  console.log("PersonalData", PersonalData);
+
   const [searchTerm] = useState("");
   const { data: allData } = useAllWorkShopQuery({ search: searchTerm });
 

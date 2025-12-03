@@ -15,6 +15,8 @@ const toTitle = (v: MaybeObjWithTitle, fallback = "-") =>
 
 const Cars: React.FC = () => {
   const { data, isLoading, isError } = useAllCarQuery(undefined);
+
+
   const [deleteCar, { isLoading: isDeleting }] = useDeleteCarMutation();
 
   const handleDelete = async (carId: string) => {
@@ -58,6 +60,7 @@ const Cars: React.FC = () => {
   }
 
   const cars = data?.data?.result || data?.result || [];
+  console.log("Car5s", cars)
 
   console.log("Hellow Car");
 
@@ -91,7 +94,7 @@ const Cars: React.FC = () => {
 
             {cars.map((car: any, index: number) => {
               const brandTitle = toTitle(car?.brand?.title);
-              const brandImage =`https://api.senaeya.net/${car.brand?.image}`
+              const brandImage = `http://158.252.71.185:5173/${car.brand?.image}`
               const modelTitle = toTitle(car.model);
               const year = String(car.year || "-");
               const vin = car.vin || "-";
