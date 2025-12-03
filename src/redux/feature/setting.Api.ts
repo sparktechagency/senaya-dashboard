@@ -43,9 +43,9 @@ export const settingApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["SETTING"],
     }),
-    updateTeamOfService: builder.mutation<ApiResponse, UpdateSettingPayload>({
+    updateAppExplain: builder.mutation<ApiResponse, UpdateSettingPayload>({
       query: (data) => ({
-        url: `/rule/termsOfService`,
+        url: `/rule/app-explain`,
         method: "POST",
         body: data,
       }),
@@ -61,7 +61,7 @@ export const settingApi = baseApi.injectEndpoints({
     }),
 
 
-// GETall data
+    // GETall data
     getPrivacyPolicy: builder.query({
       query: () => ({
         url: "/rule/privacy-policy",
@@ -69,7 +69,7 @@ export const settingApi = baseApi.injectEndpoints({
       }),
       providesTags: ["SETTING"],
     }),
-        // Support
+    // Support
     getSupport: builder.query<ApiResponse<string>, void>({
       query: () => ({
         url: "/rule/support",
@@ -77,7 +77,7 @@ export const settingApi = baseApi.injectEndpoints({
       }),
       providesTags: ["SETTING"],
     }),
-        // About us
+    // About us
     getAboutUs: builder.query<ApiResponse<string>, void>({
       query: () => ({
         url: "/rule/about",
@@ -85,7 +85,15 @@ export const settingApi = baseApi.injectEndpoints({
       }),
       providesTags: ["SETTING"],
     }),
-        // Team of SERVICE
+    // App Explain
+    getAppExplain: builder.query<ApiResponse<string>, void>({
+      query: () => ({
+        url: "/rule/app-explain",
+        method: "GET",
+      }),
+      providesTags: ["SETTING"],
+    }),
+    // Team of SERVICE
     getService: builder.query<ApiResponse<string>, void>({
       query: () => ({
         url: "/rule/terms-and-conditions",
@@ -123,4 +131,4 @@ export const settingApi = baseApi.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { useGetPrivacyPolicyQuery,useUpdateAboutUsMutation,useUpdateSupportMutation, useUpdatePrivacyPolicyMutation, useGetAboutUsQuery, useGetSupportQuery, useGetServiceQuery, useUpdateServiceMutation, useUpdateSettingMutation, useGetAllSettingQuery } = settingApi;
+export const { useGetPrivacyPolicyQuery, useUpdateAppExplainMutation, useGetAppExplainQuery, useUpdateAboutUsMutation, useUpdateSupportMutation, useUpdatePrivacyPolicyMutation, useGetAboutUsQuery, useGetSupportQuery, useGetServiceQuery, useUpdateServiceMutation, useUpdateSettingMutation, useGetAllSettingQuery } = settingApi;

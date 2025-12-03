@@ -17,7 +17,7 @@ import { MdBrandingWatermark, MdWork, MdWorkHistory } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { toggleSidebar } from "../redux/sidebarSlice";
-import { MdDiscount  } from "react-icons/md";
+import { MdDiscount } from "react-icons/md";
 import type { RootState } from "../redux/store";
 import { SiOrganicmaps } from "react-icons/si";
 import { SiWorkplace } from "react-icons/si";
@@ -41,7 +41,7 @@ const AdminNavbar: React.FC = () => {
   }>({});
 
   const location = useLocation();
-console.log(isLoggedIn);
+  console.log(isLoggedIn);
   const menuItems: MenuItem[] = [
     { name: "Dashboard", icon: LayoutDashboard, path: "/admin/dashboard" },
     { name: "Profile", icon: User, path: "/admin/profile" },
@@ -69,6 +69,7 @@ console.log(isLoggedIn);
       subItems: [
         { name: "Privacy Policy", path: "/admin/privacy-policy" },
         { name: "About Us", path: "/admin/about-us" },
+        { name: "App Explain", path: "/admin/app-explain" },
         { name: "Support", path: "/admin/support" },
         { name: "Service", path: "/admin/service" },
         // { name: "Account Delete", path: "/admin/account-delete" },
@@ -127,9 +128,8 @@ console.log(isLoggedIn);
 
   return (
     <div
-      className={`${
-        isCollapsed ? "w-20" : "w-64"
-      } bg-[#1771B7] text-white h-screen flex flex-col transition-all duration-300 fixed`}
+      className={`${isCollapsed ? "w-20" : "w-64"
+        } bg-[#1771B7] text-white h-screen flex flex-col transition-all duration-300 fixed`}
     >
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-blue-400">
@@ -162,11 +162,10 @@ console.log(isLoggedIn);
                   {/* Dropdown Parent */}
                   <button
                     onClick={() => toggleDropdown(name)}
-                    className={`flex items-center justify-between w-full p-3 rounded-md transition-all ${
-                      open
+                    className={`flex items-center justify-between w-full p-3 rounded-md transition-all ${open
                         ? "bg-linear-to-tr from-blue-500 via-purple-500 to-pink-500 text-white font-bold"
                         : "hover:bg-blue-700"
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center">
                       <Icon size={20} />
@@ -192,10 +191,9 @@ console.log(isLoggedIn);
                           key={sub.name}
                           to={sub.path}
                           className={({ isActive }) =>
-                            `block text-sm p-2 rounded-md transition-all ${
-                              isActive
-                                ? "bg-blue-600 font-semibold"
-                                : "hover:bg-blue-500"
+                            `block text-sm p-2 rounded-md transition-all ${isActive
+                              ? "bg-blue-600 font-semibold"
+                              : "hover:bg-blue-500"
                             }`
                           }
                         >
@@ -210,10 +208,9 @@ console.log(isLoggedIn);
                 <NavLink
                   to={path!}
                   className={({ isActive }) =>
-                    `flex items-center w-full p-3 rounded-md transition-all ${
-                      isActive
-                        ? "bg-linear-to-tr from-blue-500 via-purple-500 to-pink-500 font-bold text-white"
-                        : "hover:bg-blue-700"
+                    `flex items-center w-full p-3 rounded-md transition-all ${isActive
+                      ? "bg-linear-to-tr from-blue-500 via-purple-500 to-pink-500 font-bold text-white"
+                      : "hover:bg-blue-700"
                     }`
                   }
                 >

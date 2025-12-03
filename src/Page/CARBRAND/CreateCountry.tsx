@@ -17,6 +17,9 @@ export const CreateCountry = () => {
 
   const { data: countries } = useAllCountryQuery(undefined);
 
+  console.log("countries", countries)
+
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!countryName || !image) {
@@ -117,7 +120,7 @@ export const CreateCountry = () => {
             {/* Image */}
             {country.image && (
               <img
-                src={`http://158.252.71.185:5173${country.image}`}
+                src={`http://10.10.7.103:7010/${country.image}`}
                 alt={country.title}
                 className="w-full h-48 object-cover"
               />

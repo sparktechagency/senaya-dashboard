@@ -39,6 +39,7 @@ import Support from "../Page/Setting/Support";
 import CreateSpare from "../Page/SPARE/SpareCreate";
 import ChangePassword from "../Page/ChangePassword";
 import CreatePackageForm from "../Page/PACKAGE/CreatePackage";
+import AppExplain from "../Page/Setting/AppExplain";
 
 const Routes = createBrowserRouter([
   {
@@ -82,7 +83,8 @@ const Routes = createBrowserRouter([
           // Setting
           { path: "admin/privacy-policy", element: <PrivacyPolicy /> },
           { path: "admin/about-us", element: <AboutUs /> },
-          { path: "admin/support", element: <Support/> },
+          { path: "admin/app-explain", element: <AppExplain /> },
+          { path: "admin/support", element: <Support /> },
           { path: "admin/service", element: <Service /> },
           { path: "admin/account-delete", element: <AccountDelete /> },
           { path: "createCarBrand", element: <CreateCarBrand /> },

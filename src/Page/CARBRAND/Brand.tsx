@@ -11,6 +11,7 @@ import {
 
 const CarBrandComponent: React.FC = () => {
   const { data, isLoading, isError } = useAllBrandQuery(undefined);
+  console.log(data?.data?.result)
   const [deleteCarBrand] = useDeleteBrandMutation();
 
   const handleDelete = async (brandId: string) => {
@@ -104,7 +105,7 @@ const CarBrandComponent: React.FC = () => {
             {/* Image */}
             <div className="w-full h-40 overflow-hidden rounded-xl mb-4">
               <img
-                src={`http://158.252.71.185:5173${brand.image}`}
+                src={`http://10.10.7.103:7010${brand.image}`}
                 alt={brand.title}
                 className="w-full h-full object-cover transform hover:scale-105 transition duration-300"
               />
