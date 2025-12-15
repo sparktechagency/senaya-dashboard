@@ -85,8 +85,8 @@ export const CreateCountry = () => {
                 className="w-full h-40 object-cover rounded-md"
               />
             ) : (
-              <div className="text-center">
-                <div className="text-gray-400 text-3xl mb-2">📁</div>
+              <div className="text-center flex items-center justify-center">
+                <div className="text-gray-400 text-3xl">📁</div>
                 <p className="text-gray-500 text-sm">Click to upload image</p>
               </div>
             )}
@@ -120,7 +120,7 @@ export const CreateCountry = () => {
             {/* Image */}
             {country.image && (
               <img
-                src={`http://10.10.7.103:7010/${country.image}`}
+                src={`https://api.senaeya.net/${country.image}`}
                 alt={country.title}
                 className="w-full h-48 object-cover"
               />

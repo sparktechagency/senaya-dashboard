@@ -1,8 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const baseQuery = fetchBaseQuery({
-  // baseUrl: "http://10.10.7.103:7010/api/v1",
-  // baseUrl: "http://158.252.71.185:7010/api/v1",
   baseUrl: "https://api.senaeya.net/api/v1",
   prepareHeaders: (headers) => {
     // Set custom headers (e.g., ngrok-skip-browser-warning)

@@ -105,7 +105,7 @@ const CarBrandComponent: React.FC = () => {
             {/* Image */}
             <div className="w-full h-40 overflow-hidden rounded-xl mb-4">
               <img
-                src={`http://10.10.7.103:7010${brand.image}`}
+                src={`https://api.senaeya.net${brand.image}`}
                 alt={brand.title}
                 className="w-full h-full object-cover transform hover:scale-105 transition duration-300"
               />

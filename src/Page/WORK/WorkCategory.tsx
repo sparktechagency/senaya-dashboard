@@ -187,7 +187,7 @@ export const CreateWorkCategory: React.FC = () => {
                 <td className="px-4 py-3 border text-center">
                   {item.image && (
                     <img
-                      src={`http://10.10.7.103:7010${item.image}`}
+                      src={`https://api.senaeya.net${item.image}`}
                       alt="Work"
                       className="w-16 h-16 rounded-full object-cover mx-auto"
                     />

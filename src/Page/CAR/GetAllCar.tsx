@@ -60,10 +60,7 @@ const Cars: React.FC = () => {
   }
 
   const cars = data?.data?.result || data?.result || [];
-
-
-
-  console.log("Hellow Car");
+  console.log("Cars---------------", cars);
 
   return (
     <div className="p-6">
@@ -79,6 +76,7 @@ const Cars: React.FC = () => {
               <th className="px-4 py-2 text-left">Year</th>
               <th className="px-4 py-2 text-center">VIN</th>
               <th className="px-4 py-2 text-left">Client Name</th>
+              <th className="px-4 py-2 text-left">Contact Number</th>
               <th className="px-4 py-2 text-left">Car Type</th>
               <th className="px-4 py-2 text-left">Plate Number</th>
               <th className="px-4 py-2 text-left">Actions</th>
@@ -95,18 +93,21 @@ const Cars: React.FC = () => {
 
             {cars.map((car: any, index: number) => {
               const brandTitle = toTitle(car?.brand?.title);
-              const brandImage = `http://10.10.7.103:7010/${car.brand?.image}`
+              const brandImage = `https://api.senaeya.net/${car.brand?.image}`
               const modelTitle = toTitle(car.model);
               const year = String(car.year || "-");
               const vin = car.vin || "-";
               const clientName = toTitle(car.client?.clientId?.name);
               const carType = car.carType || "-";
+              const contactNumber = car.client?.contact || "-";
 
               let plateNumber = "-";
               if (carType === "International") {
                 plateNumber = car.plateNumberForInternational || "-";
               } else if (carType === "Saudi") {
-                plateNumber = car.plateNumberForSaudi?.numberEnglish || "-";
+                const number = car.plateNumberForSaudi?.numberEnglish || "-";
+                const english = car.plateNumberForSaudi?.alphabetsCombinations[0] || "-";
+                plateNumber = `${number}-${english}`;
               }
 
               return (
@@ -131,6 +132,7 @@ const Cars: React.FC = () => {
                   <td className="px-4 py-2 text-center
                   ">{vin}</td>
                   <td className="px-4 py-2 text-left">{clientName}</td>
+                  <td className="px-4 py-2 text-left">{contactNumber}</td>
                   <td className="px-4 py-2 text-left">{carType}</td>
                   <td className="px-4 py-2 text-left">{plateNumber}</td>
 
