@@ -147,23 +147,45 @@ export const CreateWorkCategory: React.FC = () => {
           </div>
 
           {/* Image Upload */}
-          <label htmlFor="imageUpload" className="md:col-span-2 cursor-pointer">
-            <div className="border-2 border-dashed border-gray-300 rounded-md px-4 py-4 flex flex-col items-center justify-center hover:border-blue-500 transition">
-              {image ? (
-                <img src={URL.createObjectURL(image)} alt="Preview" className="w-48 h-48 object-cover rounded-full" />
-              ) : (
-                <div className="text-center">
-                  <div className="text-gray-400 text-3xl mb-2">📁</div>
-                  <p className="text-gray-500 text-sm">Click to upload image</p>
-                </div>
-              )}
-            </div>
-          </label>
-          <input id="imageUpload" type="file" accept="image/*" onChange={(e) => setImage(e.target.files?.[0] || null)} className="hidden" />
+          <div className="flex flex-col md:flex-row items-center justify-start gap-4">
+            {/* Image Upload */}
+            <label htmlFor="imageUpload" className="cursor-pointer">
+              <div className="w-48 h-30 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center hover:border-blue-500 transition">
+                {image ? (
+                  <img
+                    src={URL.createObjectURL(image)}
+                    alt="Preview"
+                    className="w-full h-full object-cover rounded-xl"
+                  />
+                ) : (
+                  <div className="text-center flex flex-col items-center justify-center gap-1">
+                    <div className="text-gray-400 text-4xl">📁</div>
+                    <p className="text-gray-500 text-sm">Click to upload image</p>
+                  </div>
+                )}
+              </div>
+            </label>
 
-          <button type="submit" disabled={creating} className="bg-blue-600 text-white font-semibold px-6 py-3 rounded-xl hover:bg-blue-700 transition md:col-span-2 shadow-md">
-            {creating ? "Processing..." : editingId ? "Update Work" : "Create Work"}
-          </button>
+            <input
+              id="imageUpload"
+              type="file"
+              accept="image/*"
+              onChange={(e) => setImage(e.target.files?.[0] || null)}
+              className="hidden"
+            />
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={creating}
+              className="h-12 px-8 rounded-xl bg-blue-600 text-white font-semibold shadow-md
+               hover:bg-blue-700 disabled:bg-blue-400 transition"
+            >
+              {creating ? "Processing..." : editingId ? "Update Work" : "Create Work"}
+            </button>
+          </div>
+
+
         </form>
       </div>
 

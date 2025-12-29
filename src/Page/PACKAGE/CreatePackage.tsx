@@ -58,7 +58,7 @@ const CreatePackageForm = () => {
 
     try {
       const result = await createPackage(finalData).unwrap();
-      if(result.success){
+      if (result.success) {
         toast.success("Package Create Successfully")
         navigate("/admin/package")
       }
@@ -76,14 +76,14 @@ const CreatePackageForm = () => {
 
       {/* Title */}
       <div className="mb-3">
-        <label className="block font-medium mb-1">Title</label>
+        <label className="block font-medium mb-1">Time Period</label>
         <input
           {...register("title", { required: true })}
-          placeholder="Enter package title"
+          placeholder="Enter Time Period"
           className="border w-full p-2 rounded"
         />
         {errors.title && (
-          <p className="text-red-500 text-sm">Title is required</p>
+          <p className="text-red-500 text-sm">Time Period is required</p>
         )}
       </div>
 
@@ -157,7 +157,7 @@ const CreatePackageForm = () => {
 
       {/* Discount Percentage */}
       <div className="mb-3">
-        <label className="block font-medium mb-1">Discount Percentage</label>
+        <label className="block font-medium mb-1">Last Price</label>
         <input
           type="number"
           {...register("discountPercentage", {

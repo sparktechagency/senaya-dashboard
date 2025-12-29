@@ -70,7 +70,7 @@ const PackageTable = () => {
           <thead className="bg-gray-100 text-gray-800">
             <tr>
               <th className="px-4 py-2 text-left">S/N</th>
-              <th className="px-4 py-2 text-left">Title</th>
+              <th className="px-4 py-2 text-left">Time Period</th>
               <th className="px-4 py-2 text-left">Description</th>
               <th className="px-4 py-2 text-left">Price</th>
               <th className="px-4 py-2 text-left">Duration</th>
@@ -88,7 +88,7 @@ const PackageTable = () => {
                 <td className="px-4 py-2 font-medium">{pkg.title}</td>
                 <td
                   className="px-4 py-2 hover:bg-gray-300 max-w-xs truncate relative group cursor-pointer"
-                  title={pkg.description} 
+                  title={pkg.description}
                 >
                   {pkg.description.split(" ").slice(0, 5).join(" ")}
                   {pkg.description.split(" ").length > 7 && "....."}
@@ -104,9 +104,8 @@ const PackageTable = () => {
                   {pkg.subscriptionType || "N/A"}
                 </td>
                 <td
-                  className={`px-4 py-2 font-semibold ${
-                    pkg.status === "active" ? "text-green-600" : "text-red-600"
-                  }`}
+                  className={`px-4 py-2 font-semibold ${pkg.status === "active" ? "text-green-600" : "text-red-600"
+                    }`}
                 >
                   {pkg.status}
                 </td>
