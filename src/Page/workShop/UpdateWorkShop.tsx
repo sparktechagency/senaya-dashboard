@@ -102,13 +102,9 @@ const UpdateWorkShop: React.FC = () => {
       dataObject = {
         workshopNameEnglish: formData.workshopNameEnglish,
         workshopNameArabic: formData.workshopNameArabic,
-        unn: formData.unn,
-        crn: formData.crn,
-        mln: formData.mln,
         address: formData.address,
         contact: formData.contact,
         taxVatNumber: formData.taxVatNumber,
-        bankAccountNumber: formData.bankAccountNumber,
         name: formData.name,
         isAvailableMobileWorkshop: formData.isAvailableMobileWorkshop,
         regularWorkingSchedule: {
@@ -123,7 +119,6 @@ const UpdateWorkShop: React.FC = () => {
           startTime: formData.ramadanStartTime,
           endTime: formData.ramadanEndTime
         },
-        workshopGEOlocation: { type: "Point", coordinates: [formData.longitude, formData.latitude] },
         preferredLanguage, nationality
       }
     } else {
@@ -132,7 +127,19 @@ const UpdateWorkShop: React.FC = () => {
         workshopNameArabic: formData.workshopNameArabic,
         name: formData.name,
         address: formData.address,
+        unn: formData.unn,
+        crn: formData.crn,
+        bankAccountNumber: formData.bankAccountNumber,
+        mln: formData.mln,
+        taxVatNumber: formData.taxVatNumber,
         contact: formData.contact,
+        workshopGEOlocation: {
+          type: "Point",
+          coordinates: [
+            parseFloat(formData.longitude.toString()),
+            parseFloat(formData.latitude.toString())
+          ]
+        },
         isAvailableMobileWorkshop: formData.isAvailableMobileWorkshop,
         regularWorkingSchedule: {
           startDay: formData.regularStartDay,
@@ -174,15 +181,17 @@ const UpdateWorkShop: React.FC = () => {
         <h2 className="text-2xl font-bold text-indigo-700 mb-6 text-center">Update Workshop {userRole === "owner" ? "(Owner View)" : ""}</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Workshop Names */}
-          <div>
-            <label className="font-semibold text-gray-700">Workshop Name (English) *</label>
-            <input {...register("workshopNameEnglish", { required: true })} disabled={!isFieldEditable("workshopNameEnglish")} className={`w-full border rounded-lg px-3 py-2 ${!isFieldEditable("workshopNameEnglish") ? "bg-gray-100 cursor-not-allowed" : ""}`} />
-            {errors.workshopNameEnglish && <span className="text-red-500 text-sm">This field is required</span>}
-          </div>
-          <div>
-            <label className="font-semibold text-gray-700">Workshop Name (Arabic) *</label>
-            <input {...register("workshopNameArabic", { required: true })} disabled={!isFieldEditable("workshopNameArabic")} className={`w-full border rounded-lg px-3 py-2 ${!isFieldEditable("workshopNameArabic") ? "bg-gray-100 cursor-not-allowed" : ""}`} />
-            {errors.workshopNameArabic && <span className="text-red-500 text-sm">This field is required</span>}
+          <div className="flex gap-2">
+            <div>
+              <label className="font-semibold text-gray-700">Workshop Name (English) *</label>
+              <input {...register("workshopNameEnglish", { required: true })} disabled={!isFieldEditable("workshopNameEnglish")} className={`w-full border rounded-lg px-3 py-2 ${!isFieldEditable("workshopNameEnglish") ? "bg-gray-100 cursor-not-allowed" : ""}`} />
+              {errors.workshopNameEnglish && <span className="text-red-500 text-sm">This field is required</span>}
+            </div>
+            <div>
+              <label className="font-semibold text-gray-700">Workshop Name (Arabic) *</label>
+              <input {...register("workshopNameArabic", { required: true })} disabled={!isFieldEditable("workshopNameArabic")} className={`w-full border rounded-lg px-3 py-2 ${!isFieldEditable("workshopNameArabic") ? "bg-gray-100 cursor-not-allowed" : ""}`} />
+              {errors.workshopNameArabic && <span className="text-red-500 text-sm">This field is required</span>}
+            </div>
           </div>
 
           {/* Owner Name */}
@@ -197,40 +206,58 @@ const UpdateWorkShop: React.FC = () => {
             <input {...register("contact", { required: true })} className={`w-full border rounded-lg px-3 py-2 ${!isFieldEditable("contact") ? "bg-gray-100 cursor-not-allowed" : ""}`} />
             {errors.contact && <span className="text-red-500 text-sm">This field is required</span>}
           </div>
-
-          {/* Admin Fields */}
-          {userRole === "admin" && (
-            <>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                <input {...register("unn", { required: true })} placeholder="UNN *" className="w-full border rounded-lg px-3 py-2" />
-                <input {...register("crn", { required: true })} placeholder="CRN *" className="w-full border rounded-lg px-3 py-2" />
-                <input {...register("mln", { required: true })} placeholder="MLN *" className="w-full border rounded-lg px-3 py-2" />
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <input {...register("taxVatNumber", { required: true })} placeholder="Tax/VAT Number *" className="w-full border rounded-lg px-3 py-2" />
-                <input {...register("bankAccountNumber", { required: true })} placeholder="Bank Account Number *" className="w-full border rounded-lg px-3 py-2" />
-              </div>
-
-              {/* GEO Location */}
-              <h3 className="text-indigo-700 font-semibold mt-4">GEO Location</h3>
-              <div className="grid grid-cols-2 gap-3">
-                <input type="number" step="any" {...register("latitude", { required: true })} placeholder="Latitude *" className="w-full border rounded-lg px-3 py-2" />
-                <input type="number" step="any" {...register("longitude", { required: true })} placeholder="Longitude *" className="w-full border rounded-lg px-3 py-2" />
-              </div>
-
-              <div>
-                <label className="font-semibold text-gray-700">Workshop Image (Optional)</label>
-                <input type="file" accept="image/*" {...register("image")} className="w-full border rounded-lg px-3 py-2" />
-              </div>
-            </>
-          )}
-
-          {/* Address & Mobile Workshop */}
-          <div>
-            <label className="font-semibold text-gray-700">Address *</label>
-            <input {...register("address", { required: true })} placeholder="Address" className="w-full border rounded-lg px-3 py-2" />
-            {errors.address && <span className="text-red-500 text-sm">This field is required</span>}
+          {/* Text Vet Number */}
+          <div className="flex gap-2">
+            <div>
+              <label className="font-semibold text-gray-700">Text VAT Number *</label>
+              <input {...register("taxVatNumber", { required: true })} className={`w-full border rounded-lg px-3 py-2 ${!isFieldEditable("taxVatNumber") ? "bg-gray-100 cursor-not-allowed" : ""}`} />
+              {errors.taxVatNumber && <span className="text-red-500 text-sm">This field is required</span>}
+            </div>
+            <div>
+              <label className="font-semibold text-gray-700">Bank Account Number *</label>
+              <input {...register("bankAccountNumber", { required: true })} className={`w-full border rounded-lg px-3 py-2 ${!isFieldEditable("bankAccountNumber") ? "bg-gray-100 cursor-not-allowed" : ""}`} />
+              {errors.bankAccountNumber && <span className="text-red-500 text-sm">This field is required</span>}
+            </div>
           </div>
+          {/* UNN CNN MLN */}
+          <div className="flex gap-2">
+            <div>
+              <label className="font-semibold text-gray-700">UNN *</label>
+              <input {...register("unn", { required: true })} className={`w-full border rounded-lg px-3 py-2 ${!isFieldEditable("unn") ? "bg-gray-100 cursor-not-allowed" : ""}`} />
+              {errors.unn && <span className="text-red-500 text-sm">This field is required</span>}
+            </div>
+            <div>
+              <label className="font-semibold text-gray-700">CRN *</label>
+              <input {...register("crn", { required: true })} className={`w-full border rounded-lg px-3 py-2 ${!isFieldEditable("crn") ? "bg-gray-100 cursor-not-allowed" : ""}`} />
+              {errors.crn && <span className="text-red-500 text-sm">This field is required</span>}
+            </div>
+            <div>
+              <label className="font-semibold text-gray-700">MLN *</label>
+              <input {...register("mln", { required: true })} className={`w-full border rounded-lg px-3 py-2 ${!isFieldEditable("mln") ? "bg-gray-100 cursor-not-allowed" : ""}`} />
+              {errors.mln && <span className="text-red-500 text-sm">This field is required</span>}
+            </div>
+          </div>
+          <div className="flex gap-2">
+            {/* Address & Mobile Workshop */}
+            <div>
+              <label className="font-semibold text-gray-700">Address *</label>
+              <input {...register("address", { required: true })} placeholder="Address" className="w-full border rounded-lg px-3 py-2" />
+              {errors.address && <span className="text-red-500 text-sm">This field is required</span>}
+            </div>
+            <div>
+              <label className="font-semibold text-gray-700">longitude  *</label>
+              <input {...register("longitude", { required: true })} placeholder="Address" className="w-full border rounded-lg px-3 py-2" />
+              {errors.longitude && <span className="text-red-500 text-sm">This field is required</span>}
+            </div>
+            <div>
+              <label className="font-semibold text-gray-700">latitude *</label>
+              <input {...register("latitude", { required: true })} placeholder="Address" className="w-full border rounded-lg px-3 py-2" />
+              {errors.latitude && <span className="text-red-500 text-sm">This field is required</span>}
+            </div>
+
+          </div>
+
+          {/* Mobile Workshop */}
           <div className="flex gap-2 items-center">
             <input type="checkbox" {...register("isAvailableMobileWorkshop")} id="mobileWorkshop" />
             <label htmlFor="mobileWorkshop">Mobile Workshop Available</label>
