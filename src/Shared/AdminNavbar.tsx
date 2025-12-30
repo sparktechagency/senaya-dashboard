@@ -163,8 +163,8 @@ const AdminNavbar: React.FC = () => {
                   <button
                     onClick={() => toggleDropdown(name)}
                     className={`flex items-center justify-between w-full p-3 rounded-md transition-all ${open
-                        ? "bg-linear-to-tr from-blue-500 via-purple-500 to-pink-500 text-white font-bold"
-                        : "hover:bg-blue-700"
+                      ? "bg-linear-to-tr from-blue-500 via-purple-500 to-pink-500 text-white font-bold"
+                      : "hover:bg-blue-700"
                       }`}
                   >
                     <div className="flex items-center">
@@ -228,11 +228,11 @@ const AdminNavbar: React.FC = () => {
         <div className="flex items-center justify-between">
           {!isCollapsed && (
             <div className="flex items-center space-x-3">
-              <img
+              {/* <img
                 src="https://i.pravatar.cc/40"
                 alt="admin"
                 className="h-8 w-8 rounded-full"
-              />
+              /> */}
               <div>
                 <p className="text-sm font-semibold">Admin</p>
                 <p className="text-xs text-gray-200">Super Admin</p>
