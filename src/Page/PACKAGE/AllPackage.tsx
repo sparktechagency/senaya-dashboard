@@ -70,13 +70,13 @@ const PackageTable = () => {
           <thead className="bg-gray-100 text-gray-800">
             <tr>
               <th className="px-4 py-2 text-left">S/N</th>
-              <th className="px-4 py-2 text-left">Time Period</th>
+              <th className="px-4 py-2 text-left">Subscription Period</th>
               <th className="px-4 py-2 text-left">Description</th>
               <th className="px-4 py-2 text-left">Price</th>
               <th className="px-4 py-2 text-left">Duration</th>
               <th className="px-4 py-2 text-left">Payment Type</th>
-              <th className="px-4 py-2 text-left">Discount</th>
-              <th className="px-4 py-2 text-left">Subscription Type</th>
+              <th className="px-4 py-2 text-center">Discount</th>
+              {/* <th className="px-4 py-2 text-center">Subscription Type</th> */}
               <th className="px-4 py-2 text-left">Status</th>
               <th className="px-4 py-2 text-center">Actions</th>
             </tr>
@@ -98,11 +98,11 @@ const PackageTable = () => {
                 <td className="px-4 py-2">{pkg.duration || "N/A"}</td>
                 <td className="px-4 py-2">{pkg.paymentType}</td>
                 <td className="px-4 py-2 text-center">
-                  {pkg.discountPercentage || 0}%
+                  {(pkg.discountPercentage).toFixed(2) || 0} %
                 </td>
-                <td className="px-4 py-2 text-center">
+                {/* <td className="px-4 py-2 text-center">
                   {pkg.subscriptionType || "N/A"}
-                </td>
+                </td> */}
                 <td
                   className={`px-4 py-2 font-semibold ${pkg.status === "active" ? "text-green-600" : "text-red-600"
                     }`}

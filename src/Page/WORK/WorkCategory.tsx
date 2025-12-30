@@ -120,14 +120,14 @@ export const CreateWorkCategory: React.FC = () => {
                   placeholder={`Enter title in ${lang}`}
                   value={titleObj[lang]}
                   onChange={(e) => handleTitleChange(lang, e.target.value)}
-                  className="mt-1 p-3 border rounded-lg w-full focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition"
+                  className="mt-1 p-3 border rounded-lg w-full h-15 focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition"
                 />
               </div>
             ))}
           </div>
 
           {/* Description */}
-          <div className="space-y-4">
+          <div className="space-y-2">
             <h3 className="font-semibold text-xl text-gray-700 border-b pb-2">
               📝 Description (Multi-language)
             </h3>
@@ -140,7 +140,7 @@ export const CreateWorkCategory: React.FC = () => {
                   placeholder={`Enter description in ${lang}`}
                   value={descriptionObj[lang]}
                   onChange={(e) => handleDescriptionChange(lang, e.target.value)}
-                  className="mt-1 p-3 border rounded-lg w-full h-24 focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition"
+                  className="mt-1 p-3 border rounded-lg w-full h-16 focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition"
                 ></textarea>
               </div>
             ))}
@@ -150,7 +150,7 @@ export const CreateWorkCategory: React.FC = () => {
           <div className="flex flex-col md:flex-row items-center justify-start gap-4">
             {/* Image Upload */}
             <label htmlFor="imageUpload" className="cursor-pointer">
-              <div className="w-48 h-30 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center hover:border-blue-500 transition">
+              <div className="w-48 h-20 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center hover:border-blue-500 transition">
                 {image ? (
                   <img
                     src={URL.createObjectURL(image)}
@@ -158,9 +158,9 @@ export const CreateWorkCategory: React.FC = () => {
                     className="w-full h-full object-cover rounded-xl"
                   />
                 ) : (
-                  <div className="text-center flex flex-col items-center justify-center gap-1">
+                  <div className="text-center flex items-center justify-center gap-1">
                     <div className="text-gray-400 text-4xl">📁</div>
-                    <p className="text-gray-500 text-sm">Click to upload image</p>
+                    <p className="text-gray-500 text-sm">upload image</p>
                   </div>
                 )}
               </div>

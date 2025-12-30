@@ -64,7 +64,7 @@ const UpdatePackageForm: React.FC = () => {
           : [{ value: "" }],
         price: pkg.price || 0,
         monthlyBasePrice: pkg.monthlyBasePrice || 0,
-        discountPercentage: pkg.discountPercentage || 0,
+        discountPercentage: pkg.price * (1 - (pkg.discountPercentage / 100)),
         duration: pkg.duration || "",
         paymentType: pkg.paymentType || "Monthly",
         subscriptionType: pkg.subscriptionType || "app",
@@ -72,26 +72,27 @@ const UpdatePackageForm: React.FC = () => {
     }
   }, [packageData, reset]);
 
-const onSubmit = async (data: PackageFormData) => {
-  const finalData = {
-    ...data,
-    price: Number(data.price),
-    monthlyBasePrice: Number(data.monthlyBasePrice),
-    discountPercentage: Number(data.discountPercentage),
-    features: data.features.map((f) => f.value),
-  };
+  const onSubmit = async (data: PackageFormData) => {
+    const discountPrice = (data.price - data.discountPercentage) / data.price * 100;
+    const finalData = {
+      ...data,
+      price: Number(data.price),
+      monthlyBasePrice: Number(data.monthlyBasePrice),
+      discountPercentage: Number(discountPrice),
+      features: data.features.map((f) => f.value),
+    };
 
-  try {
-    const result = await updatePackage({ id, data: finalData }).unwrap(); 
-    if (result.success) {
-      toast.success("Package updated successfully!");
-      navigate("/admin/package");
+    try {
+      const result = await updatePackage({ id, data: finalData }).unwrap();
+      if (result.success) {
+        toast.success("Package updated successfully!");
+        navigate("/admin/package");
+      }
+    } catch (error) {
+      console.error("Update failed:", error);
+      toast.error("Failed to update package");
     }
-  } catch (error) {
-    console.error("Update failed:", error);
-    toast.error("Failed to update package");
-  }
-};
+  };
 
 
   if (isLoading) {
@@ -107,10 +108,10 @@ const onSubmit = async (data: PackageFormData) => {
 
       {/* Title */}
       <div className="mb-3">
-        <label className="block font-medium mb-1">Title</label>
+        <label className="block font-medium mb-1">Subscription Period</label>
         <input
-          {...register("title", { required: "Title is required" })}
-          placeholder="Enter package title"
+          {...register("title", { required: "Subscription Period is required" })}
+          placeholder="Enter Subscription Period"
           className="border w-full p-2 rounded"
         />
         {errors.title && (
@@ -135,6 +136,7 @@ const onSubmit = async (data: PackageFormData) => {
       <div className="mb-3">
         <label className="block font-medium mb-1">Features</label>
         {fields.map((field, index) => (
+
           <div key={field.id} className="flex items-center mb-2 gap-2">
             <input
               {...register(`features.${index}.value`, {
@@ -161,6 +163,18 @@ const onSubmit = async (data: PackageFormData) => {
         </button>
       </div>
 
+      {/* Monthly Base Price */}
+      <div className="mb-3">
+        <label className="block font-medium mb-1">Monthly Base Price</label>
+        <input
+          type="number"
+          {...register("monthlyBasePrice", {
+            required: "Monthly base price is required",
+          })}
+          placeholder="Enter monthly base price"
+          className="border w-full p-2 rounded"
+        />
+      </div>
       {/* Price */}
       <div className="mb-3">
         <label className="block font-medium mb-1">Price</label>
@@ -175,22 +189,9 @@ const onSubmit = async (data: PackageFormData) => {
         )}
       </div>
 
-      {/* Monthly Base Price */}
-      <div className="mb-3">
-        <label className="block font-medium mb-1">Monthly Base Price</label>
-        <input
-          type="number"
-          {...register("monthlyBasePrice", {
-            required: "Monthly base price is required",
-          })}
-          placeholder="Enter monthly base price"
-          className="border w-full p-2 rounded"
-        />
-      </div>
-
       {/* Discount Percentage */}
       <div className="mb-3">
-        <label className="block font-medium mb-1">Discount Percentage</label>
+        <label className="block font-medium mb-1">Last Price</label>
         <input
           type="number"
           {...register("discountPercentage", {
@@ -230,7 +231,7 @@ const onSubmit = async (data: PackageFormData) => {
       </div>
 
       {/* Subscription Type */}
-      <div className="mb-3">
+      {/* <div className="mb-3">
         <label className="block font-medium mb-1">Subscription Type</label>
         <select
           {...register("subscriptionType", {
@@ -241,7 +242,7 @@ const onSubmit = async (data: PackageFormData) => {
           <option value="app">App</option>
           <option value="web">Web</option>
         </select>
-      </div>
+      </div> */}
 
       <button
         type="submit"

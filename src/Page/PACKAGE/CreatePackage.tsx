@@ -48,11 +48,12 @@ const CreatePackageForm = () => {
   });
 
   const onSubmit = async (data: PackageFormData) => {
+    const discountPrice = (data.price - data.discountPercentage) / data.price * 100;
     const finalData = {
       ...data,
       price: Number(data.price),
       monthlyBasePrice: Number(data.monthlyBasePrice),
-      discountPercentage: Number(data.discountPercentage),
+      discountPercentage: Number(discountPrice),
       features: data.features.map((f) => f.value),
     };
 
@@ -76,14 +77,14 @@ const CreatePackageForm = () => {
 
       {/* Title */}
       <div className="mb-3">
-        <label className="block font-medium mb-1">Time Period</label>
+        <label className="block font-medium mb-1">Subscription Period</label>
         <input
           {...register("title", { required: true })}
-          placeholder="Enter Time Period"
+          placeholder="Enter Subscription Period"
           className="border w-full p-2 rounded"
         />
         {errors.title && (
-          <p className="text-red-500 text-sm">Time Period is required</p>
+          <p className="text-red-500 text-sm">Subscription Period is required</p>
         )}
       </div>
 
@@ -130,17 +131,6 @@ const CreatePackageForm = () => {
         </button>
       </div>
 
-      {/* Price */}
-      <div className="mb-3">
-        <label className="block font-medium mb-1">Price</label>
-        <input
-          type="number"
-          {...register("price", { required: true, valueAsNumber: true })}
-          placeholder="Enter price"
-          className="border w-full p-2 rounded"
-        />
-      </div>
-
       {/* Monthly Base Price */}
       <div className="mb-3">
         <label className="block font-medium mb-1">Monthly Base Price</label>
@@ -154,7 +144,16 @@ const CreatePackageForm = () => {
           className="border w-full p-2 rounded"
         />
       </div>
-
+      {/* Price */}
+      <div className="mb-3">
+        <label className="block font-medium mb-1">Price</label>
+        <input
+          type="number"
+          {...register("price", { required: true, valueAsNumber: true })}
+          placeholder="Enter price"
+          className="border w-full p-2 rounded"
+        />
+      </div>
       {/* Discount Percentage */}
       <div className="mb-3">
         <label className="block font-medium mb-1">Last Price</label>
@@ -200,7 +199,7 @@ const CreatePackageForm = () => {
       </div>
 
       {/* Subscription Type */}
-      <div className="mb-3">
+      {/* <div className="mb-3">
         <label className="block font-medium mb-1">Subscription Type</label>
         <select
           {...register("subscriptionType", { required: true })}
@@ -209,7 +208,7 @@ const CreatePackageForm = () => {
           <option value="app">App</option>
           <option value="web">Web</option>
         </select>
-      </div>
+      </div> */}
 
       <button
         type="submit"

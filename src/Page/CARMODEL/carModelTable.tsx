@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 
 interface CarModel {
   _id: string;
-  brand: {title:string};
+  brand: { title: string };
   title: string;
   isDeleted: boolean;
   createdAt: string;
@@ -22,9 +22,10 @@ interface CarModel {
 
 const CarModelTable = () => {
   const { data, error, isLoading } = useAllCarModelQuery(undefined);
-  const [deleteCarBrand] = useDeletecarModelMutation(); 
+  console.log(data)
+  const [deleteCarBrand] = useDeletecarModelMutation();
 
-console.log("CARMODEL",data);
+  console.log("CARMODEL", data);
   const handleDelete = async (id: string) => {
     try {
       const result = await Swal.fire({
@@ -36,14 +37,14 @@ console.log("CARMODEL",data);
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete it!",
       })
-        if (result.isConfirmed) {
-          await deleteCarBrand(id).unwrap();
-          Swal.fire({
-            title: "Deleted!",
-            text: "Your file has been deleted.",
-            icon: "success",
-          });
-        }
+      if (result.isConfirmed) {
+        await deleteCarBrand(id).unwrap();
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+      }
     } catch {
       toast.error("Failed to delete the model.");
     }
@@ -65,10 +66,10 @@ console.log("CARMODEL",data);
 
   return (
     <div className="p-8 min-h-screen bg-linear-to-br from-slate-100 via-gray-100 to-slate-200">
-       {/* Image List Section */}
-        <div >
-          <ImageList />
-        </div>
+      {/* Image List Section */}
+      <div >
+        <ImageList />
+      </div>
       <div className="max-w-6xl mx-auto">
         {/* Card container */}
         <div className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl overflow-hidden transition-all hover:shadow-indigo-300/40 hover:scale-[1.01] duration-300">
@@ -111,9 +112,8 @@ console.log("CARMODEL",data);
                     {data?.data?.map((carModel: CarModel, index: number) => (
                       <tr
                         key={carModel._id}
-                        className={`${
-                          index % 2 === 0 ? "bg-white/40" : "bg-white/30"
-                        } hover:bg-indigo-50 transition duration-200`}
+                        className={`${index % 2 === 0 ? "bg-white/40" : "bg-white/30"
+                          } hover:bg-indigo-50 transition duration-200`}
                       >
                         <td className="px-5 py-3 font-medium text-gray-800">
                           {carModel.title}
