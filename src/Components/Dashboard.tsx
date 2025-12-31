@@ -25,8 +25,6 @@ const Dashboard = () => {
   const [searchTerm] = useState("");
   const { data: allData } = useAllWorkShopQuery({ search: searchTerm });
 
-
-
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen text-indigo-600">

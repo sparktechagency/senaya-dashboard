@@ -19,6 +19,15 @@ export const settingApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["DISCOUNT"],
     }),
+    // INVOICE
+    createInvoice: builder.mutation({
+      query: (data) => ({
+        url: "/rule/allowed-invoices-count-for-free-users",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["INVOICE"],
+    }),
     //---------------- get All Package--------------
     getAllPackage: builder.query({
       query: () => ({
@@ -56,6 +65,13 @@ export const settingApi = baseApi.injectEndpoints({
         method: "GET",
       }),
       providesTags: ["DISCOUNT"],
+    }),
+    getInvoice: builder.query({
+      query: () => ({
+        url: `/rule/allowed-invoices-count-for-free-users`,
+        method: "GET",
+      }),
+      providesTags: ["INVOICE"],
     }),
 
     // -=================UPDATE===================
@@ -114,8 +130,10 @@ export const settingApi = baseApi.injectEndpoints({
 export const {
   useCreateDiscountMutation,
   useCreatePackageMutation,
+  useCreateInvoiceMutation,
   useDeletePackageMutation,
   useGetAllSubscriptionQuery,
+  useGetInvoiceQuery,
   useGetAllPackageQuery,
   useDeleteCuponMutation,
   useUpdateDiscountMutation,

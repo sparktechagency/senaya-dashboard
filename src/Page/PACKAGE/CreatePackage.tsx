@@ -9,7 +9,7 @@ interface PackageFormData {
   features: { value: string }[];
   price: number;
   monthlyBasePrice: number;
-  discountPercentage: number;
+  cutOffprice: number;
   duration: string;
   paymentType: "Monthly" | "Yearly";
   subscriptionType: "app" | "web";
@@ -30,7 +30,7 @@ const CreatePackageForm = () => {
       features: [{ value: "" }],
       price: 0,
       monthlyBasePrice: 0,
-      discountPercentage: 0,
+      cutOffprice: 0,
       duration: "",
       paymentType: "Monthly",
       subscriptionType: "app",
@@ -48,12 +48,11 @@ const CreatePackageForm = () => {
   });
 
   const onSubmit = async (data: PackageFormData) => {
-    const discountPrice = (data.price - data.discountPercentage) / data.price * 100;
     const finalData = {
       ...data,
       price: Number(data.price),
       monthlyBasePrice: Number(data.monthlyBasePrice),
-      discountPercentage: Number(discountPrice),
+      cutOffprice: Number(data.cutOffprice),
       features: data.features.map((f) => f.value),
     };
 
@@ -146,7 +145,7 @@ const CreatePackageForm = () => {
       </div>
       {/* Price */}
       <div className="mb-3">
-        <label className="block font-medium mb-1">Price</label>
+        <label className="block font-medium mb-1"> Price</label>
         <input
           type="number"
           {...register("price", { required: true, valueAsNumber: true })}
@@ -154,16 +153,16 @@ const CreatePackageForm = () => {
           className="border w-full p-2 rounded"
         />
       </div>
-      {/* Discount Percentage */}
+      {/* Cut Off Price */}
       <div className="mb-3">
         <label className="block font-medium mb-1">Last Price</label>
         <input
           type="number"
-          {...register("discountPercentage", {
+          {...register("cutOffprice", {
             required: true,
             valueAsNumber: true,
           })}
-          placeholder="Enter discount percentage"
+          placeholder="Enter cut off price"
           className="border w-full p-2 rounded"
         />
       </div>

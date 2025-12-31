@@ -14,7 +14,7 @@ interface PackageFormData {
   features: { value: string }[];
   price: number;
   monthlyBasePrice: number;
-  discountPercentage: number;
+  cutOffprice: number;
   duration: string;
   paymentType: "Monthly" | "Yearly";
   subscriptionType: "app" | "web";
@@ -40,7 +40,7 @@ const UpdatePackageForm: React.FC = () => {
       features: [{ value: "" }],
       price: 0,
       monthlyBasePrice: 0,
-      discountPercentage: 0,
+      cutOffprice: 0,
       duration: "",
       paymentType: "Monthly",
       subscriptionType: "app",
@@ -64,7 +64,7 @@ const UpdatePackageForm: React.FC = () => {
           : [{ value: "" }],
         price: pkg.price || 0,
         monthlyBasePrice: pkg.monthlyBasePrice || 0,
-        discountPercentage: pkg.price * (1 - (pkg.discountPercentage / 100)),
+        cutOffprice: pkg.cutOffprice || 0,
         duration: pkg.duration || "",
         paymentType: pkg.paymentType || "Monthly",
         subscriptionType: pkg.subscriptionType || "app",
@@ -73,12 +73,11 @@ const UpdatePackageForm: React.FC = () => {
   }, [packageData, reset]);
 
   const onSubmit = async (data: PackageFormData) => {
-    const discountPrice = (data.price - data.discountPercentage) / data.price * 100;
     const finalData = {
       ...data,
       price: Number(data.price),
       monthlyBasePrice: Number(data.monthlyBasePrice),
-      discountPercentage: Number(discountPrice),
+      cutOffprice: Number(data.cutOffprice),
       features: data.features.map((f) => f.value),
     };
 
@@ -177,7 +176,7 @@ const UpdatePackageForm: React.FC = () => {
       </div>
       {/* Price */}
       <div className="mb-3">
-        <label className="block font-medium mb-1">Price</label>
+        <label className="block font-medium mb-1"> Price</label>
         <input
           type="number"
           {...register("price", { required: "Price is required" })}
@@ -188,14 +187,13 @@ const UpdatePackageForm: React.FC = () => {
           <p className="text-red-500 text-sm">{errors.price.message}</p>
         )}
       </div>
-
       {/* Discount Percentage */}
       <div className="mb-3">
         <label className="block font-medium mb-1">Last Price</label>
         <input
           type="number"
-          {...register("discountPercentage", {
-            required: "Discount percentage is required",
+          {...register("cutOffprice", {
+            required: "Last price is required",
           })}
           placeholder="Enter discount percentage"
           className="border w-full p-2 rounded"

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useCreateSpareMutation } from "../../redux/feature/work";
 import { useAllWorkShopQuery } from "../../redux/feature/adminApi";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
 type SpareFormValues = {
   providerWorkShopId: string;
@@ -11,7 +12,9 @@ type SpareFormValues = {
 };
 
 const CreateSpare: React.FC = () => {
-  const { data: providers, isLoading: loadingProviders } = useAllWorkShopQuery(undefined);
+  const [searchTerm] = useState("");
+  const navigate = useNavigate();
+  const { data: providers, isLoading: loadingProviders } = useAllWorkShopQuery({ search: searchTerm });
   const [createSpare, { isLoading }] = useCreateSpareMutation();
 
   const providerList = providers?.data?.result || [];
@@ -34,6 +37,7 @@ const CreateSpare: React.FC = () => {
       await createSpare(payload).unwrap();
       toast.success("Spare part created successfully!");
       reset();
+      navigate("/spare");
     } catch (err) {
       toast.error("Failed to create spare part.");
     }
@@ -111,11 +115,10 @@ const CreateSpare: React.FC = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className={`w-full py-2.5 rounded-md font-medium text-white ${
-              isLoading
-                ? "bg-indigo-300 cursor-not-allowed"
-                : "bg-linear-to-tr from-blue-500 via-purple-500 to-pink-500 hover:opacity-90"
-            } transition`}
+            className={`w-full py-2.5 rounded-md font-medium text-white ${isLoading
+              ? "bg-indigo-300 cursor-not-allowed"
+              : "bg-linear-to-tr from-blue-500 via-purple-500 to-pink-500 hover:opacity-90"
+              } transition`}
           >
             {isLoading ? "Creating..." : "Create Spare"}
           </button>

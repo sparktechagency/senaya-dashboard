@@ -60,7 +60,7 @@ const AdminNavbar: React.FC = () => {
       icon: Package,
       subItems: [
         { name: "Package", path: "/admin/package" },
-        { name: "Subscription", path: "/admin/Subscription" },
+        { name: "Subscription", path: "/admin/Subscription" }
       ],
     },
     {

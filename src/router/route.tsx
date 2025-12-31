@@ -39,7 +39,9 @@ import Support from "../Page/Setting/Support";
 import CreateSpare from "../Page/SPARE/SpareCreate";
 import ChangePassword from "../Page/ChangePassword";
 import CreatePackageForm from "../Page/PACKAGE/CreatePackage";
+
 import AppExplain from "../Page/Setting/AppExplain";
+import InvoiceSettings from "../Page/PACKAGE/Invoice";
 
 const Routes = createBrowserRouter([
   {
@@ -66,6 +68,7 @@ const Routes = createBrowserRouter([
           { path: "admin/details/:id", element: <CarBrandDetail /> },
           { path: "admin/package", element: <PackageTable /> },
           { path: "admin/package/create", element: <CreatePackageForm /> },
+          { path: "admin/package/invoice", element: <InvoiceSettings /> },
           { path: "admin/Subscription", element: <AllSubscription /> },
           // WORK
           { path: "admin/workShop", element: <WorkShop /> },

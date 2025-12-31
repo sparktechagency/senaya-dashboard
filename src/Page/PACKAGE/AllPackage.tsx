@@ -59,12 +59,20 @@ const PackageTable = () => {
             📦 All Packages
           </h2>
 
-          <Link to="/admin/package/create">
-            <button className="px-5 py-2 flex items-center gap-2  bg-white text-indigo-600 font-semibold rounded-md hover:bg-indigo-50 transition-all shadow-md hover:shadow-lg">
-              <MdOutlineCreateNewFolder className="text-lg" />
-              Create Package
-            </button>
-          </Link>
+          <div className="flex gap-2 items-center justify-center">
+            <Link to="/admin/package/create">
+              <button className="px-5 py-2 flex items-center gap-2  bg-white text-indigo-600 font-semibold rounded-md hover:bg-indigo-50 transition-all shadow-md hover:shadow-lg">
+                <MdOutlineCreateNewFolder className="text-lg" />
+                Create Package
+              </button>
+            </Link>
+            <Link to="/admin/package/invoice">
+              <button className="px-5 py-2 flex items-center gap-2  bg-white text-indigo-600 font-semibold rounded-md hover:bg-indigo-50 transition-all shadow-md hover:shadow-lg">
+                <MdOutlineCreateNewFolder className="text-lg" />
+                Create Invoice
+              </button>
+            </Link>
+          </div>
         </div>
         <table className="min-w-full divide-y divide-gray-200 text-sm mt-5 border text-gray-700">
           <thead className="bg-gray-100 text-gray-800">
@@ -75,7 +83,6 @@ const PackageTable = () => {
               <th className="px-4 py-2 text-left">Price</th>
               <th className="px-4 py-2 text-left">Duration</th>
               <th className="px-4 py-2 text-left">Payment Type</th>
-              <th className="px-4 py-2 text-center">Discount</th>
               {/* <th className="px-4 py-2 text-center">Subscription Type</th> */}
               <th className="px-4 py-2 text-left">Status</th>
               <th className="px-4 py-2 text-center">Actions</th>
@@ -97,12 +104,6 @@ const PackageTable = () => {
                 <td className="px-4 py-2">${pkg.price}</td>
                 <td className="px-4 py-2">{pkg.duration || "N/A"}</td>
                 <td className="px-4 py-2">{pkg.paymentType}</td>
-                <td className="px-4 py-2 text-center">
-                  {(pkg.discountPercentage).toFixed(2) || 0} %
-                </td>
-                {/* <td className="px-4 py-2 text-center">
-                  {pkg.subscriptionType || "N/A"}
-                </td> */}
                 <td
                   className={`px-4 py-2 font-semibold ${pkg.status === "active" ? "text-green-600" : "text-red-600"
                     }`}

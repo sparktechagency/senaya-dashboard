@@ -160,7 +160,7 @@ const Profile: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium">
+                <label className=" text-sm font-medium text-white ">
                   Preferred Language
                 </label>
                 <select
@@ -194,7 +194,7 @@ const Profile: React.FC = () => {
               </div>
             </div>
           ) : (
-            <div className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+            <div className="text-sm text-white-600  space-y-1">
               {profile.nationality && (
                 <div>Nationality: {profile.nationality}</div>
               )}
