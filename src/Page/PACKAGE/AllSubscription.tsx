@@ -112,7 +112,7 @@ const AllSubscription = () => {
     }
   };
 
-  return ( 
+  return (
     <div className="p-6">
       {/* Search */}
       <div className="flex justify-between gap-4 items-center mb-4">
@@ -147,7 +147,7 @@ const AllSubscription = () => {
               subscriptions.map((sub, index) => (
                 <tr key={sub._id} className="hover:bg-gray-50">
                   <td className="px-4 py-2 text-center">{index + 1}</td>
-                  <td className="px-4 py-2 text-left">{sub.package.title}</td>
+                  <td className="px-4 py-2 text-left">{sub?.package?.title}</td>
                   <td className="px-4 py-2 text-right">${sub.price}</td>
                   <td className="px-4 py-2 text-center">
                     {sub?.workshop?.ownerId?.contact}
@@ -159,14 +159,13 @@ const AllSubscription = () => {
                     {new Date(sub.currentPeriodEnd).toLocaleDateString()}
                   </td>
                   <td className="px-4 py-2 text-left">
-                    {sub.package.paymentType}
+                    {sub?.package?.paymentType}
                   </td>
                   <td
-                    className={`px-4 py-2 text-center font-semibold ${
-                      sub.status === "active"
-                        ? "text-green-600"
-                        : "text-red-600"
-                    }`}
+                    className={`px-4 py-2 text-center font-semibold ${sub.status === "active"
+                      ? "text-green-600"
+                      : "text-red-600"
+                      }`}
                   >
                     {sub.status}
                   </td>
@@ -233,5 +232,15 @@ const AllSubscription = () => {
     </div>
   );
 };
+
+
+
+// const AllSubscription = () => {
+//   return (
+//     <div>
+//       <h1>Subscription</h1>
+//     </div>
+//   )
+// }
 
 export default AllSubscription;

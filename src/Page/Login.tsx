@@ -16,7 +16,7 @@ const Login: React.FC = () => {
   const onSubmit = async (data: any) => {
     try {
       setIsLoading(true);
-      const res = await login(data).unwrap();
+      const res = await login({ ...data, role: "ADMIN" }).unwrap();
 
       if (res.success) {
         localStorage.setItem("accessToken", res.data.accessToken);
