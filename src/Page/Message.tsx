@@ -14,7 +14,7 @@ const MessageList = () => {
     isError,
     refetch,
   } = useAllMessageQuery(undefined);
-  console.log(messages);
+
   const [deleteMessage, { isLoading: isDeleting }] = useDeleteMessageMutation();
   console.log(messages?.data?.result);
 

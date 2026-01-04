@@ -42,6 +42,7 @@ import CreatePackageForm from "../Page/PACKAGE/CreatePackage";
 
 import AppExplain from "../Page/Setting/AppExplain";
 import InvoiceSettings from "../Page/PACKAGE/Invoice";
+import EditCarModel from "../Page/CARMODEL/editCarModel";
 
 const Routes = createBrowserRouter([
   {
@@ -65,6 +66,7 @@ const Routes = createBrowserRouter([
           { path: "admin/brand", element: <CarBrandComponent /> },
           { path: "admin/country", element: <CreateCountry /> },
           { path: "admin/carmodel", element: <CarModelTable /> },
+          { path: "admin/carmodel/:modelId", element: <EditCarModel /> },
           { path: "admin/details/:id", element: <CarBrandDetail /> },
           { path: "admin/package", element: <PackageTable /> },
           { path: "admin/package/create", element: <CreatePackageForm /> },

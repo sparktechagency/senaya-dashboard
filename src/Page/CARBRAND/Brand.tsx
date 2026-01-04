@@ -11,7 +11,7 @@ import {
 
 const CarBrandComponent: React.FC = () => {
   const { data, isLoading, isError } = useAllBrandQuery(undefined);
-  console.log(data?.data?.result)
+
   const [deleteCarBrand] = useDeleteBrandMutation();
 
   const handleDelete = async (brandId: string) => {

@@ -37,7 +37,7 @@ const CreateSpare: React.FC = () => {
       await createSpare(payload).unwrap();
       toast.success("Spare part created successfully!");
       reset();
-      navigate("/spare");
+      navigate("/admin/Spare");
     } catch (err) {
       toast.error("Failed to create spare part.");
     }

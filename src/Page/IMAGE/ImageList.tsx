@@ -22,7 +22,7 @@ interface ImageItem {
 }
 
 const ImageList: React.FC = () => {
-  const { data, isLoading, isError } = useImageTypeQuery(undefined);
+  const { data: symbol, isLoading, isError } = useImageTypeQuery(undefined);
   const { data: logoType } = useLogoTypeQuery(undefined);
   const [deleteImage] = useDeleteImageTypeMutation();
   const navigate = useNavigate();
@@ -43,7 +43,7 @@ const ImageList: React.FC = () => {
     );
   }
 
-  const images: ImageItem[] = data?.data || [];
+  const images: ImageItem[] = symbol?.data || [];
   const logos: ImageItem[] = logoType?.data?.result || [];
 
   // Count per type

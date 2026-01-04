@@ -118,6 +118,13 @@ export const adminAPI = baseApi.injectEndpoints({
 
     // ---------------------------------------
     // ✅ Single Brand Fetch
+    getSingleCarModel: builder.query({
+      query: (modelId: string) => ({
+        url: `/car-models/${modelId}`,
+        method: "GET",
+      }),
+      providesTags: ["CARS"],
+    }),
     getBrandById: builder.query({
       query: (brandId: string) => ({
         url: `/car-brand-countries/${brandId}`,
@@ -212,7 +219,16 @@ export const adminAPI = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["IMAGE"],
     }),
-
+    // ----------------------------   UPDATE
+    // update car
+    updateCar: builder.mutation({
+      query: ({ id, payload }: { id: string; payload: any }) => ({
+        url: `/cars/${id}`,
+        method: "PATCH",
+        body: payload,
+      }),
+      invalidatesTags: ["CAR"],
+    }),
     // ✅ Update Workshop
     updateWorkShop: builder.mutation({
       query: ({ id, payload }: { id: string; payload: any }) => ({
@@ -230,6 +246,15 @@ export const adminAPI = baseApi.injectEndpoints({
         body: payload,
       }),
       invalidatesTags: ["IMAGE"],
+    }),
+    // ✅ Update Car Model
+    updateCarModel: builder.mutation({
+      query: ({ id, ...data }) => ({
+        url: `/car-models/${id}`,
+        method: "PATCH", // ← Try changing to "PUT"
+        body: data,
+      }),
+      invalidatesTags: ["CARS"],
     }),
   }),
 
@@ -254,6 +279,7 @@ export const {
   useImageTypeQuery,
 
   // ✅ Get Single
+  useGetSingleCarModelQuery,
   useGetBrandByIdQuery,
   useGetSingleWorkShopQuery,
   useGetSingleCarQuery,
@@ -270,6 +296,8 @@ export const {
   useDeleteImageTypeMutation,
 
   // ✅ Update
+  useUpdateCarMutation,
   useUpdateWorkShopMutation,
   useUpdateImageMutation,
+  useUpdateCarModelMutation,
 } = adminAPI;

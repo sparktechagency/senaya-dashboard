@@ -22,10 +22,8 @@ interface CarModel {
 
 const CarModelTable = () => {
   const { data, error, isLoading } = useAllCarModelQuery(undefined);
-  console.log(data)
   const [deleteCarBrand] = useDeletecarModelMutation();
 
-  console.log("CARMODEL", data);
   const handleDelete = async (id: string) => {
     try {
       const result = await Swal.fire({
@@ -126,7 +124,7 @@ const CarModelTable = () => {
                         </td>
                         <td className="px-5 py-3 flex justify-center gap-3">
                           <Tooltip title="Edit Model">
-                            <Link to={`/edit/${carModel._id}`}>
+                            <Link to={`/admin/carmodel/${carModel._id}`}>
                               <Button
                                 icon={<FiEdit />}
                                 shape="circle"
