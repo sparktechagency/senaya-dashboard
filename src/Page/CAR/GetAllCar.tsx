@@ -19,6 +19,34 @@ const Cars: React.FC = () => {
 
   const { data, isLoading, isError } = useAllCarQuery(undefined);
   const [deleteCar, { isLoading: isDeleting }] = useDeleteCarMutation();
+  const englishToArabicAlphabet = (value: string) => {
+    const map: Record<string, string> = {
+      A: "ا",
+      B: "ب",
+      J: "ج",
+      D: "د",
+      R: "ر",
+      S: "س",
+      X: "ص",
+      T: "ط",
+      E: "ع",
+      G: "ق",
+      K: "ك",
+      L: "ل",
+      M: "م",
+      N: "ن",
+      H: "هـ",
+      V: "و",
+      Y: "ي"
+    };
+
+    return value
+      .toUpperCase()
+      .split("")
+      .map(char => map[char] ?? "")
+      .join("");
+  };
+
 
   const handleDelete = async (carId: string) => {
     try {
@@ -172,10 +200,20 @@ const Cars: React.FC = () => {
                 if (carType === "International") {
                   plateNumber = car.plateNumberForInternational || "-";
                 } else if (carType === "Saudi") {
-                  const number = car.plateNumberForSaudi?.numberEnglish || "-";
                   const english =
-                    car.plateNumberForSaudi?.alphabetsCombinations[0] || "-";
-                  plateNumber = `${number}-${english}`;
+                    car.plateNumberForSaudi?.alphabetsCombinations?.[0] || "-";
+
+                  const arabicAlphabet =
+                    english !== "-" ? englishToArabicAlphabet(english) : "-";
+
+                  const numberEnglish =
+                    car.plateNumberForSaudi?.numberEnglish || "-";
+
+                  const numberArabic =
+                    car.plateNumberForSaudi?.numberArabic || "-";
+
+                  plateNumber = `${english}-${numberEnglish}  |  ${arabicAlphabet}-${numberArabic}`;
+
                 }
 
                 return (
