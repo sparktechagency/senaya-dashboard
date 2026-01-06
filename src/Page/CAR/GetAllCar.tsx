@@ -1,4 +1,4 @@
-import { Eye, Loader2, Trash2, ChevronLeft, ChevronRight, Edit } from "lucide-react";
+import { Loader2, Trash2, ChevronLeft, ChevronRight, Edit } from "lucide-react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";

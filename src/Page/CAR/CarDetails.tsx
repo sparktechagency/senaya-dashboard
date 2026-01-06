@@ -1,12 +1,11 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useGetSingleCarQuery, useUpdateCarMutation } from "../../redux/feature/adminApi";
+import { useGetSingleCarQuery } from "../../redux/feature/adminApi";
 import { Loader2, CarFront, MapPin, User, CreditCard, CalendarDays, Wrench } from "lucide-react";
 
 const CarDetails: React.FC = () => {
   const { carId } = useParams<{ carId: string }>();
   const { data, isLoading, isError } = useGetSingleCarQuery(carId!, { skip: !carId });
-  const [updateCar] = useUpdateCarMutation();
   const car = data?.data;
   console.log(car);
 

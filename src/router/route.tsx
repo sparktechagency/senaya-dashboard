@@ -12,7 +12,6 @@ import CarBrandDetail from "../Page/CARBRAND/Details";
 import WorkShop from "../Page/workShop/workShop";
 import WorkShopDetails from "../Page/workShop/workShopDetails";
 import Cars from "../Page/CAR/GetAllCar";
-import CarDetails from "../Page/CAR/CarDetails";
 import UpdateWorkShop from "../Page/workShop/UpdateWorkShop";
 import Profile from "../Page/Profile";
 import CreateCarImage from "../Page/IMAGE/CreateCarImage";
