@@ -61,9 +61,8 @@ const CouponCards: React.FC = () => {
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold text-gray-800">{coupon.code}</h3>
               <span
-                className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                  coupon.isActive ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
-                }`}
+                className={`px-3 py-1 rounded-full text-sm font-semibold ${coupon.isActive ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+                  }`}
               >
                 {coupon.isActive ? "Active" : "Inactive"}
               </span>
@@ -83,10 +82,18 @@ const CouponCards: React.FC = () => {
                 </span>
               </p>
               <p className="text-gray-500 text-sm">
-                Start: {new Date(coupon.startDate).toLocaleDateString()}
+                Start: {new Date(coupon.startDate).toLocaleDateString("en-GB", {
+                  day: "2-digit",
+                  month: "long",
+                  year: "numeric",
+                })}
               </p>
               <p className="text-gray-500 text-sm">
-                End: {new Date(coupon.endDate).toLocaleDateString()}
+                End: {new Date(coupon.endDate).toLocaleDateString("en-GB", {
+                  day: "2-digit",
+                  month: "long",
+                  year: "numeric",
+                })}
               </p>
             </div>
 

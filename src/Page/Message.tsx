@@ -98,13 +98,22 @@ const MessageList = () => {
             {/* Message Body */}
             <p className="text-gray-700 mb-3">{msg.message}</p>
 
-            {/* Contact Info */}
-            {msg.contact && (
-              <div className="flex items-center gap-2 text-gray-600 text-sm mb-2">
-                <Phone size={16} />
-                <span>{msg.contact}</span>
-              </div>
-            )}
+            <div className="flex justify-between">
+              {/* Contact Info */}
+              {msg.contact && (
+                <div className="flex items-center gap-2 text-gray-600 text-sm mb-2">
+                  <Phone size={16} />
+                  <span>{msg.contact}</span>
+                </div>
+              )}
+              <td className="px-4 py-3">
+                {new Date(msg.createdAt).toLocaleDateString("en-GB", {
+                  day: "2-digit",
+                  month: "long",
+                  year: "numeric",
+                })}
+              </td>
+            </div>
 
             {/* Attached Data */}
             {/* Attached Data */}

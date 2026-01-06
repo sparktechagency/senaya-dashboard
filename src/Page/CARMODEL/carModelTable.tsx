@@ -120,7 +120,13 @@ const CarModelTable = () => {
                           {carModel.brand?.title}
                         </td>
                         <td className="px-5 py-3 text-gray-500">
-                          {new Date(carModel.createdAt).toLocaleDateString()}
+                          <td className="px-4 py-3">
+                            {new Date(carModel.createdAt).toLocaleDateString("en-GB", {
+                              day: "2-digit",
+                              month: "long",
+                              year: "numeric",
+                            })}
+                          </td>
                         </td>
                         <td className="px-5 py-3 flex justify-center gap-3">
                           <Tooltip title="Edit Model">
