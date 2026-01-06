@@ -153,10 +153,18 @@ const AllSubscription = () => {
                     {sub?.workshop?.ownerId?.contact}
                   </td>
                   <td className="px-4 py-2 text-center">
-                    {new Date(sub.currentPeriodStart).toLocaleDateString()}
+                    {new Date(sub.currentPeriodStart).toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                    })}
                   </td>
                   <td className="px-4 py-2 text-center">
-                    {new Date(sub.currentPeriodEnd).toLocaleDateString()}
+                    {new Date(sub.currentPeriodEnd).toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                    })}
                   </td>
                   <td className="px-4 py-2 text-left">
                     {sub?.package?.paymentType}

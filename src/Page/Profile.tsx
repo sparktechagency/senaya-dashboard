@@ -209,8 +209,13 @@ const Profile: React.FC = () => {
 
         {/* Created Date */}
         <div className="text-xs text-gray-500 mt-6 text-center">
-          Created: {new Date(profile.createdAt).toLocaleDateString()}
+          Created: {new Date(profile.createdAt).toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+          })}
         </div>
+
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { Eye, Loader2, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Eye, Loader2, Trash2, ChevronLeft, ChevronRight, Edit } from "lucide-react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -68,6 +68,9 @@ const Cars: React.FC = () => {
   }
 
   const allCars = data?.data?.result || data?.result || [];
+  console.log("AllCars", allCars);
+  console.log(allCars);
+
   const total = allCars.length;
   const totalPages = Math.ceil(total / itemsPerPage);
 
@@ -160,6 +163,8 @@ const Cars: React.FC = () => {
                 const year = String(car.year || "-");
                 const vin = car.vin || "-";
                 const clientName = toTitle(car.client?.clientId?.name);
+                const CLIENTname = toTitle(car.client?.workShopNameAsClient);
+                const clientType = car.client?.clientType || "-";
                 const carType = car.carType || "-";
                 const contactNumber = car.client?.contact || "-";
 
@@ -199,7 +204,13 @@ const Cars: React.FC = () => {
                     <td className="px-4 py-3 text-gray-700">{modelTitle}</td>
                     <td className="px-4 py-3 text-gray-700">{year}</td>
                     <td className="px-4 py-3 text-center text-gray-700">{vin}</td>
-                    <td className="px-4 py-3 text-gray-700">{clientName}</td>
+                    {
+                      clientType === "WorkShop" ? (
+                        <td className="px-4 py-3 text-gray-700">{CLIENTname}</td>
+                      ) : (
+                        <td className="px-4 py-3 text-gray-700">{clientName}</td>
+                      )
+                    }
                     <td className="px-4 py-3 text-gray-700">{contactNumber}</td>
                     <td className="px-4 py-3 text-gray-700">{carType}</td>
                     <td className="px-4 py-3 text-gray-700">{plateNumber}</td>
@@ -224,7 +235,7 @@ const Cars: React.FC = () => {
                           className="flex items-center justify-center p-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-full transition hover:scale-110"
                           title="View details"
                         >
-                          <Eye size={16} />
+                          <Edit size={16} />
                         </Link>
                       </div>
                     </td>
@@ -258,8 +269,8 @@ const Cars: React.FC = () => {
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
               className={`flex items-center gap-1 px-3 py-2 rounded-lg font-medium transition-all ${currentPage === 1
-                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                  : "bg-white border border-gray-300 text-gray-700 hover:bg-indigo-50 hover:border-indigo-500"
+                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                : "bg-white border border-gray-300 text-gray-700 hover:bg-indigo-50 hover:border-indigo-500"
                 }`}
             >
               <ChevronLeft size={18} />
@@ -276,8 +287,8 @@ const Cars: React.FC = () => {
                     <button
                       onClick={() => handlePageChange(page as number)}
                       className={`px-3 py-2 rounded-lg font-medium transition-all min-w-[40px] ${currentPage === page
-                          ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
-                          : "bg-white border border-gray-300 text-gray-700 hover:bg-indigo-50 hover:border-indigo-500"
+                        ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
+                        : "bg-white border border-gray-300 text-gray-700 hover:bg-indigo-50 hover:border-indigo-500"
                         }`}
                     >
                       {page}
@@ -292,8 +303,8 @@ const Cars: React.FC = () => {
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
               className={`flex items-center gap-1 px-3 py-2 rounded-lg font-medium transition-all ${currentPage === totalPages
-                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                  : "bg-white border border-gray-300 text-gray-700 hover:bg-indigo-50 hover:border-indigo-500"
+                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                : "bg-white border border-gray-300 text-gray-700 hover:bg-indigo-50 hover:border-indigo-500"
                 }`}
             >
               <span className="hidden sm:inline">Next</span>

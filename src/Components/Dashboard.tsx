@@ -13,7 +13,6 @@ import {
   useAllWorkShopQuery,
   useGetDashBoardQuery,
 } from "../redux/feature/adminApi";
-import { useGetAllAdminQuery } from "../redux/feature/authApi";
 import { useState } from "react";
 
 const Dashboard = () => {
@@ -22,8 +21,6 @@ const Dashboard = () => {
     isLoading,
     isError,
   } = useGetDashBoardQuery(undefined);
-  const { data: PersonalData } = useGetAllAdminQuery(undefined);
-  console.log("PersonalData", PersonalData);
 
   const [searchTerm] = useState("");
   const { data: allData } = useAllWorkShopQuery({ search: searchTerm });
@@ -73,7 +70,7 @@ const Dashboard = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Workshops Subscribed</p>
-              <h2 className="text-3xl font-bold text-gray-800 mt-1">
+              <h2 className="text-3xl font-bold text-gray-500 p-5 rounded-full text-gray-800 mt-1">
                 {subscriptions?.workshopsSubscribedCount}
               </h2>
             </div>
@@ -117,7 +114,7 @@ const Dashboard = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Total Cars</p>
-              <h2 className="text-xl font-semibold text-gray-800 mt-1">
+              <h2 className="text-3xl font-bold text-gray-800 mt-1">
                 {total}
               </h2>
             </div>
@@ -131,7 +128,7 @@ const Dashboard = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Total Car Models</p>
-              <h2 className="text-xl font-semibold text-gray-800 mt-1">
+              <h2 className="text-3xl font-bold text-gray-800 mt-1">
                 {totalCarModel}
               </h2>
             </div>

@@ -215,7 +215,11 @@ const WorkShop = () => {
                     {workshop.preferredLanguage || "N/A"}
                   </td>
                   <td className="px-4 py-3">
-                    {new Date(workshop.createdAt).toLocaleDateString()}
+                    {new Date(workshop.createdAt).toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                    })}
                   </td>
                   <td className="px-4 py-3 text-center flex justify-center gap-3">
                     <Link

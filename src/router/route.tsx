@@ -43,6 +43,7 @@ import CreatePackageForm from "../Page/PACKAGE/CreatePackage";
 import AppExplain from "../Page/Setting/AppExplain";
 import InvoiceSettings from "../Page/PACKAGE/Invoice";
 import EditCarModel from "../Page/CARMODEL/editCarModel";
+import EditCar from "../Page/CAR/editCar";
 
 const Routes = createBrowserRouter([
   {
@@ -100,7 +101,7 @@ const Routes = createBrowserRouter([
           { path: "UpdateWorkShop/:workshopId", element: <UpdateWorkShop /> },
           { path: "workShopDetails/:workShopId", element: <WorkShopDetails /> },
           { path: "updatePackage/:id", element: <UpdatePackageForm /> },
-          { path: "carDetails/:carId", element: <CarDetails /> },
+          { path: "carDetails/:carId", element: <EditCar /> },
         ],
       },
     ],

@@ -49,6 +49,15 @@ export const adminAPI = baseApi.injectEndpoints({
       providesTags: ["ADMIN"],
     }),
 
+    //-------------------------------------ALL 
+    //all Client
+    allClient: builder.query({
+      query: () => ({
+        url: "/clients/",
+        method: "GET",
+      }),
+      providesTags: ["CLIENT"],
+    }),
     // ✅ All Messages
     allMessage: builder.query({
       query: () => ({
@@ -269,6 +278,7 @@ export const {
   useCreateImageMutation,
 
   // ✅ Get All
+  useAllClientQuery,
   useGetDashBoardQuery,
   useAllBrandQuery,
   useAllCarModelQuery,

@@ -33,15 +33,13 @@ const AdminNavbar: React.FC = () => {
   const dispatch = useDispatch();
   const { isCollapsed } = useSelector((state: RootState) => state.sidebar);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  console.log("🚀 ~ AdminNavbar ~ isLoggedIn:", isLoggedIn);
-
+  console.log(isLoggedIn);
   // ✅ Store open state per dropdown
   const [openDropdowns, setOpenDropdowns] = useState<{
     [key: string]: boolean;
   }>({});
 
   const location = useLocation();
-  console.log(isLoggedIn);
   const menuItems: MenuItem[] = [
     { name: "Dashboard", icon: LayoutDashboard, path: "/admin/dashboard" },
     { name: "Profile", icon: User, path: "/admin/profile" },

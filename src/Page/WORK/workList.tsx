@@ -172,7 +172,11 @@ const WorkListTable: React.FC = () => {
                   </td>
                   <td className="py-3 px-4 border">{work.code || "N/A"}</td>
                   <td className="py-3 px-4 border text-gray-500 text-sm">
-                    {new Date(work.createdAt).toLocaleDateString()}
+                    {new Date(work.createdAt).toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                    })}
                   </td>
                   <td className="py-3 px-4 border text-center">
                     <Tooltip title="Delete Work">

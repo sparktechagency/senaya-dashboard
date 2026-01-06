@@ -97,9 +97,8 @@ const SparePartsList: React.FC = () => {
               {spareParts.map((item: any, index: number) => (
                 <tr
                   key={item._id}
-                  className={`border-b hover:bg-gray-50 transition ${
-                    index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                  }`}
+                  className={`border-b hover:bg-gray-50 transition ${index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                    }`}
                 >
                   <td className="py-2 px-4 border text-center">{index + 1}</td>
 
@@ -115,7 +114,11 @@ const SparePartsList: React.FC = () => {
                   </td>
 
                   <td className="py-2 px-4 border text-center">
-                    {new Date(item.createdAt).toLocaleString()}
+                    {new Date(item.createdAt).toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                    })}
                   </td>
                   <td className="text-center py-2 border-b text-gray-500 text-sm">
                     <Tooltip title="Delete Work">
@@ -124,9 +127,8 @@ const SparePartsList: React.FC = () => {
                         icon={<FiDelete />}
                         shape="circle"
                         onClick={() => handleDelete(item._id)}
-                        className={`hover:scale-110 text-center transition-all ${
-                          isDeleting ? "opacity-50 cursor-not-allowed" : ""
-                        }`}
+                        className={`hover:scale-110 text-center transition-all ${isDeleting ? "opacity-50 cursor-not-allowed" : ""
+                          }`}
                         disabled={isDeleting}
                       />
                     </Tooltip>
