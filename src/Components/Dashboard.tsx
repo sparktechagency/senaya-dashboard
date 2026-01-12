@@ -6,6 +6,7 @@ import {
   Bookmark,
   Car,
   CarFront,
+  CreditCard,
 } from "lucide-react";
 import {
   useAllCarModelQuery,
@@ -30,6 +31,14 @@ const Dashboard = () => {
 
   const allCars = data?.data?.result || data?.result || [];
   const total = allCars.length;
+
+
+
+  const totalData = allData?.data?.result
+  const totalInvoice = totalData?.reduce((total: number, invoice: any) => total + invoice.generatedInvoiceCount, 0)
+
+
+
 
   if (isLoading || carLoading) {
     return (
@@ -57,9 +66,7 @@ const Dashboard = () => {
         <h1 className="text-3xl font-bold text-gray-800">
           Admin Dashboard
         </h1>
-        <p className="text-gray-500 mt-1">
-          Overview of platform statistics and performance
-        </p>
+
       </div>
 
       {/* Summary Cards */}
@@ -99,9 +106,9 @@ const Dashboard = () => {
         <div className="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-lg transition">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-500">Total Subscriptions</p>
+              <p className="text-sm text-gray-500">Amount Earned</p>
               <h2 className="text-3xl font-bold text-gray-800 mt-1">
-                {subscriptions?.subscriptionsCount}
+                {subscriptions?.amountEarned}
               </h2>
             </div>
             <div className="p-3 rounded-xl bg-amber-100 text-amber-600">
@@ -109,6 +116,9 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
+
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
         {/* Total Cars */}
         <div className="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-lg transition">
           <div className="flex items-center justify-between">
@@ -142,9 +152,9 @@ const Dashboard = () => {
         <div className="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-lg transition">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-500">Amount Earned</p>
+              <p className="text-sm text-gray-500">Total Subscriptions</p>
               <h2 className="text-3xl font-bold text-gray-800 mt-1">
-                ${subscriptions?.amountEarned}
+                {subscriptions?.subscriptionsCount}
               </h2>
             </div>
             <div className="p-3 rounded-xl bg-green-100 text-green-600">
@@ -152,6 +162,22 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
+        {/* Total Invoice */}
+        <div className="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-lg transition">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-500">Total Invoice</p>
+              <h2 className="text-3xl font-bold text-gray-800 mt-1">
+                {totalInvoice}
+              </h2>
+            </div>
+            <div className="p-3 rounded-xl bg-green-100 text-green-600">
+              <CreditCard size={28} />
+            </div>
+          </div>
+        </div>
+
+
 
       </div>
     </div>

@@ -230,9 +230,19 @@ export const adminAPI = baseApi.injectEndpoints({
     }),
     // ----------------------------   UPDATE
     // update car
+    // updateCar: builder.mutation({
+    //   query: ({ id, payload }: { id: string; payload: any }) => ({
+    //     url: `/cars/${id}`,
+    //     method: "PATCH",
+    //     body: payload,
+    //   }),
+    //   invalidatesTags: ["CAR"],
+    // }),
+
+
     updateCar: builder.mutation({
-      query: ({ id, payload }: { id: string; payload: any }) => ({
-        url: `/cars/${id}`,
+      query: (payload: any) => ({
+        url: `/clients/update-during-create`,
         method: "PATCH",
         body: payload,
       }),

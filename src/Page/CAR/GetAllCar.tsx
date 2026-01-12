@@ -1,4 +1,4 @@
-import { Loader2, Trash2, ChevronLeft, ChevronRight, Edit } from "lucide-react";
+import { Loader2, Trash2, ChevronLeft, ChevronRight, Edit, Search } from "lucide-react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -16,9 +16,11 @@ const toTitle = (v: MaybeObjWithTitle, fallback = "-") =>
 const Cars: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-
-  const { data, isLoading, isError } = useAllCarQuery(undefined);
+  const [searchTerm, setSearchTerm] = useState("");
+  const { data, isLoading, isError } = useAllCarQuery({ search: searchTerm });
   const [deleteCar, { isLoading: isDeleting }] = useDeleteCarMutation();
+
+
   const englishToArabicAlphabet = (value: string) => {
     const map: Record<string, string> = {
       A: "ا",
@@ -46,6 +48,8 @@ const Cars: React.FC = () => {
       .map(char => map[char] ?? "")
       .join("");
   };
+
+  console.log("`````~~~~~~~~~~~``````", data)
 
 
   const handleDelete = async (carId: string) => {
@@ -146,21 +150,33 @@ const Cars: React.FC = () => {
   return (
     <div className="p-6 min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-white rounded-xl shadow-md border border-gray-200 p-5 mb-6">
+      <div className="">
         <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
           <div>
             <h2 className="text-2xl font-bold text-indigo-700 flex items-center gap-2">
               🚗 Cars List
             </h2>
-            <p className="text-sm text-gray-500 mt-1">
-              Total: {total} cars
-            </p>
+
+          </div>
+          {/* Search Box */}
+          <div className="flex items-center bg-white shadow-md rounded-xl px-4 py-2">
+            <Search size={18} className="text-gray-500" />
+            <input
+              type="text"
+              placeholder="Search by mobile number..."
+              value={searchTerm}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                setCurrentPage(1);
+              }}
+              className="ml-2 outline-none border-none bg-transparent text-sm text-gray-700"
+            />
           </div>
         </div>
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto bg-white rounded-lg shadow-md border border-gray-200">
+      <div className="overflow-x-auto mt-4 bg-white rounded-lg shadow-md border border-gray-200">
         <table className="min-w-full table-auto text-sm">
           <thead className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white">
             <tr>
@@ -183,104 +199,107 @@ const Cars: React.FC = () => {
                   No cars found.
                 </td>
               </tr>
-            ) : (
-              currentCars.map((car: any, index: number) => {
-                const brandTitle = toTitle(car?.brand?.title);
-                const brandImage = `https://api.senaeya.net/${car.brand?.image}`;
-                const modelTitle = toTitle(car.model);
-                const year = String(car.year || "-");
-                const vin = car.vin || "-";
-                const clientName = toTitle(car.client?.clientId?.name);
-                const CLIENTname = toTitle(car.client?.workShopNameAsClient);
-                const clientType = car.client?.clientType || "-";
-                const carType = car.carType || "-";
-                const contactNumber = car.client?.contact || "-";
+            ) :
+              (
+                currentCars.filter((car: any) => car?.client?.clientType === "User").
+                  map((car: any, index: number) => {
+                    const brandTitle = toTitle(car?.brand?.title);
+                    const brandImage = `https://api.senaeya.net/${car.brand?.image}`;
+                    const modelTitle = toTitle(car.model);
+                    const year = String(car.year || "-");
+                    const vin = car.vin || "-";
+                    const clientName = toTitle(car.client?.clientId?.name);
+                    const CLIENTname = toTitle(car.client?.workShopNameAsClient);
+                    const clientType = car.client?.clientType || "-";
+                    const carType = car.carType || "-";
+                    const contactNumber = car.client?.contact || "-";
 
-                let plateNumber = "-";
-                if (carType === "International") {
-                  plateNumber = car.plateNumberForInternational || "-";
-                } else if (carType === "Saudi") {
-                  const english =
-                    car.plateNumberForSaudi?.alphabetsCombinations?.[0] || "-";
+                    let plateNumber = "-";
+                    if (carType === "International") {
+                      plateNumber = car.plateNumberForInternational || "-";
+                    } else if (carType === "Saudi") {
+                      const english =
+                        car.plateNumberForSaudi?.alphabetsCombinations?.[0] || "-";
 
-                  const arabicAlphabet =
-                    english !== "-" ? englishToArabicAlphabet(english) : "-";
+                      const arabicAlphabet =
+                        english !== "-" ? englishToArabicAlphabet(english) : "-";
 
-                  const numberEnglish =
-                    car.plateNumberForSaudi?.numberEnglish || "-";
+                      const numberEnglish =
+                        car.plateNumberForSaudi?.numberEnglish || "-";
 
-                  const numberArabic =
-                    car.plateNumberForSaudi?.numberArabic || "-";
+                      const numberArabic =
+                        car.plateNumberForSaudi?.numberArabic || "-";
 
-                  plateNumber = `${english}-${numberEnglish}  |  ${arabicAlphabet}-${numberArabic}`;
+                      plateNumber = `${english}-${numberEnglish}  |  ${arabicAlphabet}-${numberArabic}`;
 
-                }
-
-                return (
-                  <tr
-                    key={car._id}
-                    className={`border-b transition-colors duration-150 ${index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                      } hover:bg-blue-50`}
-                  >
-                    <td className="px-4 py-3 text-center font-medium text-gray-700">
-                      {startIndex + index + 1}
-                    </td>
-
-                    <td className="px-4 py-3">
-                      <div className="flex items-center gap-2">
-                        <img
-                          src={brandImage}
-                          alt={brandTitle}
-                          className="w-10 h-10 rounded-full object-cover border-2 border-indigo-300"
-                        />
-                        <span className="font-medium text-gray-700">
-                          {brandTitle}
-                        </span>
-                      </div>
-                    </td>
-
-                    <td className="px-4 py-3 text-gray-700">{modelTitle}</td>
-                    <td className="px-4 py-3 text-gray-700">{year}</td>
-                    <td className="px-4 py-3 text-center text-gray-700">{vin}</td>
-                    {
-                      clientType === "WorkShop" ? (
-                        <td className="px-4 py-3 text-gray-700">{CLIENTname}</td>
-                      ) : (
-                        <td className="px-4 py-3 text-gray-700">{clientName}</td>
-                      )
                     }
-                    <td className="px-4 py-3 text-gray-700">{contactNumber}</td>
-                    <td className="px-4 py-3 text-gray-700">{carType}</td>
-                    <td className="px-4 py-3 text-gray-700">{plateNumber}</td>
 
-                    <td className="px-4 py-3">
-                      <div className="flex items-center justify-center gap-2">
-                        <button
-                          onClick={() => handleDelete(car._id)}
-                          disabled={isDeleting}
-                          className="flex items-center justify-center p-2 bg-red-500 hover:bg-red-600 text-white rounded-full transition disabled:opacity-60 hover:scale-110"
-                          title="Delete"
-                        >
-                          {isDeleting ? (
-                            <Loader2 size={16} className="animate-spin" />
+                    return (
+                      <tr
+                        key={car._id}
+                        className={`border-b transition-colors duration-150 ${index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                          } hover:bg-blue-50`}
+                      >
+                        <td className="px-4 py-3 text-center font-medium text-gray-700">
+                          {startIndex + index + 1}
+                        </td>
+
+                        <td className="px-4 py-3">
+                          <div className="flex items-center gap-2">
+                            <img
+                              src={brandImage}
+                              alt={brandTitle}
+                              className="w-10 h-10 rounded-full object-cover border-2 border-indigo-300"
+                            />
+                            <span className="font-medium text-gray-700">
+                              {brandTitle}
+                            </span>
+                          </div>
+                        </td>
+
+                        <td className="px-4 py-3 text-gray-700">{modelTitle}</td>
+                        <td className="px-4 py-3 text-gray-700">{year}</td>
+                        <td className="px-4 py-3 text-center text-gray-700">{vin}</td>
+                        {
+                          clientType === "WorkShop" ? (
+                            <td className="px-4 py-3 text-gray-700">{CLIENTname}</td>
                           ) : (
-                            <Trash2 size={16} />
-                          )}
-                        </button>
+                            <td className="px-4 py-3 text-gray-700">{clientName}</td>
+                          )
+                        }
+                        <td className="px-4 py-3 text-gray-700">{contactNumber}</td>
+                        <td className="px-4 py-3 text-gray-700">{carType}</td>
+                        <td className="px-4 py-3 text-gray-700">{plateNumber}</td>
 
-                        <Link
-                          to={`/carDetails/${car._id}`}
-                          className="flex items-center justify-center p-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-full transition hover:scale-110"
-                          title="View details"
-                        >
-                          <Edit size={16} />
-                        </Link>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })
-            )}
+                        <td className="px-4 py-3">
+                          <div className="flex items-center justify-center gap-2">
+                            <button
+                              onClick={() => handleDelete(car._id)}
+                              disabled={isDeleting}
+                              className="flex items-center justify-center p-2 bg-red-500 hover:bg-red-600 text-white rounded-full transition disabled:opacity-60 hover:scale-110"
+                              title="Delete"
+                            >
+                              {isDeleting ? (
+                                <Loader2 size={16} className="animate-spin" />
+                              ) : (
+                                <Trash2 size={16} />
+                              )}
+                            </button>
+
+                            <Link
+                              to={`/carDetails/${car._id}`}
+                              className="flex items-center justify-center p-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-full transition hover:scale-110"
+                              title="View details"
+                            >
+                              <Edit size={16} />
+                            </Link>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  }
+                  )
+              )}
           </tbody>
         </table>
       </div>
