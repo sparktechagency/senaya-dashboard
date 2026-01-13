@@ -97,7 +97,7 @@ export const adminAPI = baseApi.injectEndpoints({
     // ✅ All Cars
     allCar: builder.query({
       query: ({ search }) => ({
-        url: `cars?searchTerm=${search || ""}`,
+        url: `cars/admin?searchTerm=${search || ""}`,
         method: "GET",
       }),
       providesTags: ["CAR"],
