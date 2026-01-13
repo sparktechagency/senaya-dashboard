@@ -100,8 +100,10 @@ const Cars: React.FC = () => {
   }
 
   const allCars = data?.data?.result || data?.result || [];
+
+
   console.log("AllCars", allCars);
-  console.log(allCars);
+
 
   const total = allCars.length;
   const totalPages = Math.ceil(total / itemsPerPage);
