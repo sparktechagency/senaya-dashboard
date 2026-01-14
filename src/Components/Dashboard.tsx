@@ -25,7 +25,7 @@ const Dashboard = () => {
 
   const [searchTerm] = useState("");
   const { data: allData } = useAllWorkShopQuery({ search: searchTerm });
-  const { data, isLoading: carLoading, isError: carError } = useAllCarQuery(undefined);
+  const { data, isLoading: carLoading, isError: carError } = useAllCarQuery({ search: searchTerm });
   const { data: carModelData } = useAllCarModelQuery(undefined);
   const totalCarModel = carModelData?.data?.length;
 
