@@ -118,7 +118,7 @@ export const settingApi = baseApi.injectEndpoints({
     // Delete
     deleteSubscription: builder.mutation({
       query: (id: string) => ({
-        url: `/subscription/cancel/${id}`,
+        url: `/subscription/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["SUBSCRIPTION"],
