@@ -17,7 +17,14 @@ const Cars: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const [searchTerm, setSearchTerm] = useState("");
-  const { data, isLoading, isError } = useAllCarQuery({ search: searchTerm });
+
+  // Pass pagination parameters to the API query
+  const { data, isLoading, isError } = useAllCarQuery({
+    search: searchTerm,
+    page: currentPage,
+    limit: itemsPerPage
+  });
+
   const [deleteCar, { isLoading: isDeleting }] = useDeleteCarMutation();
 
 
@@ -73,8 +80,9 @@ const Cars: React.FC = () => {
           showConfirmButton: false,
         });
 
-        // Jodi current page e kono data na thake, previous page e jawa
-        if (currentCars.length === 1 && currentPage > 1) {
+        // If current page has no data after deletion, go to previous page
+        const carsOnPage = data?.data?.result?.length || 0;
+        if (carsOnPage === 1 && currentPage > 1) {
           setCurrentPage(currentPage - 1);
         }
       }
@@ -99,54 +107,23 @@ const Cars: React.FC = () => {
     );
   }
 
-  const allCars = data?.data?.result || data?.result || [];
-
+  // Get data from API response
+  const allCars = data?.data?.result || [];
+  const meta = data?.data?.meta || { page: 1, limit: 10, total: 0, totalPage: 1 };
 
   console.log("AllCars", allCars);
+  console.log("Meta", meta);
 
-
-  const total = allCars.length;
-  const totalPages = Math.ceil(total / itemsPerPage);
-
-  // Current page er data slice kore newa
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentCars = allCars.slice(startIndex, endIndex);
+  // Use server-side pagination data
+  const total = meta.total;
+  const totalPages = meta.totalPage;
+  const startIndex = (meta.page - 1) * meta.limit;
 
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
-  };
-
-  const renderPageNumbers = () => {
-    const pages = [];
-    const maxVisible = 5;
-
-    if (totalPages <= maxVisible) {
-      for (let i = 1; i <= totalPages; i++) {
-        pages.push(i);
-      }
-    } else {
-      if (currentPage <= 3) {
-        for (let i = 1; i <= 4; i++) pages.push(i);
-        pages.push("...");
-        pages.push(totalPages);
-      } else if (currentPage >= totalPages - 2) {
-        pages.push(1);
-        pages.push("...");
-        for (let i = totalPages - 3; i <= totalPages; i++) pages.push(i);
-      } else {
-        pages.push(1);
-        pages.push("...");
-        for (let i = currentPage - 1; i <= currentPage + 1; i++) pages.push(i);
-        pages.push("...");
-        pages.push(totalPages);
-      }
-    }
-
-    return pages;
   };
 
   return (
@@ -195,113 +172,110 @@ const Cars: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {currentCars.length === 0 ? (
+            {allCars.length === 0 ? (
               <tr>
                 <td colSpan={10} className="text-center py-8 text-gray-500 italic">
                   No cars found.
                 </td>
               </tr>
-            ) :
-              (
-                currentCars.filter((car: any) => car?.client?.clientType === "User").
-                  map((car: any, index: number) => {
-                    const brandTitle = toTitle(car?.brand?.title);
-                    const brandImage = `https://api.senaeya.net/${car.brand?.image}`;
-                    const modelTitle = toTitle(car.model);
-                    const year = String(car.year || "-");
-                    const vin = car.vin || "-";
-                    const clientName = toTitle(car.client?.clientId?.name);
-                    const CLIENTname = toTitle(car.client?.workShopNameAsClient);
-                    const clientType = car.client?.clientType || "-";
-                    const carType = car.carType || "-";
-                    const contactNumber = car.client?.contact || "-";
+            ) : (
+              allCars.map((car: any, index: number) => {
+                const brandTitle = toTitle(car?.brand?.title);
+                const brandImage = `https://api.senaeya.net/${car.brand?.image}`;
+                const modelTitle = toTitle(car.model);
+                const year = String(car.year || "-");
+                const vin = car.vin || "-";
+                const clientName = toTitle(car.client?.clientId?.name);
+                const CLIENTname = toTitle(car.client?.workShopNameAsClient);
+                const clientType = car.client?.clientType || "-";
+                const carType = car.carType || "-";
+                const contactNumber = car.client?.contact || "-";
 
-                    let plateNumber = "-";
-                    if (carType === "International") {
-                      plateNumber = car.plateNumberForInternational || "-";
-                    } else if (carType === "Saudi") {
-                      const english =
-                        car.plateNumberForSaudi?.alphabetsCombinations?.[0] || "-";
+                let plateNumber = "-";
+                if (carType === "International") {
+                  plateNumber = car.plateNumberForInternational || "-";
+                } else if (carType === "Saudi") {
+                  const english =
+                    car.plateNumberForSaudi?.alphabetsCombinations?.[0] || "-";
 
-                      const arabicAlphabet =
-                        english !== "-" ? englishToArabicAlphabet(english) : "-";
+                  const arabicAlphabet =
+                    english !== "-" ? englishToArabicAlphabet(english) : "-";
 
-                      const numberEnglish =
-                        car.plateNumberForSaudi?.numberEnglish || "-";
+                  const numberEnglish =
+                    car.plateNumberForSaudi?.numberEnglish || "-";
 
-                      const numberArabic =
-                        car.plateNumberForSaudi?.numberArabic || "-";
+                  const numberArabic =
+                    car.plateNumberForSaudi?.numberArabic || "-";
 
-                      plateNumber = `${english}-${numberEnglish}  |  ${arabicAlphabet}-${numberArabic}`;
+                  plateNumber = `${english}-${numberEnglish}  |  ${arabicAlphabet}-${numberArabic}`;
 
+                }
+
+                return (
+                  <tr
+                    key={car._id}
+                    className={`border-b transition-colors duration-150 ${index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                      } hover:bg-blue-50`}
+                  >
+                    <td className="px-4 py-3 text-center font-medium text-gray-700">
+                      {startIndex + index + 1}
+                    </td>
+
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-2">
+                        <img
+                          src={brandImage}
+                          alt={brandTitle}
+                          className="w-10 h-10 rounded-full object-cover border-2 border-indigo-300"
+                        />
+                        <span className="font-medium text-gray-700">
+                          {brandTitle}
+                        </span>
+                      </div>
+                    </td>
+
+                    <td className="px-4 py-3 text-gray-700">{modelTitle}</td>
+                    <td className="px-4 py-3 text-gray-700">{year}</td>
+                    <td className="px-4 py-3 text-center text-gray-700">{vin}</td>
+                    {
+                      clientType === "WorkShop" ? (
+                        <td className="px-4 py-3 text-gray-700">{CLIENTname}</td>
+                      ) : (
+                        <td className="px-4 py-3 text-gray-700">{clientName}</td>
+                      )
                     }
+                    <td className="px-4 py-3 text-gray-700">{contactNumber}</td>
+                    <td className="px-4 py-3 text-gray-700">{carType}</td>
+                    <td className="px-4 py-3 text-gray-700">{plateNumber}</td>
 
-                    return (
-                      <tr
-                        key={car._id}
-                        className={`border-b transition-colors duration-150 ${index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                          } hover:bg-blue-50`}
-                      >
-                        <td className="px-4 py-3 text-center font-medium text-gray-700">
-                          {startIndex + index + 1}
-                        </td>
-
-                        <td className="px-4 py-3">
-                          <div className="flex items-center gap-2">
-                            <img
-                              src={brandImage}
-                              alt={brandTitle}
-                              className="w-10 h-10 rounded-full object-cover border-2 border-indigo-300"
-                            />
-                            <span className="font-medium text-gray-700">
-                              {brandTitle}
-                            </span>
-                          </div>
-                        </td>
-
-                        <td className="px-4 py-3 text-gray-700">{modelTitle}</td>
-                        <td className="px-4 py-3 text-gray-700">{year}</td>
-                        <td className="px-4 py-3 text-center text-gray-700">{vin}</td>
-                        {
-                          clientType === "WorkShop" ? (
-                            <td className="px-4 py-3 text-gray-700">{CLIENTname}</td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center justify-center gap-2">
+                        <button
+                          onClick={() => handleDelete(car._id)}
+                          disabled={isDeleting}
+                          className="flex items-center justify-center p-2 bg-red-500 hover:bg-red-600 text-white rounded-full transition disabled:opacity-60 hover:scale-110"
+                          title="Delete"
+                        >
+                          {isDeleting ? (
+                            <Loader2 size={16} className="animate-spin" />
                           ) : (
-                            <td className="px-4 py-3 text-gray-700">{clientName}</td>
-                          )
-                        }
-                        <td className="px-4 py-3 text-gray-700">{contactNumber}</td>
-                        <td className="px-4 py-3 text-gray-700">{carType}</td>
-                        <td className="px-4 py-3 text-gray-700">{plateNumber}</td>
+                            <Trash2 size={16} />
+                          )}
+                        </button>
 
-                        <td className="px-4 py-3">
-                          <div className="flex items-center justify-center gap-2">
-                            <button
-                              onClick={() => handleDelete(car._id)}
-                              disabled={isDeleting}
-                              className="flex items-center justify-center p-2 bg-red-500 hover:bg-red-600 text-white rounded-full transition disabled:opacity-60 hover:scale-110"
-                              title="Delete"
-                            >
-                              {isDeleting ? (
-                                <Loader2 size={16} className="animate-spin" />
-                              ) : (
-                                <Trash2 size={16} />
-                              )}
-                            </button>
-
-                            <Link
-                              to={`/carDetails/${car._id}`}
-                              className="flex items-center justify-center p-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-full transition hover:scale-110"
-                              title="View details"
-                            >
-                              <Edit size={16} />
-                            </Link>
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  }
-                  )
-              )}
+                        <Link
+                          to={`/carDetails/${car._id}`}
+                          className="flex items-center justify-center p-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-full transition hover:scale-110"
+                          title="View details"
+                        >
+                          <Edit size={16} />
+                        </Link>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })
+            )}
           </tbody>
         </table>
       </div>
@@ -310,63 +284,46 @@ const Cars: React.FC = () => {
       {totalPages > 1 && (
         <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 bg-white rounded-lg shadow-md border border-gray-200 p-4">
           <div className="text-sm text-gray-600">
-            Showing{" "}
+            Showing page{" "}
             <span className="font-semibold text-gray-800">
-              {startIndex + 1}
+              {currentPage}
             </span>{" "}
-            to{" "}
+            of{" "}
             <span className="font-semibold text-gray-800">
-              {Math.min(endIndex, total)}
+              {totalPages}
             </span>{" "}
-            of <span className="font-semibold text-gray-800">{total}</span>{" "}
-            results
+            ({total} total results)
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             {/* Previous Button */}
             <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
-              className={`flex items-center gap-1 px-3 py-2 rounded-lg font-medium transition-all ${currentPage === 1
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${currentPage === 1
                 ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                : "bg-white border border-gray-300 text-gray-700 hover:bg-indigo-50 hover:border-indigo-500"
+                : "bg-gradient-to-r from-indigo-500 to-purple-500 text-white hover:from-indigo-600 hover:to-purple-600 shadow-md hover:shadow-lg"
                 }`}
             >
               <ChevronLeft size={18} />
-              <span className="hidden sm:inline">Previous</span>
+              <span>Previous</span>
             </button>
 
-            {/* Page Numbers */}
-            <div className="flex items-center gap-1">
-              {renderPageNumbers().map((page, index) => (
-                <React.Fragment key={index}>
-                  {page === "..." ? (
-                    <span className="px-3 py-2 text-gray-500">...</span>
-                  ) : (
-                    <button
-                      onClick={() => handlePageChange(page as number)}
-                      className={`px-3 py-2 rounded-lg font-medium transition-all min-w-[40px] ${currentPage === page
-                        ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
-                        : "bg-white border border-gray-300 text-gray-700 hover:bg-indigo-50 hover:border-indigo-500"
-                        }`}
-                    >
-                      {page}
-                    </button>
-                  )}
-                </React.Fragment>
-              ))}
+            {/* Page Info */}
+            <div className="px-4 py-2 bg-gray-100 rounded-lg font-semibold text-gray-700">
+              {currentPage} / {totalPages}
             </div>
 
             {/* Next Button */}
             <button
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className={`flex items-center gap-1 px-3 py-2 rounded-lg font-medium transition-all ${currentPage === totalPages
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${currentPage === totalPages
                 ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                : "bg-white border border-gray-300 text-gray-700 hover:bg-indigo-50 hover:border-indigo-500"
+                : "bg-gradient-to-r from-indigo-500 to-purple-500 text-white hover:from-indigo-600 hover:to-purple-600 shadow-md hover:shadow-lg"
                 }`}
             >
-              <span className="hidden sm:inline">Next</span>
+              <span>Next</span>
               <ChevronRight size={18} />
             </button>
           </div>
