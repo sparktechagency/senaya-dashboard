@@ -22,6 +22,8 @@ interface CarModel {
 
 const CarModelTable = () => {
   const { data, error, isLoading } = useAllCarModelQuery(undefined);
+  console.log("dataPAGINATE", data?.data)
+
   const [deleteCarBrand] = useDeletecarModelMutation();
 
   const handleDelete = async (id: string) => {
@@ -70,7 +72,7 @@ const CarModelTable = () => {
       </div>
       <div className="max-w-6xl mx-auto">
         {/* Card container */}
-        <div className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl overflow-hidden transition-all hover:shadow-indigo-300/40 hover:scale-[1.01] duration-300">
+        <div className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl overflow-hidden">
           {/* linear header strip */}
           <div className="bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 p-4 flex justify-between items-center">
             <h2 className="text-2xl md:text-3xl font-bold text-white tracking-wide drop-shadow-md">
