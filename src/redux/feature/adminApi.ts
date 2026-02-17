@@ -69,8 +69,8 @@ export const adminAPI = baseApi.injectEndpoints({
 
     // ✅ All Workshops
     allWorkShop: builder.query({
-      query: ({ search }) => ({
-        url: `/workshops?searchTerm=${search || ""}`,
+      query: ({ search, page = 1, limit = 5 }) => ({
+        url: `/workshops?searchTerm=${search || ""}&page=${page}&limit=${limit}`,
         method: "GET",
       }),
       providesTags: ["WORKSHOP"],

@@ -18,7 +18,8 @@ import {
 
 const WorkShop = () => {
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
   const [deleteWorkShop, { isLoading: isDeleting }] =
     useDeleteWorkShopMutation();
 
@@ -28,9 +29,15 @@ const WorkShop = () => {
     isLoading,
     isError,
     refetch,
-  } = useAllWorkShopQuery({ search: searchTerm });
+  } = useAllWorkShopQuery({ search: searchTerm, page, limit });
 
   const { result = [], meta = {} } = allData?.data || {};
+  // const { page: currentPage = 1, totalPage = 1, total = 0 } = meta;
+  const total = meta.total || 0;
+  const totalPages = meta.totalPage || 1;
+
+
+  console.log("allWorkShop🛄🛫🛫", result)
 
 
   const isSearchActive = searchTerm.length > 0;
@@ -51,6 +58,13 @@ const WorkShop = () => {
     if (confirm.isConfirmed) {
       await deleteWorkShop(id).unwrap();
       refetch();
+    }
+  };
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setPage(newPage);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -91,7 +105,10 @@ const WorkShop = () => {
             type="text"
             placeholder="Search by mobile number..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              setPage(1); // Reset to page 1 on search
+            }}
             className="ml-2 outline-none border-none bg-transparent text-sm text-gray-700"
           />
         </div>
@@ -190,7 +207,7 @@ const WorkShop = () => {
                   key={workshop._id}
                   className="border-b hover:bg-gray-50 transition"
                 >
-                  <td className="px-4 py-3">{index + 1}</td>
+                  <td className="px-4 py-3">{(page - 1) * limit + index + 1}</td>
                   <td className="px-4 py-3 font-medium text-gray-800">
                     {workshop.workshopNameEnglish}
                   </td>
@@ -248,6 +265,46 @@ const WorkShop = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 bg-white rounded-lg shadow-md border border-gray-200 p-4">
+          <div className="text-sm text-gray-600">
+            Showing page{" "}
+            <span className="font-semibold text-gray-800">{page}</span> of{" "}
+            <span className="font-semibold text-gray-800">{totalPages}</span> (
+            {total} total results)
+          </div>
+
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => handlePageChange(page - 1)}
+              disabled={page === 1}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${page === 1
+                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                : "bg-gradient-to-r from-indigo-500 to-purple-500 text-white hover:from-indigo-600 hover:to-purple-600 shadow-md hover:shadow-lg"
+                }`}
+            >
+              <span>Previous</span>
+            </button>
+
+            <div className="px-4 py-2 bg-gray-100 rounded-lg font-semibold text-gray-700">
+              {page} / {totalPages}
+            </div>
+
+            <button
+              onClick={() => handlePageChange(page + 1)}
+              disabled={page === totalPages}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${page === totalPages
+                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                : "bg-gradient-to-r from-indigo-500 to-purple-500 text-white hover:from-indigo-600 hover:to-purple-600 shadow-md hover:shadow-lg"
+                }`}
+            >
+              <span>Next</span>
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
