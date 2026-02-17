@@ -14,8 +14,8 @@ interface WorkshopFormData {
   mln: string
   address: string
   contact: string
-  taxVatNumber: string
-  bankAccountNumber: string
+  taxVatNumber?: string
+  bankAccountNumber?: string
   name: string
   isAvailableMobileWorkshop: boolean
   regularStartDay: string
@@ -44,7 +44,6 @@ const UpdateWorkShop: React.FC = () => {
   const [nationality, setNationality] = useState<string>("")
 
   const { data, isLoading, isError } = useGetSingleWorkShopQuery(workshopId || "")
-  console.log(data?.data)
   const [updateWorkshop, { isLoading: isUpdating }] = useUpdateWorkShopMutation()
   const { register, handleSubmit, reset, formState: { errors } } = useForm<WorkshopFormData>()
 
@@ -94,6 +93,23 @@ const UpdateWorkShop: React.FC = () => {
     return ownerEditableFields.includes(field)
   }
 
+  const cleanPayload = (obj: any) => {
+    Object.keys(obj).forEach(key => {
+      const value = obj[key]
+      if (value === "" || value === null || value === undefined) {
+        delete obj[key]
+      }
+      // Nested objects
+      if (typeof value === "object" && value !== null) {
+        Object.keys(value).forEach(nestedKey => {
+          if (value[nestedKey] === "" || value[nestedKey] === null || value[nestedKey] === undefined) {
+            delete value[nestedKey]
+          }
+        })
+      }
+    })
+  }
+
   const onSubmit = async (formData: WorkshopFormData) => {
     const formDataToSend = new FormData()
     let dataObject: any
@@ -119,7 +135,8 @@ const UpdateWorkShop: React.FC = () => {
           startTime: formData.ramadanStartTime,
           endTime: formData.ramadanEndTime
         },
-        preferredLanguage, nationality
+        preferredLanguage,
+        nationality
       }
     } else {
       dataObject = {
@@ -153,11 +170,16 @@ const UpdateWorkShop: React.FC = () => {
           startTime: formData.ramadanStartTime,
           endTime: formData.ramadanEndTime
         },
-        preferredLanguage, nationality
+        preferredLanguage,
+        nationality
       }
     }
 
+    // Clean empty values before sending
+    cleanPayload(dataObject)
+
     formDataToSend.append("data", JSON.stringify(dataObject))
+
     if (userRole === "admin" && formData.image && formData.image.length > 0) {
       formDataToSend.append("image", formData.image[0])
     }

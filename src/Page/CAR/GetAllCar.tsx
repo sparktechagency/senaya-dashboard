@@ -56,9 +56,6 @@ const Cars: React.FC = () => {
       .join("");
   };
 
-  console.log("`````~~~~~~~~~~~``````", data)
-
-
   const handleDelete = async (carId: string) => {
     try {
       const result = await Swal.fire({
@@ -138,7 +135,7 @@ const Cars: React.FC = () => {
 
           </div>
           {/* Search Box */}
-          <div className="flex items-center bg-white shadow-md rounded-xl px-4 py-2">
+          {/* <div className="flex items-center bg-white shadow-md rounded-xl px-4 py-2">
             <Search size={18} className="text-gray-500" />
             <input
               type="text"
@@ -150,7 +147,7 @@ const Cars: React.FC = () => {
               }}
               className="ml-2 outline-none border-none bg-transparent text-sm text-gray-700"
             />
-          </div>
+          </div> */}
         </div>
       </div>
 
