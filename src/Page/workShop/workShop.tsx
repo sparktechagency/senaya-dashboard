@@ -19,7 +19,7 @@ import {
 const WorkShop = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const [limit] = useState(10);
   const [deleteWorkShop, { isLoading: isDeleting }] =
     useDeleteWorkShopMutation();
 
