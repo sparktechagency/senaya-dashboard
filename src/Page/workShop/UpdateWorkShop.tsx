@@ -211,12 +211,11 @@ const UpdateWorkShop: React.FC = () => {
             <div>
               <label className="font-semibold text-gray-700">Text VAT Number *</label>
               <input {...register("taxVatNumber")} className={`w-full border rounded-lg px-3 py-2 ${!isFieldEditable("taxVatNumber") ? "bg-gray-100 cursor-not-allowed" : ""}`} />
-              {errors.taxVatNumber && <span className="text-red-500 text-sm">This field is required</span>}
             </div>
             <div>
               <label className="font-semibold text-gray-700">Bank Account Number *</label>
               <input {...register("bankAccountNumber")} className={`w-full border rounded-lg px-3 py-2 ${!isFieldEditable("bankAccountNumber") ? "bg-gray-100 cursor-not-allowed" : ""}`} />
-              {errors.bankAccountNumber && <span className="text-red-500 text-sm">This field is required</span>}
+
             </div>
           </div>
           {/* UNN CNN MLN */}
