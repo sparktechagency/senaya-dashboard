@@ -1,4 +1,4 @@
-import { Loader2, Trash2, ChevronLeft, ChevronRight, Edit, Search } from "lucide-react";
+import { Loader2, Trash2, ChevronLeft, ChevronRight, Edit } from "lucide-react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -16,11 +16,11 @@ const toTitle = (v: MaybeObjWithTitle, fallback = "-") =>
 const Cars: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-  const [searchTerm, setSearchTerm] = useState("");
+  // const [searchTerm, setSearchTerm] = useState("");
 
   // Pass pagination parameters to the API query
   const { data, isLoading, isError } = useAllCarQuery({
-    search: searchTerm,
+    // search: searchTerm,
     page: currentPage,
     limit: itemsPerPage
   });
